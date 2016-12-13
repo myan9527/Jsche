@@ -5,4 +5,3 @@ Build with:
 - Themeleaf
 - Mysql
 - Travis CI
-[![Build Status](https://travis-ci.org/TobeDeveloper/practice.svg?branch=master)](https://travis-ci.org/TobeDeveloper/practice)
