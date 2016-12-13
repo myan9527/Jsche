@@ -1,5 +1,12 @@
 language: java
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+branches:
+  only:
+  - master
+  - develop
 script:
   - jdk_switcher use oraclejdk8
-    mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-    mvn test
+  - mvn test
+deploy:
+    #deploy job here
