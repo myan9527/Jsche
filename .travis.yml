@@ -9,6 +9,7 @@ branches:
   - master
   - develop
 script:
+  - mvn clean compile -B -e -U
   - mvn test
 deploy:
     #deploy job here
