@@ -10,9 +10,9 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class Application implements EmbeddedServletContainerCustomizer {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(Application.class);
-	}
+    public static void main(String[] args) throws Exception {
+            SpringApplication.run(Application.class);
+    }
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
