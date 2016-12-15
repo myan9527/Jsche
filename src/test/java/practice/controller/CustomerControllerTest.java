@@ -14,12 +14,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import practice.Application;
 import practice.entity.Customer;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import practice.repo.CustomerRepository;
@@ -30,7 +28,6 @@ import practice.repo.CustomerRepository;
  * @author myan
  */
 @RunWith(SpringRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     @Mock
@@ -39,6 +36,7 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     private CustomerController controller;
     
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
