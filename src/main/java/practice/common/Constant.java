@@ -11,4 +11,5 @@ package practice.common;
  */
 public class Constant {
     public static final String LOGIN_TOKEN = "LOGIN";
+    public static final String BASE_URL = "http://localhost:8000";
 }
