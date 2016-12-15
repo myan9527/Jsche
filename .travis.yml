@@ -11,5 +11,7 @@ branches:
 script:
   - mvn clean compile -B -e -U
   - mvn test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 deploy:
     #deploy job here
