@@ -28,12 +28,12 @@ import practice.repo.CustomerRepository;
  * @author myan
  */
 @RunWith(SpringRunner.class)
-@WebAppConfiguration
 public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     @Mock
     private CustomerRepository cp;
     @InjectMocks
     private CustomerController controller;
+    Customer customer;
     
     @Before
     @Override
@@ -47,28 +47,19 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     }
 
     /**
-     * Test of index method, of class BaseController.
+     * Test of getByFirstName method, of class CustomerController.
      * @throws java.lang.Exception
      */
     @Test
     public void testGetByFirstName() throws Exception {        
         RequestBuilder request = null;
-        Customer customer= new Customer("michael", "yan");
+        customer = new Customer("michael", "yan");
         List<Customer> cuss = new ArrayList<>();
         cuss.add(customer);
         //mock first
-        Mockito.when(cp.save(customer)).thenReturn(customer);
         Mockito.when(cp.findByFirstName("michael")).thenReturn(cuss);
         
-        //save an customer first
-        request = MockMvcRequestBuilders.post("/save")
-                .param("id", "1")
-                .param("first_name", "michael")
-                .param("last_name", "yan");
-        perform(request)
-                .andExpect(status().isOk())
-                .andExpect(content().string("success"));
-        //then get it
+        //get it
         request = MockMvcRequestBuilders.get("/get/michael");
         perform(request)
                 .andExpect(status().isOk())
@@ -78,6 +69,21 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
         perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().string("No customer matched your search"));
+    }
+    
+    /**
+     * test save method of CustomerController
+     * @throws Exception
+     */
+    @Test
+    public void testSaveCustomer() throws Exception{
+        RequestBuilder request = MockMvcRequestBuilders.post("/save")
+                .param("id", "1")
+                .param("first_name", "michael")
+                .param("last_name", "yan");
+        perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("success"));
     }
 
     @Override
