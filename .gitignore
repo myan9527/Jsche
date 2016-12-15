@@ -4,3 +4,4 @@
 /src/main/resources/META-INF/persistence.xml
 !maven-wrapper.jar
 /nbproject/
+/nbactions.xml

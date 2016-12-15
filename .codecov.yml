@@ -6,9 +6,9 @@ codecov:
     require_ci_to_pass: yes
 
 coverage:
-  precision: 2
+  precision: 4
   round: down
-  range: "70...100"
+  range: "60...95"
 
   status:
     project: yes
@@ -22,6 +22,8 @@ parsers:
       loop: yes
       method: no
       macro: no
+ignore:
+    - practice/entity/*.java
 
 comment:
   layout: "header, diff"
