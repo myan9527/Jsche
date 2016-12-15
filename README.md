@@ -8,3 +8,4 @@ Build with:
 - Themeleaf
 - Mysql
 - Travis CI
+- Jacoco & Codecov
