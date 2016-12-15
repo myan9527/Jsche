@@ -1,4 +1,7 @@
 codecov:
+  branch:
+    master
+    develop
   notify:
     require_ci_to_pass: yes
 
