@@ -5,36 +5,42 @@
  */
 package practice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import practice.Application;
 import practice.entity.Customer;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import practice.repo.CustomerRepository;
 
 
 /**
  * Sample code for rest controller test case.
  * @author myan
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class CustomerControllerTest {
-    private MockMvc mvc;
-    Customer c = null;
+public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
+    @Mock
+    private CustomerRepository cp;
+    @InjectMocks
+    private CustomerController controller;
     
     @Before
     public void setUp() {
-        this.mvc = MockMvcBuilders.standaloneSetup(new CustomerController()).build();
+        super.setUp();
     }
     
     @After
@@ -49,20 +55,36 @@ public class CustomerControllerTest {
     @Test
     public void testGetByFirstName() throws Exception {        
         RequestBuilder request = null;
+        Customer customer= new Customer("michael", "yan");
+        List<Customer> cuss = new ArrayList<>();
+        cuss.add(customer);
+        //mock first
+        Mockito.when(cp.save(customer)).thenReturn(customer);
+        Mockito.when(cp.findByFirstName("michael")).thenReturn(cuss);
         
         //save an customer first
         request = MockMvcRequestBuilders.post("/save")
                 .param("id", "1")
                 .param("first_name", "michael")
                 .param("last_name", "yan");
-        mvc.perform(request)
+        perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().string("success"));
         //then get it
-        request = MockMvcRequestBuilders.get("/get/test");
-        mvc.perform(request)
+        request = MockMvcRequestBuilders.get("/get/michael");
+        perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().string("test"));
+                .andExpect(content().string("[{\"firstName\":\"michael\",\"lastName\":\"yan\"}]"));
+        //then get another
+        request = MockMvcRequestBuilders.get("/get/none");
+        perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("No customer matched your search"));
+    }
+
+    @Override
+    protected CustomerController getController() {
+        return controller;
     }
     
 }
