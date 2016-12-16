@@ -23,7 +23,8 @@ parsers:
       method: no
       macro: no
 ignore:
-    - practice/entity/*.java
+    - /src/main/java/practice/entity/*.java
+    - /src/main/java/practice/Application.java
 
 comment:
   layout: "header, diff"
