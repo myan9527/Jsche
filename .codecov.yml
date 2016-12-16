@@ -23,6 +23,7 @@ parsers:
       method: no
       macro: no
 ignore:
+    - /src/main/java/practice/common/*.java
     - /src/main/java/practice/entity/*.java
     - /src/main/java/practice/Application.java
 
