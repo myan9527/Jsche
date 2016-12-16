@@ -10,13 +10,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customers")
 public class Customer implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	private String firstName;
+    private String firstName;
     private String lastName;
 
-    protected Customer() {}
+    protected Customer() {
+    }
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
