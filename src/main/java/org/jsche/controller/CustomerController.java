@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import org.jsche.entity.Customer;
+import org.jsche.repo.CustomerRepository;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import practice.entity.Customer;
-import practice.repo.CustomerRepository;
 
 @RestController
 public class CustomerController {

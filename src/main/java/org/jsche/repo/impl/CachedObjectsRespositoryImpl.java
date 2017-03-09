@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Resource;
+import org.jsche.entity.City;
+import org.jsche.entity.Customer;
+import org.jsche.repo.CachedObjectsRespository;
+import org.jsche.repo.CityRepository;
+import org.jsche.repo.CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import practice.entity.City;
-
-import practice.entity.Customer;
-import practice.repo.CachedObjectsRespository;
-import practice.repo.CityRepository;
-import practice.repo.CustomerRepository;
 
 public class CachedObjectsRespositoryImpl implements CachedObjectsRespository {
 

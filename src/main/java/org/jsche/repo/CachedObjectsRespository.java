@@ -1,10 +1,9 @@
 package org.jsche.repo;
 
 import java.util.List;
+import org.jsche.entity.City;
+import org.jsche.entity.Customer;
 import org.springframework.stereotype.Component;
-import practice.entity.City;
-
-import practice.entity.Customer;
 
 /**
  * add all objects cached here
