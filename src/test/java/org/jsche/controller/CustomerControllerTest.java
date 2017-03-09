@@ -5,10 +5,14 @@
  */
 package org.jsche.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jsche.entity.Customer;
-import org.jsche.repo.CustomerRepository;
+import org.jsche.service.CustomerService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +23,6 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 /**
@@ -29,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     @Mock
-    private CustomerRepository cp;
+    private CustomerService cs;
     @InjectMocks
     private CustomerController controller;
     Customer customer;
@@ -56,7 +59,7 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
         List<Customer> cuss = new ArrayList<>();
         cuss.add(customer);
         //mock first
-        Mockito.when(cp.findByFirstName("michael")).thenReturn(cuss);
+        Mockito.when(cs.findByFirstName("michael")).thenReturn(cuss);
         
         //get it
         request = MockMvcRequestBuilders.get("/get/michael");
