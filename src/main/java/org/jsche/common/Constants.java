@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practice.common;
+package org.jsche.common;
 
 /**
  *
  * @author myan
  */
-public class Constant {
-    public static final String LOGIN_TOKEN = "LOGIN";
-    public static final String BASE_URL = "http://localhost:8000";
+public class Constants {
+    
 }
