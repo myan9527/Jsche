@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practice.repo;
+package org.jsche.repo;
 
+import org.jsche.entity.Customer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import practice.entity.Customer;
 
 /**
  *

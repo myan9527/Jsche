@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practice.controller;
+package org.jsche.controller;
 
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;

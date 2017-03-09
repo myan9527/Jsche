@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practice.controller;
+package org.jsche.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jsche.entity.Customer;
+import org.jsche.repo.CustomerRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +19,7 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import practice.entity.Customer;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import practice.repo.CustomerRepository;
 
 
 /**
