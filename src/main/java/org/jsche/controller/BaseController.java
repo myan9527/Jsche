@@ -14,6 +14,5 @@ public class BaseController {
     public String index(ModelMap map){
         map.addAttribute("result", "Some test content");
         return "index";
-
     }
 }

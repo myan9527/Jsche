@@ -5,6 +5,7 @@
  */
 package org.jsche.repo;
 
+import org.jsche.entity.Customer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
