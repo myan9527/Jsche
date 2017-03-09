@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.jsche.repo;
+package org.repo;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
