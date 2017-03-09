@@ -5,7 +5,7 @@
  */
 package org.jsche.controller;
 
-import org.jsche.common.TokenGenerator;
+import org.jsche.common.token.TokenManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +26,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(){
         ModelAndView mav = new ModelAndView("user/register");
-        mav.addObject(TokenGenerator.TOKEN_ATTR_NAME, TokenGenerator.getTempToken());
+        mav.addObject(TokenManager.TOKEN_ATTR_NAME, TokenManager.getCsrfToken().getTokenizer());
         return mav;
     } 
     
@@ -34,5 +34,18 @@ public class UserController {
     public ModelAndView processLogin(){
         ModelAndView mav = new ModelAndView("login");
         return mav;
+    }
+    
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public ModelAndView processRegister(){
+    	TokenManager.getCsrfToken().expires();
+    	ModelAndView mav = new ModelAndView();
+    	if(!TokenManager.getCsrfToken().isValid()){
+    		mav.setViewName("error/form");
+    	}else{
+    		//nomal process
+    		mav.setViewName("user/login");
+    	}
+    	return mav;
     }
 }
