@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 public class Application implements EmbeddedServletContainerCustomizer {
 
     public static void main(String[] args) throws Exception {
-            SpringApplication.run(Application.class);
+        SpringApplication.run(Application.class);
     }
 
     @Override
