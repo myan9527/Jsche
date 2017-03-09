@@ -5,11 +5,10 @@
  */
 package org.jsche.controller;
 
+import org.jsche.common.TokenGenerator;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -25,8 +24,10 @@ public class UserController {
         return "user/login";
     } 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(){
-        return "user/register";
+    public ModelAndView register(){
+        ModelAndView mav = new ModelAndView("user/register");
+        mav.addObject(TokenGenerator.TOKEN_ATTR_NAME, TokenGenerator.getTempToken());
+        return mav;
     } 
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
