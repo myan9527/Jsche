@@ -1,4 +1,4 @@
-package practice.controller;
+package org.jsche.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

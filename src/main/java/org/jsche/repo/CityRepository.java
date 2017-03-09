@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practice.repo;
+package org.jsche.repo;
 
 import java.util.List;
+import org.jsche.entity.City;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import practice.entity.City;
 
 /**
  *

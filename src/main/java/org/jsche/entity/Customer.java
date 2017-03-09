@@ -1,4 +1,4 @@
-package practice.entity;
+package org.jsche.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
