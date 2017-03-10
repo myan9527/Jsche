@@ -11,6 +11,7 @@ import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.User;
+import org.jsche.service.TaskService;
 import org.jsche.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private TaskService taskService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView processLogin(HttpServletRequest request, String email, String password) {
@@ -40,7 +43,7 @@ public class UserController {
                 //load basic data here.
                 mav.setViewName("user/dashboard");
                 request.getSession().setAttribute(Constants.LOGIN_USER, user);
-                mav.addObject("tasks",null);
+                mav.addObject("tasks",taskService.getUserTasks(user.getId()));
             }else{
                 mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.INVALID_PASSWORD);
                 return mav;
