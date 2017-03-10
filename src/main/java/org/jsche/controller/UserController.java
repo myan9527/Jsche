@@ -5,7 +5,13 @@
  */
 package org.jsche.controller;
 
-import org.jsche.common.token.TokenManager;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.jsche.common.Constants;
+import org.jsche.common.token.TokenHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +30,9 @@ public class UserController {
         return "user/login";
     } 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView register(){
+    public ModelAndView register(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("user/register");
-        mav.addObject(TokenManager.TOKEN_ATTR_NAME, TokenManager.getCsrfToken().getTokenizer());
+        mav.addObject(Constants.TOKEN_ATTR_NAME, TokenHandler.generateToken(request.getSession()));
         return mav;
     } 
     
@@ -37,15 +43,21 @@ public class UserController {
     }
     
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView processRegister(){
-    	TokenManager.getCsrfToken().expires();
+    public ModelAndView processRegister(HttpServletRequest request, HttpServletResponse response){
     	ModelAndView mav = new ModelAndView();
-    	if(!TokenManager.getCsrfToken().isValid()){
-    		mav.setViewName("error/form");
-    	}else{
-    		//nomal process
-    		mav.setViewName("user/login");
+    	try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    	if(!TokenHandler.checkToken(request)){
+    	    try {
+    	        response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    	    } catch (IOException e) {
+    	        e.printStackTrace();
+    	    }
     	}
+    	mav.setViewName("index");
     	return mav;
     }
 }

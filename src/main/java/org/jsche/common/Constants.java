@@ -10,5 +10,7 @@ package org.jsche.common;
  * @author myan
  */
 public class Constants {
+    public static String TOKEN_VALUE;
+    public static final String TOKEN_ATTR_NAME = "csrf_token";
     
 }
