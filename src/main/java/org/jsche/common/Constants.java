@@ -13,5 +13,6 @@ public class Constants {
     public static String TOKEN_VALUE;
     public static final String TOKEN_ATTR_NAME = "csrf_token";
     public static final String ERROR_ATTR_NAME = "error_message";
+    public static final String LOGIN_USER = "session_user";
     
 }

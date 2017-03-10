@@ -6,7 +6,6 @@
 package org.jsche.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
@@ -28,28 +27,46 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     @Autowired
     private UserService userService;
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView processLogin(){
-        ModelAndView mav = new ModelAndView("login");
+    public ModelAndView processLogin(HttpServletRequest request, String email, String password) {
+        ModelAndView mav = new ModelAndView("user/login");
+        User user = userService.getUserByEmail(email);
+        if(user == null){
+            mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.NO_SUCH_USER);
+            return mav;
+        }else{
+            if(user.getPassword().equals(AppUtil.getHexPassword(password))){
+                //load basic data here.
+                mav.setViewName("user/dashboard");
+                request.getSession().setAttribute(Constants.LOGIN_USER, user);
+                mav.addObject("tasks",null);
+            }else{
+                mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.INVALID_PASSWORD);
+                return mav;
+            }
+        }
         return mav;
     }
-    
+
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView processRegister(HttpServletRequest request, User user){
-    	ModelAndView mav = new ModelAndView();
-    	if(user.getPassword().trim().length() == 0){
-    	    mav.setViewName("user/register");
-    	    return mav;
-    	}
-    	if(userService.getUserByEmail(user.getEmail()) != null){
-    	    mav.setViewName("user/register");
-    	    mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
-    	    return mav;
-    	}
-    	mav.setViewName("user/dashboard");
-    	user.setPassword(AppUtil.getHexPassword(user.getPassword()));
-    	userService.save(user);
-    	return mav;
+    public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
+        ModelAndView mav = new ModelAndView("user/register");
+        if (user.getPassword().length() == 0) {
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.PASSWORD_REQUIRED);
+            return mav;
+        } else if (!user.getPassword().equals(repassword)) {
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.UNMATCHED_PASSWORD);
+            return mav;
+        }
+        if (userService.getUserByEmail(user.getEmail()) != null) {
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
+            return mav;
+        }
+        mav.setViewName("user/login");
+        user.setPassword(AppUtil.getHexPassword(user.getPassword()));
+        userService.save(user);
+
+        return mav;
     }
 }

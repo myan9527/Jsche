@@ -21,13 +21,12 @@
 			<div class="page-header">
 				<h1>Login</h1>
 			</div>
-			<div class="alert alert-warning" style="margin-bottom: 0px;">
+			<div class="alert alert-warning" style="margin-bottom: 0px;" th:if="${error_message != null}">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<span th:text="${error_message.errorMessage}"></span>
 			</div>
-			<form action="" method="post" class="form" role="form">
-				<input id="csrf_token" name="csrf_token" type="hidden"
-					value="Ijk2ZjFkN2ZkMjFiNzU2ODc2ZmJmMWFkNGFiYmM4NzJiMDhiZjI1ZTgi.C6Pbmg.Qn-PDh9uxi4bS33F_NLq59tWCi4">
+			<form action="/user/login" method="post" class="form" role="form">
+				<input name="csrf_token" type="hidden" th:value="${csrf_token}">
 				<div class="form-group  required">
 					<label class="control-label" for="email">Email</label> <input
 						class="form-control" id="email" name="email" required type="text"
@@ -38,12 +37,6 @@
 						class="form-control" id="password" name="password" required
 						type="password" value="">
 
-				</div>
-
-				<div class="checkbox">
-					<label> <input id="remember_me" name="remember_me"
-						type="checkbox" value="y"> Keep me logged in
-					</label>
 				</div>
 
 				<input class="btn btn-default" id="submit" name="submit"

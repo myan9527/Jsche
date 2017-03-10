@@ -21,14 +21,12 @@
 			<div class="page-header">
 				<h1>Register</h1>
 			</div>
-			<div class="alert alert-warning" style="margin-bottom: 0px;">
+			<div class="alert alert-warning" style="margin-bottom: 0px;" th:if="${error_message != null}">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <span th:text="${error_message.errorMessage}"></span>
             </div>
 			<form action="/user/register" method="post" class="form" role="form">
-				<input id="csrf_token" name="csrf_token" type="hidden"
-					th:value="${csrf_token}">
-
+				<input name="csrf_token" type="hidden" th:value="${csrf_token}">
 				<div class="form-group  required">
 					<label class="control-label" for="email">Email</label> <input
 						class="form-control" id="email" name="email" required type="text"
@@ -53,7 +51,7 @@
 				<div class="form-group  required">
 					<label class="control-label" for="password2">Confirm
 						password</label> <input class="form-control" id="password2"
-						name="password2" required type="password" value="">
+						name="repassword" required type="password" value="">
 
 				</div>
 
