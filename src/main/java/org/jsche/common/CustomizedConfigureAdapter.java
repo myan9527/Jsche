@@ -5,6 +5,7 @@
  */
 package org.jsche.common;
 
+import org.jsche.common.inteceptor.TokenStageInteceptor;
 import org.jsche.common.inteceptor.ValidTokenInteceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,16 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     public ValidTokenInteceptor validTokenInteceptor(){
         return new ValidTokenInteceptor();
     }
-
+    
+    @Bean
+    public TokenStageInteceptor tokenStageInteceptor(){
+    	return new TokenStageInteceptor();
+    }
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*");
+        registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/*");
     }
     
 }
