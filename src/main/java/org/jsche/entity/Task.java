@@ -21,15 +21,12 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "tasks")
-public class Task implements Serializable {
+public class Task implements Serializable, Comparable<Task> {
 	private static final long serialVersionUID = -6215223549526696658L;
 
 	public enum TaskType {
-		FAMILY_ISSUE("Family Issue"),
-		SELF_IMPROVEMENT("Self Improvement"), 
-		SOCIAL_ACTIVITY("Social Activity"), 
-		WORK_TASK("Work Task"), 
-		OTHER_ISSUR("Other Issue");
+		FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
+		        "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUR("Other Issue");
 
 		private String typeName;
 
@@ -40,7 +37,7 @@ public class Task implements Serializable {
 		public String getTypeName() {
 			return typeName;
 		}
-		
+
 	}
 
 	@Id
@@ -118,6 +115,11 @@ public class Task implements Serializable {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	@Override
+	public int compareTo(Task t) {
+		return this.startDate.before(t.getStartDate()) ? 0 : -1;
 	}
 
 }

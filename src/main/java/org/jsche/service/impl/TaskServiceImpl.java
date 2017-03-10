@@ -1,5 +1,6 @@
 package org.jsche.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jsche.entity.Task;
@@ -21,7 +22,9 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public List<Task> getUserTasks(int userId) {
-		return tp.getUserTasks(userId);
+		List<Task> tasks = tp.getUserTasks(userId);
+		Collections.sort(tasks);
+		return tasks;
 	}
 
 }
