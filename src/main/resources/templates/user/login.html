@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" th:href="@{~/images/icon.ico}" type="image/x-icon"/>
-        <link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon"/>
-        <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}"/>
-        <link rel="stylesheet" th:href="@{~/css/main.css}"/>
-        <script src="https://use.fontawesome.com/b2bd19dab3.js"></script>
-        <script th:src="@{~/js/jquery-2.1.1.js}"></script>
-        <script th:src="@{~/js/bootstrap.min.js}"></script>
-        <title>Login</title>
-    </head>
-    <body>
-        <div th:insert="nav :: navbar"></div>
-    </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" th:href="@{~/images/icon.ico}"
+	type="image/x-icon" />
+<link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon" />
+<link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{~/css/main.css}" />
+<script src="https://use.fontawesome.com/b2bd19dab3.js"></script>
+<script th:src="@{~/js/jquery-2.1.1.js}"></script>
+<script th:src="@{~/js/bootstrap.min.js}"></script>
+<title>Login</title>
+</head>
+<body>
+	<div th:insert="nav :: navbar"></div>
+	<div class="container-fluid">
+
+		<div class="col-md-4 col col-md-offset-4">
+			<div class="page-header">
+				<h1>Login</h1>
+			</div>
+			<div class="alert alert-warning" style="margin-bottom: 0px;" th:if="${error_message != null}">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<span th:text="${error_message.errorMessage}"></span>
+			</div>
+			<form action="/user/login" method="post" class="form" role="form">
+				<input name="csrf_token" type="hidden" th:value="${csrf_token}">
+				<div class="form-group  required">
+					<label class="control-label" for="email">Email</label> <input
+						class="form-control" id="email" name="email" required type="text"
+						value="">
+				</div>
+				<div class="form-group  required">
+					<label class="control-label" for="password">Password</label> <input
+						class="form-control" id="password" name="password" required
+						type="password" value="">
+
+				</div>
+
+				<input class="btn btn-default" id="submit" name="submit"
+					type="submit" value="Log In">
+			</form>
+			<br>
+		</div>
+
+	</div>
+</body>
 </html>
