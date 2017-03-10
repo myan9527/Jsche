@@ -21,6 +21,10 @@
 			<div class="page-header">
 				<h1>Register</h1>
 			</div>
+			<div class="alert alert-warning" style="margin-bottom: 0px;">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span th:text="${error_message.errorMessage}"></span>
+            </div>
 			<form action="/user/register" method="post" class="form" role="form">
 				<input id="csrf_token" name="csrf_token" type="hidden"
 					th:value="${csrf_token}">
@@ -34,7 +38,7 @@
 
 				<div class="form-group  required">
 					<label class="control-label" for="username">Name</label> <input
-						class="form-control" id="username" name="username" required
+						class="form-control" id="username" name="name" required
 						type="text" value="">
 
 				</div>
