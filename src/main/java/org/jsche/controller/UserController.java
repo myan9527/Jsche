@@ -66,7 +66,7 @@ public class UserController {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
             return mav;
         }
-        mav.setViewName("user/login");
+        mav.setViewName("redirect:/login");
         user.setPassword(AppUtil.getHexPassword(user.getPassword()));
         userService.save(user);
 
