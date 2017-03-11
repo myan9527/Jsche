@@ -22,7 +22,7 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public List<Task> getUserTasks(int userId) {
-		List<Task> tasks = tp.getUserTasks(userId);
+		List<Task> tasks = tp.getTaskByUserId(userId);
 		Collections.sort(tasks);
 		return tasks;
 	}
