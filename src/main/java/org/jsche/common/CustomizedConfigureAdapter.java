@@ -5,6 +5,7 @@
  */
 package org.jsche.common;
 
+import org.jsche.common.inteceptor.SystemUsageLogInteceptor;
 import org.jsche.common.inteceptor.TokenStageInteceptor;
 import org.jsche.common.inteceptor.ValidTokenInteceptor;
 import org.springframework.context.annotation.Bean;
@@ -19,19 +20,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     @Bean
-    public ValidTokenInteceptor validTokenInteceptor(){
+    private ValidTokenInteceptor validTokenInteceptor(){
         return new ValidTokenInteceptor();
     }
     
     @Bean
-    public TokenStageInteceptor tokenStageInteceptor(){
+    private TokenStageInteceptor tokenStageInteceptor(){
     	return new TokenStageInteceptor();
+    }
+    
+    @Bean
+    private SystemUsageLogInteceptor systemLogInteceptor(){
+    	return new SystemUsageLogInteceptor();
     }
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*");
         registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/*");
+        registry.addInterceptor(systemLogInteceptor()).addPathPatterns("**/*");
     }
     
 }

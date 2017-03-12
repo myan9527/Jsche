@@ -42,6 +42,7 @@ public class UserController {
             if(user.getPassword().equals(AppUtil.getHexPassword(password))){
                 //load basic data here.
                 mav.setViewName("user/dashboard");
+                userService.updateLastLogin(user);
                 request.getSession().setAttribute(Constants.LOGIN_USER, user);
                 mav.addObject("tasks",taskService.getUserTasks(user.getId()));
             }else{

@@ -1,5 +1,7 @@
 package org.jsche.service.impl;
 
+import java.util.Date;
+
 import org.jsche.entity.User;
 import org.jsche.repo.UserRepository;
 import org.jsche.service.UserService;
@@ -25,5 +27,11 @@ public class UserServiceImpl implements UserService{
     public User getUserByEmail(String email) {
         return up.getUserByEmail(email);
     }
+
+	@Override
+	public void updateLastLogin(User user) {
+		user.setLastLogin(new Date(System.currentTimeMillis()));
+		up.save(user);
+	}
 
 }
