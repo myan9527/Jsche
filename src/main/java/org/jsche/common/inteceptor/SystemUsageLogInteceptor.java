@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsche.common.util.AppUtil;
 import org.jsche.entity.SystemUsage;
 import org.jsche.repo.SystemUsageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,10 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object obj) throws Exception {
 		usage = new SystemUsage();
 		usage.setDateStamp(new Date(System.currentTimeMillis()));
-		return false;
+		usage.setClientIp(AppUtil.getClienIp(req));
+		usage.setMethod(req.getMethod());
+		usage.setPath(req.getPathInfo());
+		return true;
 	}
 
 }

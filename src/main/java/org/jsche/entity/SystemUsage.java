@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.jsche.common.util.AppUtil;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Entity
 @Table(name = "system_usages")
@@ -28,7 +27,7 @@ public class SystemUsage implements Serializable {
 	private String path;
 	private String clientIp;
 	private String dateStamp;
-	private RequestMethod method;
+	private String method;
 	public int getId() {
 		return id;
 	}
@@ -53,10 +52,10 @@ public class SystemUsage implements Serializable {
 	public void setDateStamp(Date dateStamp) {
 		this.dateStamp = AppUtil.formatDate(dateStamp);
 	}
-	public RequestMethod getMethod() {
+	public String getMethod() {
 		return method;
 	}
-	public void setMethod(RequestMethod method) {
+	public void setMethod(String method) {
 		this.method = method;
 	}
 	
