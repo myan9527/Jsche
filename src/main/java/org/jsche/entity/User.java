@@ -7,13 +7,14 @@ package org.jsche.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -28,11 +29,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    @NotNull
+    @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String password;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date lastLogin;
-    @NotNull
+    @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String email;
 
     public int getId() {

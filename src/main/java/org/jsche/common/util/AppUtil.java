@@ -1,8 +1,11 @@
 package org.jsche.common.util;
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public final class AppUtil {
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 
     public static String getHexPassword(String src) {
         if (src == null || src.trim().length() == 0) {
@@ -32,4 +35,8 @@ public final class AppUtil {
     public static boolean validHexPassword(String src) {
         return false;
     }
+
+	public static String formatDate(Date dateStamp) {
+		return sdf.format(dateStamp);
+	}
 }
