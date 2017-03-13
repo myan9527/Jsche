@@ -32,7 +32,8 @@ public class LoginInteceptor extends HandlerInterceptorAdapter {
 		User user = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
 		if(user == null){
 			request.setAttribute(Constants.ERROR_ATTR_NAME, ErrorMessage.LOGIN_REQUIRED);
-			response.sendRedirect("/login");
+			request.getRequestDispatcher("login").forward(request, response);
+//			response.sendRedirect("/login");
 			return false;
 		}
 		return true;
