@@ -6,6 +6,7 @@
 package org.jsche.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
@@ -37,17 +38,14 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         if(user == null){
             mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.NO_SUCH_USER);
-            return mav;
         }else{
             if(user.getPassword().equals(AppUtil.getHexPassword(password))){
                 //load basic data here.
-                mav.setViewName("user/dashboard");
                 userService.updateLastLogin(user);
+                mav.setViewName("redirect:/user/dashboard");
                 request.getSession().setAttribute(Constants.LOGIN_USER, user);
-                mav.addObject("tasks",taskService.getUserTasks(user.getId()));
             }else{
                 mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.INVALID_PASSWORD);
-                return mav;
             }
         }
         return mav;
@@ -72,5 +70,24 @@ public class UserController {
         userService.save(user);
 
         return mav;
+    }
+    
+    @RequestMapping(value = "/dashboard")
+    public ModelAndView dashboard(HttpSession session){
+        ModelAndView mav = new ModelAndView("user/dashboard");
+        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
+        if(loginUser != null){
+            mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+        }else{
+            mav.setViewName("redirect:/login");
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.LOGIN_REQUIRED);
+        }
+        return mav;
+    }
+    
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute(Constants.LOGIN_USER);
+        return "index";
     }
 }

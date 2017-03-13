@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -31,7 +30,6 @@ public class User implements Serializable {
     private String name;
     @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String password;
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date lastLogin;
     @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String email;

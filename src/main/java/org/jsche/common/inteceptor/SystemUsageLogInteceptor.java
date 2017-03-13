@@ -36,7 +36,8 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor{
 		usage.setDateStamp(new Date(System.currentTimeMillis()));
 		usage.setClientIp(AppUtil.getClienIp(req));
 		usage.setMethod(req.getMethod());
-		usage.setPath(req.getPathInfo());
+		usage.setPath(req.getRequestURI());
+		usage.setStatus(resp.getStatus());
 		return true;
 	}
 
