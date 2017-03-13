@@ -13,11 +13,20 @@
             </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-
+            <ul class="nav navbar-nav navbar-right" th:if="${session.session_user}">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span th:text="${session.session_user.name}"></span><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user/dashboard"><span class="fa fa-user"></span>My Dashboard</a></li>
+                        <li><a href="user/profile"><span class="fa fa-user"></span>View Profile</a></li>
+                        <li><a href="user/password"><span class="fa fa-user"></span>Change Password</a></li>
+                        <li><a href="user/logout"><span class="fa fa-user"></span>Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" th:unless="${session.session_user}">
                 <li><a href="/login">Log In</a></li>
                 <li><a href="/register">Sign Up</a></li>
-
             </ul>
         </div>
     </div>
