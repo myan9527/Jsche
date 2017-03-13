@@ -20,17 +20,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     @Bean
-    private ValidTokenInteceptor validTokenInteceptor(){
+    public ValidTokenInteceptor validTokenInteceptor(){
         return new ValidTokenInteceptor();
     }
     
     @Bean
-    private TokenStageInteceptor tokenStageInteceptor(){
+    public TokenStageInteceptor tokenStageInteceptor(){
     	return new TokenStageInteceptor();
     }
     
     @Bean
-    private SystemUsageLogInteceptor systemLogInteceptor(){
+    public SystemUsageLogInteceptor systemLogInteceptor(){
     	return new SystemUsageLogInteceptor();
     }
     
@@ -38,7 +38,7 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*");
         registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/*");
-        registry.addInterceptor(systemLogInteceptor()).addPathPatterns("**/*");
+        registry.addInterceptor(systemLogInteceptor()).addPathPatterns("/*");
     }
     
 }
