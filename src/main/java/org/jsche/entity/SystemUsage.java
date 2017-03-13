@@ -28,6 +28,8 @@ public class SystemUsage implements Serializable {
 	private String clientIp;
 	private String dateStamp;
 	private String method;
+	private int status;
+	
 	public int getId() {
 		return id;
 	}
@@ -58,5 +60,11 @@ public class SystemUsage implements Serializable {
 	public void setMethod(String method) {
 		this.method = method;
 	}
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
+        this.status = status;
+    }
 	
 }

@@ -21,6 +21,7 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor{
 	@Override
 	public void afterCompletion(HttpServletRequest req, HttpServletResponse resp, Object obj, Exception ex)
 	        throws Exception {
+	    usage.setStatus(resp.getStatus());
 		sup.save(usage);
 		usage = null;
 	}
