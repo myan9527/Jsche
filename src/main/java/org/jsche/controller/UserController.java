@@ -41,8 +41,8 @@ public class UserController {
         }else{
             if(user.getPassword().equals(AppUtil.getHexPassword(password))){
                 //load basic data here.
-                mav.setViewName("redirect:/user/dashboard");
                 userService.updateLastLogin(user);
+                mav.setViewName("redirect:/user/dashboard");
                 request.getSession().setAttribute(Constants.LOGIN_USER, user);
             }else{
                 mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.INVALID_PASSWORD);
