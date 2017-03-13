@@ -36,7 +36,8 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*").excludePathPatterns("/user/dashboard");
+        registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*")
+            .excludePathPatterns("/user/dashboard").excludePathPatterns("/user/logout");
         registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/**");
         registry.addInterceptor(systemLogInteceptor()).addPathPatterns("/**");
     }
