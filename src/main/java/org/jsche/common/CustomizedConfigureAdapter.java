@@ -5,6 +5,7 @@
  */
 package org.jsche.common;
 
+import org.jsche.common.inteceptor.LoginInteceptor;
 import org.jsche.common.inteceptor.SystemUsageLogInteceptor;
 import org.jsche.common.inteceptor.TokenStageInteceptor;
 import org.jsche.common.inteceptor.ValidTokenInteceptor;
@@ -34,12 +35,18 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     	return new SystemUsageLogInteceptor();
     }
     
+    @Bean
+    public LoginInteceptor loginInteceptor(){
+    	return new LoginInteceptor();
+    }
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/user/*")
             .excludePathPatterns("/user/dashboard").excludePathPatterns("/user/logout");
         registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/**");
         registry.addInterceptor(systemLogInteceptor()).addPathPatterns("/**");
+        registry.addInterceptor(loginInteceptor()).addPathPatterns("/**");
     }
     
 }

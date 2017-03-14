@@ -21,8 +21,10 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor{
 	@Override
 	public void afterCompletion(HttpServletRequest req, HttpServletResponse resp, Object obj, Exception ex)
 	        throws Exception {
-		sup.save(usage);
-		usage = null;
+		if(usage != null){
+			sup.save(usage);
+			usage = null;
+		}
 	}
 
 	@Override

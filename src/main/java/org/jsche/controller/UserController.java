@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
+import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.User;
 import org.jsche.service.TaskService;
@@ -73,16 +74,28 @@ public class UserController {
     }
     
     @RequestMapping(value = "/dashboard")
+    @RequiredLogin(value = true)
     public ModelAndView dashboard(HttpSession session){
         ModelAndView mav = new ModelAndView("user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
         if(loginUser != null){
             mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+        }
+        return mav;
+        /*
+        if(loginUser != null){
         }else{
             mav.setViewName("redirect:/login");
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.LOGIN_REQUIRED);
         }
-        return mav;
+        */
+    }
+    
+    @RequestMapping(value = "/profile")
+    @RequiredLogin
+    public ModelAndView profile(HttpSession session){
+    	ModelAndView mav = new ModelAndView("user/profile");
+    	return mav;
     }
     
     @RequestMapping(value = "/logout")
