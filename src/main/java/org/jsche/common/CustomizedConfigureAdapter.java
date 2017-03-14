@@ -46,7 +46,7 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
             .excludePathPatterns("/user/dashboard").excludePathPatterns("/user/logout");
         registry.addInterceptor(tokenStageInteceptor()).addPathPatterns("/**");
         registry.addInterceptor(systemLogInteceptor()).addPathPatterns("/**");
-        registry.addInterceptor(loginInteceptor()).addPathPatterns("/*").excludePathPatterns("/");
+        registry.addInterceptor(loginInteceptor()).addPathPatterns("/**");
     }
     
 }

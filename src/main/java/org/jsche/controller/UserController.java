@@ -74,11 +74,14 @@ public class UserController {
     }
     
     @RequestMapping(value = "/dashboard")
-    @RequiredLogin
+    @RequiredLogin(value = true)
     public ModelAndView dashboard(HttpSession session){
         ModelAndView mav = new ModelAndView("user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
-        mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+        if(loginUser != null){
+            mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+        }
+        return mav;
         /*
         if(loginUser != null){
         }else{
@@ -86,7 +89,6 @@ public class UserController {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.LOGIN_REQUIRED);
         }
         */
-        return mav;
     }
     
     @RequestMapping(value = "/profile")
