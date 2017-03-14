@@ -7,6 +7,7 @@ import org.jsche.repo.UserRepository;
 import org.jsche.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -33,5 +34,16 @@ public class UserServiceImpl implements UserService{
 		user.setLastLogin(new Date(System.currentTimeMillis()));
 		up.save(user);
 	}
+
+    @Override
+    public void updateUserAvatar(User user) {
+        if(StringUtils.isEmpty(user.getAvatar())){
+            //set default avatar for this user
+        }else{
+            //get from form data
+            user.setAvatar("@@@DD");
+        }
+        up.save(user);
+    }
 
 }

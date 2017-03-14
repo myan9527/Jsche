@@ -10,4 +10,6 @@ public interface UserService {
     User getUserByEmail(String email);
     
     void updateLastLogin(User user);
+    
+    void updateUserAvatar(User user);
 }
