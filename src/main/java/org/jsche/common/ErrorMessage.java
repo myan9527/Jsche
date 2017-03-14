@@ -1,6 +1,7 @@
 package org.jsche.common;
 
 public enum ErrorMessage {
+    EMAIL_REQUIRED("Please supply your email."),
     EMAIL_REGISTERED("This email has been used, please change another one."),
     UNMATCHED_PASSWORD("Please confirm entered password."),
     PASSWORD_REQUIRED("Please enter your password."),

@@ -2,6 +2,7 @@ package org.jsche.service.impl;
 
 import java.util.Date;
 
+import org.jsche.common.util.AppUtil;
 import org.jsche.entity.User;
 import org.jsche.repo.UserRepository;
 import org.jsche.service.UserService;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService{
     
     @Override
     public void save(User user) {
+        if(StringUtils.isEmpty(user.getAvatar())){
+            user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
+        }
         up.save(user);
     }
 
@@ -38,7 +42,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void updateUserAvatar(User user) {
         if(StringUtils.isEmpty(user.getAvatar())){
-            //set default avatar for this user
+            user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         }else{
             //get from form data
             user.setAvatar("@@@DD");

@@ -17,6 +17,7 @@ import org.jsche.service.TaskService;
 import org.jsche.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,16 +38,16 @@ public class UserController {
     public ModelAndView processLogin(HttpServletRequest request, String email, String password) {
         ModelAndView mav = new ModelAndView("user/login");
         User user = userService.getUserByEmail(email);
-        if(user == null){
-            mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.NO_SUCH_USER);
-        }else{
-            if(user.getPassword().equals(AppUtil.getHexPassword(password))){
-                //load basic data here.
+        if (user == null) {
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.NO_SUCH_USER);
+        } else {
+            if (user.getPassword().equals(AppUtil.getHexPassword(password))) {
+                // load basic data here.
                 userService.updateLastLogin(user);
                 mav.setViewName("redirect:/user/dashboard");
                 request.getSession().setAttribute(Constants.LOGIN_USER, user);
-            }else{
-                mav.addObject(Constants.ERROR_ATTR_NAME,ErrorMessage.INVALID_PASSWORD);
+            } else {
+                mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.INVALID_PASSWORD);
             }
         }
         return mav;
@@ -62,7 +63,10 @@ public class UserController {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.UNMATCHED_PASSWORD);
             return mav;
         }
-        if (userService.getUserByEmail(user.getEmail()) != null) {
+        if (StringUtils.isEmpty(user.getEmail())) {
+            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REQUIRED);
+            return mav;
+        } else if (userService.getUserByEmail(user.getEmail()) != null) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
             return mav;
         }
@@ -72,33 +76,26 @@ public class UserController {
 
         return mav;
     }
-    
+
     @RequestMapping(value = "/dashboard")
     @RequiredLogin(value = true)
-    public ModelAndView dashboard(HttpSession session){
+    public ModelAndView dashboard(HttpSession session) {
         ModelAndView mav = new ModelAndView("user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
-        if(loginUser != null){
+        if (loginUser != null) {
             mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
         }
         return mav;
-        /*
-        if(loginUser != null){
-        }else{
-            mav.setViewName("redirect:/login");
-            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.LOGIN_REQUIRED);
-        }
-        */
     }
-    
+
     @RequestMapping(value = "/profile")
     @RequiredLogin
-    public String profile(){
-    	return "user/profile";
+    public String profile() {
+        return "user/profile";
     }
-    
+
     @RequestMapping(value = "/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.removeAttribute(Constants.LOGIN_USER);
         return "index";
     }

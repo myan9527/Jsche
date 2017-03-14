@@ -1,6 +1,7 @@
 package org.jsche.common.util;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -62,4 +63,19 @@ public final class AppUtil {
 		return ip;
 	}
 	
+	public static String generateAvatar(String src){
+	    try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(src.getBytes());
+            byte[] bytes = md.digest();
+            StringBuffer buffer = new StringBuffer();
+            for (int i = 0; i < bytes.length; i++) {
+                buffer.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            return "URL: http://www.gravatar.com/avatar/" + buffer.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+	}
 }
