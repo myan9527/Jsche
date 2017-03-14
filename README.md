@@ -1,6 +1,6 @@
 # Just for practice
-[![Build Status](https://travis-ci.org/TobeDeveloper/practice.svg?branch=master)](https://travis-ci.org/TobeDeveloper/practice)
-[![codecov](https://codecov.io/gh/TobeDeveloper/practice/branch/master/graph/badge.svg)](https://codecov.io/gh/TobeDeveloper/practice)
+[![Build Status](https://travis-ci.org/TobeDeveloper/Jsche.svg?branch=master)](https://travis-ci.org/TobeDeveloper/Jsche)
+[![codecov](https://codecov.io/gh/TobeDeveloper/Jsche/branch/master+develop/graph/badge.svg)](https://codecov.io/gh/TobeDeveloper/Jsche)
 
 Build with:
 - Spring Boot

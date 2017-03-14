@@ -5,3 +5,6 @@
 !maven-wrapper.jar
 /nbproject/
 /nbactions.xml
+.idea/
+*.iml
+.settings/
