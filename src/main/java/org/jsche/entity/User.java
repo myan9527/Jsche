@@ -33,6 +33,16 @@ public class User implements Serializable {
     private Date lastLogin;
     @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String email;
+    @Column(nullable = false,length = 200)
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public int getId() {
         return id;

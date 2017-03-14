@@ -34,19 +34,21 @@ public class TokenHandler {
     @SuppressWarnings("unchecked")
     public static boolean checkToken(HttpServletRequest request) {
         String formToken = getFormToken(request);
-        if (formToken == null)
-            return false;
-
-        HttpSession session = request.getSession();
-        Map<String, String> tokenMap = (Map<String, String>) session.getAttribute(Constants.TOKEN_ATTR_NAME);
-        if (tokenMap == null || tokenMap.size() < 1)
-            return false;
-        String sessionToken = tokenMap.get(Constants.TOKEN_ATTR_NAME + "." + formToken);
-        if (!formToken.equals(sessionToken))
-            return false;
-        tokenMap.remove(Constants.TOKEN_ATTR_NAME + "." + formToken);
-        session.setAttribute(Constants.TOKEN_ATTR_NAME, tokenMap);
-        return true;
+        if(formToken == null && request.getMethod().equals("GET")){
+            return true;
+        }else{
+            //intercept each post request.
+            HttpSession session = request.getSession();
+            Map<String, String> tokenMap = (Map<String, String>) session.getAttribute(Constants.TOKEN_ATTR_NAME);
+            if (tokenMap == null || tokenMap.size() < 1)
+                return false;
+            String sessionToken = tokenMap.get(Constants.TOKEN_ATTR_NAME + "." + formToken);
+            if (!formToken.equals(sessionToken))
+                return false;
+            tokenMap.remove(Constants.TOKEN_ATTR_NAME + "." + formToken);
+            session.setAttribute(Constants.TOKEN_ATTR_NAME, tokenMap);
+            return true;
+        }
     }
 
     private static String getFormToken(HttpServletRequest request) {

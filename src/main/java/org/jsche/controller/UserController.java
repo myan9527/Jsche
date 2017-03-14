@@ -93,9 +93,8 @@ public class UserController {
     
     @RequestMapping(value = "/profile")
     @RequiredLogin
-    public ModelAndView profile(HttpSession session){
-    	ModelAndView mav = new ModelAndView("user/profile");
-    	return mav;
+    public String profile(){
+    	return "user/profile";
     }
     
     @RequestMapping(value = "/logout")
