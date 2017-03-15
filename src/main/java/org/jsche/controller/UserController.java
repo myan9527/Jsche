@@ -60,18 +60,17 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
         ModelAndView mav = new ModelAndView("user/register");
+        mav.addObject("user",user);
         if (StringUtils.isEmpty(user.getPassword())) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.PASSWORD_REQUIRED);
-            return mav;
         } else if (!user.getPassword().equals(repassword)) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.UNMATCHED_PASSWORD);
-            return mav;
-        }
-        if (StringUtils.isEmpty(user.getEmail())) {
+        } else if (StringUtils.isEmpty(user.getEmail())) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REQUIRED);
-            return mav;
         } else if (userService.getUserByEmail(user.getEmail()) != null) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
+        }
+        if (mav.getModel().get(Constants.ERROR_ATTR_NAME) != null) {
             return mav;
         }
         mav.setViewName("redirect:/login");
@@ -92,41 +91,41 @@ public class UserController {
         return mav;
     }
 
-    @RequestMapping(value = "/profile",method = RequestMethod.GET)
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
     @RequiredLogin
     public String profile() {
         return "user/profile";
     }
 
     @RequiredLogin
-    @RequestMapping(value = "/profile",method = RequestMethod.POST)
-    public ModelAndView updateProfile(User user){
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public ModelAndView updateProfile(User user) {
         userService.save(user);
         return null;
     }
-    
+
     @RequiredLogin
-    @RequestMapping(value = "/avatar",method = RequestMethod.POST)
-    public ModelAndView updateAvatar(HttpServletRequest request, @RequestParam(value = "avatar")MultipartFile file){
-        String path = request.getSession().getServletContext().getRealPath("upload");  
-        String fileName = file.getOriginalFilename();  
-        File targetFile = new File(path, fileName);  
-        if(!targetFile.exists()){  
-            targetFile.mkdirs();  
-        }  
-  
-        try {  
-            file.transferTo(targetFile);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
+    @RequestMapping(value = "/avatar", method = RequestMethod.POST)
+    public ModelAndView updateAvatar(HttpServletRequest request, @RequestParam(value = "avatar") MultipartFile file) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String fileName = file.getOriginalFilename();
+        File targetFile = new File(path, fileName);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
-        if(user != null){
+        if (user != null) {
             userService.updateUserAvatar(user);
         }
         return null;
     }
-    
+
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(Constants.LOGIN_USER);
