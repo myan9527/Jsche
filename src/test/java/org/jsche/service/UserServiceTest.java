@@ -68,7 +68,7 @@ public class UserServiceTest {
         verify(up).save(user);
         
         when(user.getAvatar()).thenReturn("avatar");
-        verify(user).setAvatar(anyString());
+        verify(user).setAvatar("URL: http://www.gravatar.com/avatar/0c83f57c786a0b4a39efab23731c7ebc?size=180");
         verify(up).save(user);
     }
 }
