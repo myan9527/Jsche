@@ -5,6 +5,8 @@
  */
 package org.jsche.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -88,12 +92,41 @@ public class UserController {
         return mav;
     }
 
-    @RequestMapping(value = "/profile")
+    @RequestMapping(value = "/profile",method = RequestMethod.GET)
     @RequiredLogin
     public String profile() {
         return "user/profile";
     }
 
+    @RequiredLogin
+    @RequestMapping(value = "/profile",method = RequestMethod.POST)
+    public ModelAndView updateProfile(User user){
+        userService.save(user);
+        return null;
+    }
+    
+    @RequiredLogin
+    @RequestMapping(value = "/avatar",method = RequestMethod.POST)
+    public ModelAndView updateAvatar(HttpServletRequest request, @RequestParam(value = "avatar")MultipartFile file){
+        String path = request.getSession().getServletContext().getRealPath("upload");  
+        String fileName = file.getOriginalFilename();  
+        File targetFile = new File(path, fileName);  
+        if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+  
+        try {  
+            file.transferTo(targetFile);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        User user = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
+        if(user != null){
+            userService.updateUserAvatar(user);
+        }
+        return null;
+    }
+    
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(Constants.LOGIN_USER);
