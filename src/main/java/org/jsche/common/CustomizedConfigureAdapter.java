@@ -11,6 +11,7 @@ import org.jsche.common.inteceptor.TokenStageInteceptor;
 import org.jsche.common.inteceptor.ValidTokenInteceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -38,6 +39,11 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
     @Bean
     public LoginInteceptor loginInteceptor(){
     	return new LoginInteceptor();
+    }
+    
+    @Bean
+    public CommonsMultipartResolver MultipartResolver(){
+        return new CommonsMultipartResolver();
     }
     
     @Override

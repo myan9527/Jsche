@@ -6,5 +6,7 @@
 /nbproject/
 /nbactions.xml
 .idea/
-*.iml
 .settings/
+/jsche.iml
+src/main/main.iml
+src/test/test.iml
