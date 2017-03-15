@@ -56,7 +56,7 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
         ModelAndView mav = new ModelAndView("user/register");
-        if (user.getPassword().length() == 0) {
+        if (StringUtils.isEmpty(user.getPassword())) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.PASSWORD_REQUIRED);
             return mav;
         } else if (!user.getPassword().equals(repassword)) {
