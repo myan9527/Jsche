@@ -69,7 +69,8 @@ public class UserServiceTest {
         verify(up).save(user);
 
         when(user.getAvatar()).thenReturn("avatar");
+        service.updateUserAvatar(user);
         verify(user).setAvatar("avatar");
-        verify(up).save(user);
+        verify(up,times(2)).save(user);
     }
 }
