@@ -8,12 +8,14 @@ package org.jsche.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -27,7 +29,7 @@ public class Task implements Serializable, Comparable<Task> {
 
     public enum TaskType {
         FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
-                "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUR("Other Issue");
+                "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUE("Other Issue");
 
         private final String typeName;
 
@@ -48,10 +50,10 @@ public class Task implements Serializable, Comparable<Task> {
     private TaskType taskType;
     private int status;
     private int priority;
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date endDate;
+    private int duration;
+    @OneToOne(cascade = CascadeType.REFRESH, targetEntity = User.class)
+    @JoinColumn(name = "task_user_fk", referencedColumnName = "id")
     private int userId;
 
     public int getUserId() {
@@ -102,14 +104,6 @@ public class Task implements Serializable, Comparable<Task> {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
     public int getPriority() {
         return priority;
     }
@@ -121,6 +115,14 @@ public class Task implements Serializable, Comparable<Task> {
     @Override
     public int compareTo(Task t) {
         return this.startDate.before(t.getStartDate()) ? 0 : -1;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
 }
