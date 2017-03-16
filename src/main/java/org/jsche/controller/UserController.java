@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -60,7 +61,7 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
         ModelAndView mav = new ModelAndView("user/register");
-        mav.addObject("user",user);
+        mav.addObject("user", user);
         if (StringUtils.isEmpty(user.getPassword())) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.PASSWORD_REQUIRED);
         } else if (!user.getPassword().equals(repassword)) {

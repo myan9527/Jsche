@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service("userService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository up;
-    
+
     @Override
     public void save(User user) {
-        if(StringUtils.isEmpty(user.getAvatar())){
+        if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         }
         up.save(user);
@@ -33,19 +34,19 @@ public class UserServiceImpl implements UserService{
         return up.getUserByEmail(email);
     }
 
-	@Override
-	public void updateLastLogin(User user) {
-		user.setLastLogin(new Date(System.currentTimeMillis()));
-		up.save(user);
-	}
+    @Override
+    public void updateLastLogin(User user) {
+        user.setLastLogin(new Date(System.currentTimeMillis()));
+        up.save(user);
+    }
 
     @Override
     public void updateUserAvatar(User user) {
-        if(StringUtils.isEmpty(user.getAvatar())){
+        if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
-        }else{
+        } else {
             //get from form data
-            user.setAvatar("@@@DD");
+            user.setAvatar(user.getAvatar());
         }
         up.save(user);
     }

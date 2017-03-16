@@ -24,25 +24,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
 /**
  * Sample code for rest controller test case.
+ *
  * @author myan
  */
 @RunWith(SpringRunner.class)
-public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
+public class CustomerControllerTest extends WebAPIBaseTest<CustomerController> {
+
     @Mock
     private CustomerService cs;
     @InjectMocks
     private CustomerController controller;
     Customer customer;
-    
+
     @Before
     @Override
     public void setUp() {
         super.setUp();
     }
-    
+
     @After
     public void tearDown() {
         //cp.delete(c);
@@ -50,17 +51,18 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
 
     /**
      * Test of getByFirstName method, of class CustomerController.
+     *
      * @throws java.lang.Exception
      */
     @Test
-    public void testGetByFirstName() throws Exception {        
+    public void testGetByFirstName() throws Exception {
         RequestBuilder request = null;
         customer = new Customer("michael", "yan");
         List<Customer> cuss = new ArrayList<>();
         cuss.add(customer);
         //mock first
         Mockito.when(cs.findByFirstName("michael")).thenReturn(cuss);
-        
+
         //get it
         request = MockMvcRequestBuilders.get("/get/michael");
         perform(request)
@@ -72,13 +74,14 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
                 .andExpect(status().isOk())
                 .andExpect(content().string("No customer matched your search"));
     }
-    
+
     /**
      * test save method of CustomerController
+     *
      * @throws Exception
      */
     @Test
-    public void testSaveCustomer() throws Exception{
+    public void testSaveCustomer() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/save")
                 .param("id", "1")
                 .param("first_name", "michael")
@@ -92,5 +95,5 @@ public class CustomerControllerTest extends WebAPIBaseTest<CustomerController>{
     protected CustomerController getController() {
         return controller;
     }
-    
+
 }

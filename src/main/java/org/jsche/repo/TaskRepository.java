@@ -11,5 +11,6 @@ import org.springframework.stereotype.Repository;
 @Transactional
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Integer> {
-	List<Task> getTaskByUserId(int userId);
+
+    List<Task> getTaskByUserId(int userId);
 }

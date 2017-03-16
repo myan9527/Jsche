@@ -20,32 +20,33 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author myan
  */
 @Configuration
-public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
+public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter {
+
     @Bean
-    public ValidTokenInteceptor validTokenInteceptor(){
+    public ValidTokenInteceptor validTokenInteceptor() {
         return new ValidTokenInteceptor();
     }
-    
+
     @Bean
-    public TokenStageInteceptor tokenStageInteceptor(){
-    	return new TokenStageInteceptor();
+    public TokenStageInteceptor tokenStageInteceptor() {
+        return new TokenStageInteceptor();
     }
-    
+
     @Bean
-    public SystemUsageLogInteceptor systemLogInteceptor(){
-    	return new SystemUsageLogInteceptor();
+    public SystemUsageLogInteceptor systemLogInteceptor() {
+        return new SystemUsageLogInteceptor();
     }
-    
+
     @Bean
-    public LoginInteceptor loginInteceptor(){
-    	return new LoginInteceptor();
+    public LoginInteceptor loginInteceptor() {
+        return new LoginInteceptor();
     }
-    
+
     @Bean
-    public CommonsMultipartResolver MultipartResolver(){
+    public CommonsMultipartResolver MultipartResolver() {
         return new CommonsMultipartResolver();
     }
-    
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(validTokenInteceptor()).addPathPatterns("/**");
@@ -53,5 +54,5 @@ public class CustomizedConfigureAdapter extends WebMvcConfigurerAdapter{
         registry.addInterceptor(systemLogInteceptor()).addPathPatterns("/**");
         registry.addInterceptor(loginInteceptor()).addPathPatterns("/**");
     }
-    
+
 }

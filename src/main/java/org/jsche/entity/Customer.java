@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Customer implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -4283143640676498306L;
     @Id

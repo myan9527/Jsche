@@ -23,7 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 @RunWith(SpringRunner.class)
-public class UserControllerTest extends WebAPIBaseTest<UserController>{
+public class UserControllerTest extends WebAPIBaseTest<UserController> {
+
     @Mock
     private UserService userService;
     @Mock
@@ -34,7 +35,7 @@ public class UserControllerTest extends WebAPIBaseTest<UserController>{
     private HttpSession session;
     @InjectMocks
     private UserController controller;
-    
+
     @Before
     @Override
     public void setUp() {
@@ -45,9 +46,9 @@ public class UserControllerTest extends WebAPIBaseTest<UserController>{
     protected UserController getController() {
         return controller;
     }
-    
+
     @Test
-    public void testProcessLogin(){
+    public void testProcessLogin() {
         User user = mock(User.class);
         when(userService.getUserByEmail(anyString())).thenReturn(user);
         //try to hack it.
@@ -56,7 +57,7 @@ public class UserControllerTest extends WebAPIBaseTest<UserController>{
         ModelAndView mav = controller.processLogin(request, "email", "1234");
         verify(userService).updateLastLogin(user);
         Assert.assertEquals(mav.getViewName(), "redirect:/user/dashboard");
-        
+
         mav = controller.processLogin(request, "email", "123465");
         Assert.assertEquals(mav.getViewName(), "user/login");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.INVALID_PASSWORD);
@@ -65,40 +66,40 @@ public class UserControllerTest extends WebAPIBaseTest<UserController>{
         Assert.assertEquals(mav.getViewName(), "user/login");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.NO_SUCH_USER);
     }
-    
+
     @Test
-    public void testProcessRegister(){
+    public void testProcessRegister() {
         User user = mock(User.class);
         when(user.getPassword()).thenReturn(null);
         ModelAndView mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.PASSWORD_REQUIRED);
-        
+
         when(user.getPassword()).thenReturn("123");
         mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.UNMATCHED_PASSWORD);
-        
+
         when(user.getEmail()).thenReturn(null);
         when(user.getPassword()).thenReturn("1234");
         mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.EMAIL_REQUIRED);
-        
+
         when(user.getEmail()).thenReturn("email");
         when(userService.getUserByEmail("email")).thenReturn(user);
         mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.EMAIL_REGISTERED);
-        
+
         when(userService.getUserByEmail("email")).thenReturn(null);
         mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "redirect:/login");
         verify(userService).save(user);
     }
-    
+
     @Test
-    public void testDashboard(){
+    public void testDashboard() {
         User user = mock(User.class);
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
@@ -106,17 +107,17 @@ public class UserControllerTest extends WebAPIBaseTest<UserController>{
         verify(taskService).getUserTasks(1);
         Assert.assertEquals(mav.getViewName(), "user/dashboard");
     }
-    
+
     @Test
-    public void testProfile(){
+    public void testProfile() {
         Assert.assertEquals(controller.profile(), "user/profile");
     }
-    
+
     @Test
-    public void testLogout(){
+    public void testLogout() {
         String result = controller.logout(session);
         verify(session).removeAttribute(Constants.LOGIN_USER);
         Assert.assertEquals(result, "index");
     }
-    
+
 }

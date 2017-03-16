@@ -8,12 +8,13 @@ public enum ErrorMessage {
     NO_SUCH_USER("User not exist."),
     INVALID_PASSWORD("Incorrect password."),
     LOGIN_REQUIRED("Please login first.");
-    
-    
-    private String errorMessage;
-    ErrorMessage(String msg){
+
+    private final String errorMessage;
+
+    ErrorMessage(String msg) {
         this.errorMessage = msg;
     }
+
     public String getErrorMessage() {
         return errorMessage;
     }

@@ -11,20 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("taskService")
-public class TaskServiceImpl implements TaskService{
-	@Autowired
-	private TaskRepository tp;
-	
-	@Override
-	public TaskType[] buildTypeArray() {
-		return TaskType.values();
-	}
+public class TaskServiceImpl implements TaskService {
 
-	@Override
-	public List<Task> getUserTasks(int userId) {
-		List<Task> tasks = tp.getTaskByUserId(userId);
-		Collections.sort(tasks);
-		return tasks;
-	}
+    @Autowired
+    private TaskRepository tp;
+
+    @Override
+    public TaskType[] buildTypeArray() {
+        return TaskType.values();
+    }
+
+    @Override
+    public List<Task> getUserTasks(int userId) {
+        List<Task> tasks = tp.getTaskByUserId(userId);
+        Collections.sort(tasks);
+        return tasks;
+    }
 
 }

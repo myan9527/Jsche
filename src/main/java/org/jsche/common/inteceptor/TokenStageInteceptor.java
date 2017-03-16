@@ -9,18 +9,17 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * Set a token for each request.
+ *
  * @author myan
  *
  */
 public class TokenStageInteceptor extends HandlerInterceptorAdapter {
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-	        throws Exception {
-		request.setAttribute(Constants.TOKEN_ATTR_NAME, TokenHandler.generateToken(request.getSession()));
-		return true;
-	}
-	
-	
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        request.setAttribute(Constants.TOKEN_ATTR_NAME, TokenHandler.generateToken(request.getSession()));
+        return true;
+    }
 
 }

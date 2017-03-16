@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * All direct page forward goes here.
  */
 public class BaseController {
-	
+
     @RequestMapping("/")
-    public String index(ModelMap map){
+    public String index(ModelMap map) {
         return "index";
     }
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(HttpServletRequest request){
+    public String login(HttpServletRequest request) {
         return "user/login";
-    } 
-    
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(HttpServletRequest request){
+    public String register(HttpServletRequest request) {
         return "user/register";
-    } 
+    }
 }
