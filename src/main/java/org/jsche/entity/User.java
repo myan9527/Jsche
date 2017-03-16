@@ -21,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
+@SuppressWarnings("ValidAttributes")
 public class User implements Serializable {
 	private static final long serialVersionUID = 2621563319327340685L;
 	

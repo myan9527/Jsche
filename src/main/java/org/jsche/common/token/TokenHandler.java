@@ -43,7 +43,7 @@ public class TokenHandler {
             if (tokenMap == null || tokenMap.size() < 1)
                 return false;
             String sessionToken = tokenMap.get(Constants.TOKEN_ATTR_NAME + "." + formToken);
-            if (!formToken.equals(sessionToken))
+            if (formToken!=null && !formToken.equals(sessionToken))
                 return false;
             tokenMap.remove(Constants.TOKEN_ATTR_NAME + "." + formToken);
             session.setAttribute(Constants.TOKEN_ATTR_NAME, tokenMap);

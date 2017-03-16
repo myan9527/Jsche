@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsche.common.Constants;
 
 public final class AppUtil {
+
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 
     public static String getHexPassword(String src) {
         if (src == null || src.trim().length() == 0) {
             return null;
         }
-        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             byte[] btInput = src.getBytes();
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
@@ -31,7 +32,7 @@ public final class AppUtil {
                 str[k++] = hexDigits[byte0 & 0xf];
             }
             return new String(str);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
         }
@@ -70,7 +71,7 @@ public final class AppUtil {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(src.getBytes());
             byte[] bytes = md.digest();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             for (int i = 0; i < bytes.length; i++) {
                 buffer.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }

@@ -24,23 +24,24 @@ import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
 @WebAppConfiguration
 @ContextConfiguration(classes = SpringConfiguration.class)
 public abstract class WebAPIBaseTest<T> {
+
     private MockMvc mvc;
 
-    protected ResultActions perform(RequestBuilder requestBuilder) throws Exception{
+    protected ResultActions perform(RequestBuilder requestBuilder) throws Exception {
         return mvc.perform(requestBuilder);
     }
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        
+
         StandaloneMockMvcBuilder builder = MockMvcBuilders.standaloneSetup(getController());
         this.mvc = builder.build();
     }
-    
+
     protected abstract T getController();
 }
 
 @Configuration
-class SpringConfiguration{
+class SpringConfiguration {
 }

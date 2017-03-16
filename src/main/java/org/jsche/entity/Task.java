@@ -8,12 +8,14 @@ package org.jsche.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -22,104 +24,105 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "tasks")
 public class Task implements Serializable, Comparable<Task> {
-	private static final long serialVersionUID = -6215223549526696658L;
 
-	public enum TaskType {
-		FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
-		        "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUR("Other Issue");
+    private static final long serialVersionUID = -6215223549526696658L;
 
-		private String typeName;
+    public enum TaskType {
+        FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
+                "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUE("Other Issue");
 
-		TaskType(String name) {
-			this.typeName = name;
-		}
+        private final String typeName;
 
-		public String getTypeName() {
-			return typeName;
-		}
+        TaskType(String name) {
+            this.typeName = name;
+        }
 
-	}
+        public String getTypeName() {
+            return typeName;
+        }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String taskName;
-	private TaskType taskType;
-	private int status;
-	private int priority;
-	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date startDate;
-	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date endDate;
-	private int userId;
+    }
 
-	public int getUserId() {
-		return userId;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String taskName;
+    private TaskType taskType;
+    private int status;
+    private int priority;
+    private Date startDate;
+    private int duration;
+    @OneToOne(cascade = CascadeType.REFRESH, targetEntity = User.class)
+    @JoinColumn(name = "task_user_fk", referencedColumnName = "id")
+    private int userId;
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getTaskName() {
-		return taskName;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+    public String getTaskName() {
+        return taskName;
+    }
 
-	public TaskType getTaskType() {
-		return taskType;
-	}
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
-	public void setTaskType(TaskType taskType) {
-		this.taskType = taskType;
-	}
+    public TaskType getTaskType() {
+        return taskType;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public int getPriority() {
+        return priority;
+    }
 
-	public int getPriority() {
-		return priority;
-	}
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
+    @Override
+    public int compareTo(Task t) {
+        return this.startDate.before(t.getStartDate()) ? 0 : -1;
+    }
 
-	@Override
-	public int compareTo(Task t) {
-		return this.startDate.before(t.getStartDate()) ? 0 : -1;
-	}
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
 }

@@ -14,21 +14,22 @@ import com.google.gson.Gson;
 
 @RestController
 public class CustomerController {
+
     @Autowired
     private CustomerService cs;
 
-    @RequestMapping(value = "/get/{name}",method = RequestMethod.GET)
-    public String getCustomer(@PathVariable("name")String firstName){
+    @RequestMapping(value = "/get/{name}", method = RequestMethod.GET)
+    public String getCustomer(@PathVariable("name") String firstName) {
         List<Customer> customer = cs.findByFirstName(firstName);
         Gson gson = new Gson();
-        if(customer != null && !customer.isEmpty()){
+        if (customer != null && !customer.isEmpty()) {
             return gson.toJson(customer);
         }
         return "No customer matched your search";
     }
-    
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveCustomer(Customer c){
+    public String saveCustomer(Customer c) {
         cs.save(c);
         return "success";
     }
