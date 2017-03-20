@@ -55,7 +55,7 @@ public class TokenHandler {
         Map<String, String[]> params = request.getParameterMap();
         if (!params.containsKey(Constants.TOKEN_ATTR_NAME))
             return null;
-        String[] tokens = (String[]) (String[]) params.get(Constants.TOKEN_ATTR_NAME);
+        String[] tokens = (String[]) params.get(Constants.TOKEN_ATTR_NAME);
         if ((tokens == null) || (tokens.length < 1))
             return null;
         return tokens[0];
