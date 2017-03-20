@@ -8,13 +8,10 @@ package org.jsche.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -52,8 +49,6 @@ public class Task implements Serializable, Comparable<Task> {
     private int priority;
     private Date startDate;
     private int duration;
-    @OneToOne(cascade = CascadeType.REFRESH, targetEntity = User.class)
-    @JoinColumn(name = "task_user_fk", referencedColumnName = "id")
     private int userId;
 
     public int getUserId() {

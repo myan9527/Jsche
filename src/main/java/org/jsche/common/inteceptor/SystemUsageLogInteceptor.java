@@ -20,20 +20,6 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor {
     private SystemUsageRepository sup;
 
     @Override
-    public void afterCompletion(HttpServletRequest req, HttpServletResponse resp, Object obj, Exception ex)
-            throws Exception {
-        if (usage != null) {
-            sup.save(usage);
-            usage = null;
-        }
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest req, HttpServletResponse resp, Object obj, ModelAndView mav)
-            throws Exception {
-    }
-
-    @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object obj) throws Exception {
         usage = new SystemUsage();
         usage.setDateStamp(new Date(System.currentTimeMillis()));
@@ -41,7 +27,20 @@ public class SystemUsageLogInteceptor implements HandlerInterceptor {
         usage.setMethod(req.getMethod());
         usage.setPath(req.getRequestURI());
         usage.setStatus(resp.getStatus());
+        sup.save(usage);
         return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        
     }
 
 }

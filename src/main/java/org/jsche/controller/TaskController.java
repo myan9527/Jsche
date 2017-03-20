@@ -28,8 +28,10 @@ public class TaskController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @RequiredLogin
-    public String newTask() {
-        return "task/create";
+    public ModelAndView newTask() {
+        ModelAndView mav = new ModelAndView("task/create");
+        mav.addObject("types", taskService.buildTypeArray());
+        return mav;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
