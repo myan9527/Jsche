@@ -122,6 +122,8 @@ public class UserController {
         }
         User user = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
         if (user != null) {
+            user.setCustomizedAvatar(true);
+            user.setAvatar(path+File.pathSeparator+fileName);
             userService.updateUserAvatar(user);
         }
         return null;

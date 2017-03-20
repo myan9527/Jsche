@@ -35,6 +35,7 @@ public class User implements Serializable {
     private String email;
     @Column(nullable = false,length = 200)
     private String avatar;
+    private boolean customizedAvatar;
 
     public String getAvatar() {
         return avatar;
@@ -82,6 +83,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isCustomizedAvatar() {
+        return customizedAvatar;
+    }
+
+    public void setCustomizedAvatar(boolean customizedAvatar) {
+        this.customizedAvatar = customizedAvatar;
     }
     
 }

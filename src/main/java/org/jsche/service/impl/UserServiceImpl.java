@@ -2,6 +2,8 @@ package org.jsche.service.impl;
 
 import java.util.Date;
 
+import org.jsche.common.ErrorMessage;
+import org.jsche.common.exception.ServiceException;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.User;
 import org.jsche.repo.UserRepository;
@@ -17,9 +19,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository up;
 
     @Override
-    public void save(User user) {
+    public void save(User user) throws ServiceException{
         if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
+        }
+        if(up.findOne(user.getId()) != null){
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
         }
         up.save(user);
     }
@@ -35,8 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateLastLogin(User user) {
+    public void updateLastLogin(User user) throws ServiceException{
         user.setLastLogin(new Date(System.currentTimeMillis()));
+        if(up.findOne(user.getId()) == null){
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+        }
         up.save(user);
     }
 
@@ -45,8 +53,10 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         } else {
-            //get from form data
-            user.setAvatar(user.getAvatar());
+            //get file path
+            if(user.isCustomizedAvatar()){
+                user.setAvatar(user.getAvatar());
+            }
         }
         up.save(user);
     }

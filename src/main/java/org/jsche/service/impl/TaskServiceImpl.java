@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsche.common.ErrorMessage;
+import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
 import org.jsche.repo.TaskRepository;
@@ -27,12 +29,17 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getUserTasks(int userId) {
         List<Task> tasks = tp.getTaskByUserId(userId);
-        Collections.sort(tasks);
+        if(!tasks.isEmpty()){
+            Collections.sort(tasks);
+        }
         return tasks;
     }
     
     @Override
-    public void save(Task task){
+    public void save(Task task) throws ServiceException{
+        if(tp.findOne(task.getId()) != null){
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+        }
         tp.save(task);
     }
 
