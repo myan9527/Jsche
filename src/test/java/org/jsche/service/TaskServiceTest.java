@@ -3,6 +3,7 @@ package org.jsche.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.Task;
 import org.jsche.repo.TaskRepository;
 import org.jsche.service.impl.TaskServiceImpl;
@@ -48,6 +49,13 @@ public class TaskServiceTest {
         Task task = mock(Task.class);
         service.save(task);
         verify(tp, times(1)).save(task);
+    }
+    
+    @Test(expected = ServiceException.class)
+    public void testSaveThrows(){
+        Task task = mock(Task.class);
+        when(tp.findOne(anyInt())).thenReturn(task);
+        service.save(task);
     }
     
 }

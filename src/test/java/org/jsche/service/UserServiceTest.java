@@ -1,5 +1,6 @@
 package org.jsche.service;
 
+import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.User;
 import org.jsche.repo.UserRepository;
 import org.jsche.service.impl.UserServiceImpl;
@@ -53,11 +54,18 @@ public class UserServiceTest {
         Assert.assertEquals(service.getUserByEmail("email"), user);
     }
 
-    @Test
-    public void testUpdateLastLogin() {
+    @Test(expected = ServiceException.class)
+    public void testUpdateLastLoginThrows() {
         User user = mock(User.class);
         service.updateLastLogin(user);
-        verify(up).save(user);
+    }
+    
+    @Test
+    public void testUpdateLastLogin(){
+        User user = mock(User.class);
+        when(up.findOne(anyInt())).thenReturn(user);
+        service.updateLastLogin(user);
+        verify(up, times(1)).save(user);
     }
 
     @Test
@@ -69,6 +77,7 @@ public class UserServiceTest {
         verify(up).save(user);
 
         when(user.getAvatar()).thenReturn("avatar");
+        when(user.isCustomizedAvatar()).thenReturn(true);
         service.updateUserAvatar(user);
         verify(user).setAvatar("avatar");
         verify(up,times(2)).save(user);

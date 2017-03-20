@@ -7,7 +7,8 @@ public enum ErrorMessage {
     PASSWORD_REQUIRED("Please enter your password."),
     NO_SUCH_USER("User not exist."),
     INVALID_PASSWORD("Incorrect password."),
-    LOGIN_REQUIRED("Please login first.");
+    LOGIN_REQUIRED("Please login first."),
+    INVALID_OPERATION("Invalid operation.");
 
     private final String errorMessage;
 
