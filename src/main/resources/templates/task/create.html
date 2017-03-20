@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="shortcut icon" th:href="@{~/images/icon.ico}"
     type="image/x-icon" />
@@ -11,21 +11,12 @@
 <script src="https://use.fontawesome.com/b2bd19dab3.js"></script>
 <script th:src="@{~/js/jquery-2.1.1.js}"></script>
 <script th:src="@{~/js/bootstrap.min.js}"></script>
-<title>Dashboard</title>
+<title>New task</title>
 </head>
 <body>
     <div th:insert="nav :: navbar"></div>
-    <div class="container" style="margin-top: 10px;">
-        <!-- main content row -->
-        <div class="row">
-            <div class="col-xs-2">
-            </div>
-            
-            <div class="col-xs-7">
-            
-            </div>
-        </div>
-        <!-- end main content row -->
-    </div>
+    <select name="task_type" >
+        <option th:each="t,ts : ${types}" th:value="${ts.index}" th:text="${t.typeName}"></option>
+    </select>
 </body>
 </html>
