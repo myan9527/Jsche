@@ -4,16 +4,22 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsche.common.Constants;
+import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
+import org.jsche.common.exception.ServiceException;
+import org.jsche.common.util.AppUtil;
 import org.jsche.entity.Task;
 import org.jsche.entity.User;
+import org.jsche.entity.Task.TaskType;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,11 +42,23 @@ public class TaskController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @RequiredLogin
-    public ModelAndView createTask(Task task) {
+    public ModelAndView createTask(Task task,
+            @RequestParam(name = "start_date")String startDate,
+            @RequestParam(name = "task_type")String type, HttpSession session) {
         ModelAndView mav = new ModelAndView("user/dashboard");
-        taskService.save(task);
-
-        return mav;
+        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
+        if(loginUser != null){
+            task.setUserId(loginUser.getId());
+            if(startDate.trim().length() > 0){
+                task.setStartDate(AppUtil.parseDate(startDate));
+            }
+            if(Integer.valueOf(type) != -1){
+                task.setTaskType(TaskType.values()[Integer.valueOf(type)]);
+            }
+            taskService.save(task);
+            return mav;
+        }
+        throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
     }
 
     @RequestMapping(value = "/statistics", method = RequestMethod.POST)

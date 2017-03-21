@@ -116,7 +116,7 @@ select:invalid {
 }
 
 .widget {
-	border: 0.8px solid rgb(213, 213, 213);
+/* 	border: 0.8px solid rgb(213, 213, 213); */
 }
 .widget-header{
 	margin-top:0px;
