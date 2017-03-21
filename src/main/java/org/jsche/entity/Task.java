@@ -8,6 +8,7 @@ package org.jsche.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,6 +45,8 @@ public class Task implements Serializable, Comparable<Task> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String taskName;
+    @Column(updatable = true, length = 1000)
+    private String description;
     private TaskType taskType;
     private int status;
     private int priority;
@@ -118,6 +121,14 @@ public class Task implements Serializable, Comparable<Task> {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }
