@@ -16,6 +16,8 @@ public class Test {
     private String name;
     @Range(min=20,max=30)
     private int age;
+    @Range(min=2,max=10)
+    private String addr;
     @CustomPattern(regex="^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$")
     private String email;
     public String getName() {
@@ -40,6 +42,7 @@ public class Test {
     public static void main(String[] args) {
         Test test = new Test();
         test.setAge(80);
+//        test.setAddr("s");
         test.setEmail("my1@aa.cc");
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -48,6 +51,12 @@ public class Test {
             System.out.println(violation.getInvalidValue() + violation.getMessage());
             
         }
+    }
+    public String getAddr() {
+        return addr;
+    }
+    public void setAddr(String addr) {
+        this.addr = addr;
     }
     
 }

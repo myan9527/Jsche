@@ -9,6 +9,10 @@ public class ControllerException extends RuntimeException{
     public ControllerException(ErrorMessage message){
         super(message.getErrorMessage());
     }
+    
+    public ControllerException(String message){
+        super(message);
+    }
 
     public ControllerException(Throwable th, ErrorMessage message){
         super(message.getErrorMessage(), th);

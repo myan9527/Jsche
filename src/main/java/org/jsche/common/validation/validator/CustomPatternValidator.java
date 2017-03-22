@@ -1,11 +1,10 @@
 package org.jsche.common.validation.validator;
 
-import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.jsche.common.validation.constraints.CustomPattern;
 
-public class CustomPatternValidator implements ConstraintValidator<CustomPattern, String> {
+public class CustomPatternValidator implements Validator<CustomPattern, String> {
     private CustomPattern pattern;
     @Override
     public void initialize(CustomPattern constraintAnnotation) {

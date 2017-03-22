@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.jsche.common.validation.constraints.NotEmpty;
+import org.jsche.common.validation.constraints.Range;
+
 @Entity
 @Table(name = "customers")
 public class Customer implements Serializable {
@@ -18,7 +21,9 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty
     private String firstName;
+    @Range(min=2,max=10)
     private String lastName;
 
     protected Customer() {
