@@ -1,0 +1,22 @@
+package org.jsche.common.validation.validator;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+import org.jsche.common.validation.constraints.NotEmpty;
+
+public class NotEmptyValidator implements ConstraintValidator<NotEmpty, String> {
+
+    @Override
+    public void initialize(NotEmpty param) {
+        
+    }
+
+    @Override
+    public boolean isValid(String param, ConstraintValidatorContext ctx) {
+        if (param == null) return false;
+        else if(param.length()<1) return false;
+        return true;
+    }
+    
+}
