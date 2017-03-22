@@ -1,12 +1,17 @@
 package org.jsche.common.validation.checker;
 
-import javax.validation.ConstraintValidatorContext;
+import org.jsche.common.validation.ValidationContext;
+import org.jsche.common.validation.ValidationHandler;
 
 public class EntityChecker extends AbstractChecker {
-
+    public EntityChecker(ValidationHandler handler){
+        super(handler);
+    }
+    
     @Override
-    public void validate(ConstraintValidatorContext context) {
-        //find every annotation of class field.
+    public void validate(ValidationContext context) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

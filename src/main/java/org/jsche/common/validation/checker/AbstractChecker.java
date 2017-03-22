@@ -4,10 +4,16 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.validation.ConstraintValidatorContext;
+import org.jsche.common.validation.ValidationContext;
+import org.jsche.common.validation.ValidationHandler;
 
 public abstract class AbstractChecker {
-    public abstract void validate(ConstraintValidatorContext context) ;
+    public abstract void validate(ValidationContext context) ;
+    protected ValidationHandler handler;
+    
+    public AbstractChecker(ValidationHandler handler){
+        this.handler = handler;
+    }
     
     protected Annotation[] getValidationList(Annotation annotation) {
         Annotation[] annotations = null;

@@ -1,25 +1,38 @@
 package org.jsche.common.validation;
 
-import java.util.Set;
+import java.lang.annotation.Annotation;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import org.jsche.common.annotation.BeanValidation;
+import org.jsche.common.validation.validator.Validator;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-import org.jsche.common.exception.ValidationException;
+@Component
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class ValidationHandler implements ApplicationContextAware {
+    private Map<Annotation, Validator> rules = new ConcurrentHashMap();
+    Map<String, Object> validations = null;
 
-public class ValidationHandler{
-    private ValidatorFactory factory;
-    
-    public void validate(Object obj) throws ValidationException{
-        factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Object>> set = validator.validate(obj);
-        for (ConstraintViolation<Object> violation : set) {
-            if(violation.getInvalidValue() != null){
-                throw new ValidationException(violation.getMessage());
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        validations = applicationContext.getBeansWithAnnotation(BeanValidation.class);
+    }
+
+    public Validator find(Annotation annotation) {
+        Validator validator = null;
+        if (!rules.containsKey(annotation)) {
+            for (Entry<String, Object> entry : validations.entrySet()) {
+                if (entry != null) {
+                    rules.put(annotation, (Validator) entry.getValue());
+                }
             }
         }
+        validator = rules.get(annotation);
+        return validator;
     }
 }

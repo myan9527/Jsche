@@ -5,8 +5,10 @@ import java.util.Map;
 
 import javax.validation.ConstraintValidatorContext;
 
+import org.jsche.common.annotation.BeanValidation;
 import org.jsche.common.validation.constraints.Range;
 
+@BeanValidation
 public class RangeValidator implements Validator<Range, Object> {
     private Range range;
 
