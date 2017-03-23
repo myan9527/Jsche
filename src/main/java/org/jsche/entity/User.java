@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.jsche.common.validation.constraints.CustomPattern;
+
 /**
  *
  * @author myan
@@ -31,7 +33,9 @@ public class User implements Serializable {
     @Column(unique = true,nullable = false,updatable = true,length = 100)
     private String password;
     private Date lastLogin;
+    
     @Column(unique = true,nullable = false,updatable = true,length = 100)
+    @CustomPattern(regex="^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$")
     private String email;
     @Column(nullable = false,length = 200)
     private String avatar;

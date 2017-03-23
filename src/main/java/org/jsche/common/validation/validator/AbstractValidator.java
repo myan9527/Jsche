@@ -2,7 +2,7 @@ package org.jsche.common.validation.validator;
 
 import java.lang.annotation.Annotation;
 
-import org.jsche.common.exception.ValidationException;
+import org.jsche.common.exception.ValidateException;
 
 public abstract class AbstractValidator<A extends Annotation,T> implements Validator<A, T> {
 
@@ -10,11 +10,11 @@ public abstract class AbstractValidator<A extends Annotation,T> implements Valid
     public boolean isValid(A annotation, T value) {
         try {
             validate(annotation,value);
-        } catch (ValidationException e) {
+        } catch (ValidateException e) {
             throw e;
         }
         return true;
     }
     
-    public abstract void validate(A annotation, T value) throws ValidationException;
+    public abstract void validate(A annotation, T value) throws ValidateException;
 }

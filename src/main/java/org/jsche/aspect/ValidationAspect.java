@@ -10,12 +10,12 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jsche.common.exception.ControllerException;
-import org.jsche.common.exception.ValidationException;
+import org.jsche.common.exception.ValidateException;
 import org.jsche.common.validation.ValidationContext;
 import org.jsche.common.validation.ValidationHandler;
 import org.jsche.common.validation.checker.AbstractChecker;
 import org.jsche.common.validation.checker.EntityChecker;
-import org.jsche.common.validation.checker.MethodParameterChecker;
+import org.jsche.common.validation.checker.MethodChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ValidationAspect {
         logger.info("**Validation log**");
         try {
             validation(point);
-        } catch (ValidationException e) {
+        } catch (ValidateException e) {
             throw new ControllerException(e.getMessage());
         }
     }
@@ -66,7 +66,7 @@ public class ValidationAspect {
         //do really validation here.
         List<AbstractChecker> checkers = new ArrayList<>();
         checkers.add(new EntityChecker(handler));
-        checkers.add(new MethodParameterChecker(handler));
+        checkers.add(new MethodChecker(handler));
         
         for (AbstractChecker checker : checkers) {
             checker.validate(context);
