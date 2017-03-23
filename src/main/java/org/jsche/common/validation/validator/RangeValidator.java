@@ -6,8 +6,10 @@ import java.util.Map;
 import org.jsche.common.annotation.BeanValidation;
 import org.jsche.common.exception.ValidateException;
 import org.jsche.common.validation.constraints.Range;
+import org.springframework.stereotype.Component;
 
 @BeanValidation
+@Component
 public class RangeValidator extends AbstractValidator<Range, Object> {
 
     @SuppressWarnings("rawtypes")

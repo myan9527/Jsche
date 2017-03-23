@@ -6,8 +6,10 @@ import java.util.Map;
 import org.jsche.common.annotation.BeanValidation;
 import org.jsche.common.exception.ValidateException;
 import org.jsche.common.validation.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
 
 @BeanValidation
+@Component
 public class NotEmptyValidator extends AbstractValidator<NotEmpty, Object> {
 
     @SuppressWarnings("rawtypes")

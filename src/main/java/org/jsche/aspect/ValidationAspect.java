@@ -60,8 +60,10 @@ public class ValidationAspect {
         ValidationContext context = new ValidationContext();
         context.setMethod(method);
         context.setArgNames(signature.getParameterNames());
-        context.setArgValues(point.getArgs());
+        Object[] args = point.getArgs();
+        context.setArgValues(args);
         context.setParameters(method.getParameters());
+        logger.info("**Validation args:"+ args);
         
         //do really validation here.
         List<AbstractChecker> checkers = new ArrayList<>();
