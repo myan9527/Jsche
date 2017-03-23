@@ -37,9 +37,15 @@ public class TaskController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @RequiredLogin
-    public ModelAndView newTask() {
+    public ModelAndView newTask(HttpSession session) {
         ModelAndView mav = new ModelAndView("task/create");
         mav.addObject("types", taskService.buildTypeArray());
+        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
+        if(loginUser != null){
+            List<Task> tasks = taskService.getIncomingTasks(loginUser.getId());
+            mav.addObject("incomings", tasks);
+            mav.addObject("countTip",tasks.size());
+        }
         return mav;
     }
 
