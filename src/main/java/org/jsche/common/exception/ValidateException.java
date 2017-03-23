@@ -2,17 +2,17 @@ package org.jsche.common.exception;
 
 import org.jsche.common.ErrorMessage;
 
-public class ValidationException extends RuntimeException{
+public class ValidateException extends RuntimeException{
     private static final long serialVersionUID = 549894876259051580L;
-    public ValidationException(ErrorMessage message){
+    public ValidateException(ErrorMessage message){
         super(message.getErrorMessage());
     }
     
-    public ValidationException(String message){
+    public ValidateException(String message){
         super(message);
     }
 
-    public ValidationException(Throwable th, ErrorMessage message) {
+    public ValidateException(Throwable th, ErrorMessage message) {
         super(message.getErrorMessage(), th);
     }
 }
