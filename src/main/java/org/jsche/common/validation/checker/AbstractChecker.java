@@ -4,11 +4,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.jsche.common.exception.ValidationException;
 import org.jsche.common.validation.ValidationContext;
 import org.jsche.common.validation.ValidationHandler;
 
 public abstract class AbstractChecker {
-    public abstract void validate(ValidationContext context) ;
+    public abstract void validate(ValidationContext context) throws ValidationException ;
     protected ValidationHandler handler;
     
     public AbstractChecker(ValidationHandler handler){
