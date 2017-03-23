@@ -92,19 +92,5 @@
 <script th:src="@{~/js/bootstrap.min.js}"></script>
 <script th:src="@{~/js/bootstrap-select.min.js}"></script>
 <script th:src="@{~/js/bootstrap-datetimepicker.min.js}"></script>
-<script>
-	$('.selectpicker').selectpicker({
-		style : 'btn-default',
-		size : 10
-	});
-	$('.form_datetime').datetimepicker({
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-</script>
+<script th:src="@{~/js/lib.js}"></script>
 </html>

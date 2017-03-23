@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         }
         if(up.findOne(user.getId()) != null){
-            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
         up.save(user);
     }
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public void updateLastLogin(User user) throws ServiceException{
         user.setLastLogin(new Date(System.currentTimeMillis()));
         if(up.findOne(user.getId()) == null){
-            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
         up.save(user);
     }

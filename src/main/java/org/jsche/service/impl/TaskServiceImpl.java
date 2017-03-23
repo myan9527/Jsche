@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void save(Task task) throws ServiceException{
         if(tp.findOne(task.getId()) != null){
-            throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+            throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
         tp.save(task);
     }

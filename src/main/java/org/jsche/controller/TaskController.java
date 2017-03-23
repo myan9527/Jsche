@@ -58,7 +58,7 @@ public class TaskController {
             taskService.save(task);
             return mav;
         }
-        throw new ServiceException(ErrorMessage.INVALID_OPERATION.getErrorMessage());
+        throw new ServiceException(ErrorMessage.INVALID_OPERATION);
     }
 
     @RequestMapping(value = "/statistics", method = RequestMethod.POST)
