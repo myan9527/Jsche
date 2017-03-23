@@ -1,8 +1,6 @@
 package org.jsche.aspect;
 
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +13,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.SystemUsage;
 import org.jsche.repo.SystemUsageRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,7 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 @Aspect
 public class SystemAccessAspect {
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass());
     private SystemUsage usage;
 
     @Autowired
@@ -57,7 +57,7 @@ public class SystemAccessAspect {
     public void afterThrowing(Throwable e){
         usage.setStatus(500);
         sup.save(usage);
-        logger.log(Level.SEVERE, e.getMessage());
+        logger.error( e.getMessage());
     }
     
 }
