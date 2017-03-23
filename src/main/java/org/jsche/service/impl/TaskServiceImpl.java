@@ -13,6 +13,7 @@ import org.jsche.entity.Task.TaskType;
 import org.jsche.repo.TaskRepository;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service("taskService")
@@ -27,8 +28,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getUserTasks(int userId) {
-        List<Task> tasks = tp.getTaskByUserId(userId);
+    public List<Task> getUserTasks(int userId, Pageable pageable) {
+        List<Task> tasks = tp.getTaskByUserId(userId, pageable);
         if(!tasks.isEmpty()){
             Collections.sort(tasks);
         }
@@ -98,6 +99,11 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getDailyTasks(Date data) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public List<Task> getIncomingTasks(int userId) {
+        return tp.getIncomingTasks(userId);
     }
 
 }

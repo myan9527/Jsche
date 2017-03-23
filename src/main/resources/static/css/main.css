@@ -126,3 +126,8 @@ select:invalid {
 	font-size:14px;
 	color:rgb(255,255,255);
 }
+.widget-content{
+	border: 0.8px solid rgb(213, 213, 213);
+	padding: 10px 15px;
+	border-radius: 4px;
+}

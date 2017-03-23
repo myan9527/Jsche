@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -40,8 +41,9 @@ public class TaskServiceTest {
     @Test
     public void testGetUserTasks(){
         List<Task> tasks = new ArrayList<>();
-        when(tp.getTaskByUserId(anyInt())).thenReturn(tasks);
-        Assert.assertEquals(tasks, service.getUserTasks(1));
+        Pageable pageable = mock(Pageable.class);
+        when(tp.getTaskByUserId(anyInt(),anyObject())).thenReturn(tasks);
+        Assert.assertEquals(tasks, service.getUserTasks(1,pageable));
     }
     
     @Test

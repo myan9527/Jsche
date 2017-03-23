@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -101,10 +102,11 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
     @Test
     public void testDashboard() {
         User user = mock(User.class);
+        Pageable pageable = mock(Pageable.class);
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
-        ModelAndView mav = controller.dashboard(session);
-        verify(taskService).getUserTasks(1);
+        ModelAndView mav = controller.dashboard(session,pageable);
+        verify(taskService).getUserTasks(1,pageable);
         Assert.assertEquals(mav.getViewName(), "user/dashboard");
     }
 
