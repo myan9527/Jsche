@@ -1,24 +1,17 @@
 package org.jsche.common.validation.validator;
 
-import javax.validation.ConstraintValidatorContext;
-
 import org.jsche.common.annotation.BeanValidation;
+import org.jsche.common.exception.ValidationException;
 import org.jsche.common.validation.constraints.CustomPattern;
 
 @BeanValidation
-public class CustomPatternValidator implements Validator<CustomPattern, String> {
-    private CustomPattern pattern;
-    @Override
-    public void initialize(CustomPattern constraintAnnotation) {
-        this.pattern = constraintAnnotation;
-    }
+public class CustomPatternValidator extends AbstractValidator<CustomPattern, String> {
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        String regex = pattern.regex();
-        if(value != null && value.matches(regex))
-            return true;
-        return false;
+    public void validate(CustomPattern annotation, String value) throws ValidationException {
+        String regex = annotation.regex();
+        if(value == null || !value.matches(regex))
+            throw new ValidationException(annotation.message());
     }
 
 }

@@ -12,7 +12,7 @@ import org.jsche.common.validation.constraints.NotEmpty;
 import org.jsche.common.validation.constraints.Range;
 
 public class Test {
-    @NotEmpty
+    @NotEmpty()
     private String name;
     @Range(min=20,max=30)
     private int age;
