@@ -16,6 +16,7 @@ import org.jsche.common.validation.ValidationHandler;
 import org.jsche.common.validation.checker.AbstractChecker;
 import org.jsche.common.validation.checker.EntityChecker;
 import org.jsche.common.validation.checker.MethodChecker;
+import org.jsche.common.validation.checker.ParameterChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,7 @@ public class ValidationAspect {
         List<AbstractChecker> checkers = new ArrayList<>();
         checkers.add(new EntityChecker(handler));
         checkers.add(new MethodChecker(handler));
+        checkers.add(new ParameterChecker(handler));
         
         for (AbstractChecker checker : checkers) {
             checker.validate(context);
