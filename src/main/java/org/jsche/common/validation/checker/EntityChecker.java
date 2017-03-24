@@ -24,11 +24,8 @@ public class EntityChecker extends AbstractChecker {
         Object[] args = context.getArgValues();
         for (int i = 0;i < parameters.length; i++) {
             Class<?> type = parameters[i].getType();
-            if(type.getPackage().getName().equalsIgnoreCase("org.jsche.entity") ||
-                    type.isInstance(String.class) ||
-                    type.isInstance(int.class) ||
-                    type.isArray()){
-                //only validate entity/string/int/[]
+            if(type.getPackage().getName().equalsIgnoreCase("org.jsche.entity")) {
+                //only validate entity class
                 Field[] fields = type.getDeclaredFields();
                 for (Field field : fields) {
                     List<Annotation> annotations = new LinkedList<>();
