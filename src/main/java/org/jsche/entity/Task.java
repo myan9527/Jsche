@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.jsche.common.validation.constraints.NotEmpty;
+
 /**
  *
  * @author myan
@@ -44,12 +46,14 @@ public class Task implements Serializable, Comparable<Task> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotEmpty
     private String taskName;
     @Column(updatable = true, length = 1000)
     private String description;
     private TaskType taskType;
     private int status;
     private int priority;
+    @NotEmpty
     private Date startDate;
     private int duration;
     private int userId;
