@@ -13,6 +13,7 @@ import org.jsche.entity.Task.TaskType;
 import org.jsche.repo.TaskRepository;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service("taskService")
@@ -27,8 +28,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getUserTasks(int userId) {
-        List<Task> tasks = tp.getTaskByUserId(userId);
+    public List<Task> getUserTasks(int userId, Pageable pageable) {
+        List<Task> tasks = tp.getTaskByUserId(userId, pageable);
         if(!tasks.isEmpty()){
             Collections.sort(tasks);
         }
@@ -49,7 +50,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Map<String, Object> analysis(List<Task> tasks) {
         Map<String, Object> result = new HashMap<>();
-        Map<String, Integer> typesData = new HashMap<>();
+        Map<String, Integer> typesData = buildTypesData(tasks);
+        result.put("type_data", typesData);
+        return result;
+    }
+    
+    public Map<String, Integer> buildTypesData(List<Task> tasks) {
+        Map<String, Integer> result = new HashMap<>();
         int f =0;
         int w = 0;
         int sa = 0;
@@ -59,38 +66,27 @@ public class TaskServiceImpl implements TaskService {
             //basic type
             switch (task.getTaskType()) {
             case FAMILY_ISSUE:
-                typesData.put(TaskType.FAMILY_ISSUE.getTypeName(), ++f);
+                result.put(TaskType.FAMILY_ISSUE.getTypeName(), ++f);
                 break;
             case WORK_TASK:
-                typesData.put(TaskType.WORK_TASK.getTypeName(), ++w);
+                result.put(TaskType.WORK_TASK.getTypeName(), ++w);
                 break;
             case SOCIAL_ACTIVITY:
-                typesData.put(TaskType.SOCIAL_ACTIVITY.getTypeName(), ++sa);
+                result.put(TaskType.SOCIAL_ACTIVITY.getTypeName(), ++sa);
                 break;
             case SELF_IMPROVEMENT:
-                typesData.put(TaskType.SELF_IMPROVEMENT.getTypeName(), ++si);
+                result.put(TaskType.SELF_IMPROVEMENT.getTypeName(), ++si);
                 break;
             default:
-                typesData.put(TaskType.OTHER_ISSUE.getTypeName(), ++o);
+                result.put(TaskType.OTHER_ISSUE.getTypeName(), ++o);
                 break;
             }
-            //status
-            switch (task.getStatus()) {
-            case 0:
-                
-                break;
-            case 1:
-                
-                break;
-
-            default:
-                break;
-            }
+           
         }
-        result.put("type_data", typesData);
+
         return result;
     }
-    
+
     /**
      * Daily view for current user.
      */
@@ -98,6 +94,11 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getDailyTasks(Date data) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public List<Task> getIncomingTasks(int userId) {
+        return tp.getIncomingTasks(userId);
     }
 
 }

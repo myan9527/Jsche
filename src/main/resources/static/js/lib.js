@@ -16,7 +16,6 @@ function checkTaskForm(e){
 	return false;
 }
 
-
 function drawCharts(){
 	var datas;
 	$.ajax({

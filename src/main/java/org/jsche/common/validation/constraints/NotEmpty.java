@@ -12,11 +12,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.jsche.common.annotation.JscheConstraint;
+import org.jsche.common.validation.validator.NotEmptyValidator;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER })
 @Retention(RUNTIME)
 @Documented
-@JscheConstraint
+@JscheConstraint(validatedBy = NotEmptyValidator.class)
 @Repeatable(org.jsche.common.validation.constraints.NotEmpty.List.class)
 public @interface NotEmpty {
     String message() default "This field can not be empty.";

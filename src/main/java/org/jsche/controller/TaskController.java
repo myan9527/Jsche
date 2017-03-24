@@ -12,10 +12,12 @@ import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.Task;
-import org.jsche.entity.User;
 import org.jsche.entity.Task.TaskType;
+import org.jsche.entity.User;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,15 +30,22 @@ import com.google.gson.Gson;
 @Controller
 @RequestMapping("/task")
 public class TaskController {
+    private final Gson gson = new Gson();
 
     @Autowired
     private TaskService taskService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @RequiredLogin
-    public ModelAndView newTask() {
+    public ModelAndView newTask(HttpSession session) {
         ModelAndView mav = new ModelAndView("task/create");
         mav.addObject("types", taskService.buildTypeArray());
+        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
+        if(loginUser != null){
+            List<Task> tasks = taskService.getIncomingTasks(loginUser.getId());
+            mav.addObject("incomings", tasks);
+            mav.addObject("countTip",tasks.size());
+        }
         return mav;
     }
 
@@ -64,17 +73,28 @@ public class TaskController {
     @RequestMapping(value = "/statistics", method = RequestMethod.POST)
     @RequiredLogin
     @ResponseBody
-    public String getTaskStatistics(HttpServletRequest request){
-        Gson gson = new Gson();
+    public String getTaskStatistics(HttpServletRequest request, 
+            @PageableDefault Pageable pageable){
         User loginUser = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
         List<Task> tasks = null;
         Map<String, Object> result = null;
         if(loginUser!=null){
-            tasks = taskService.getUserTasks(loginUser.getId());
+            tasks = taskService.getUserTasks(loginUser.getId(),pageable);
             if(!tasks.isEmpty()){
                 result = taskService.analysis(tasks);
             }
         }
         return gson.toJson(result);
+    }
+    
+    @RequestMapping(value = "/incoming", method = RequestMethod.GET)
+    @RequiredLogin
+    @ResponseBody
+    public String getIncomingTasks(@RequestParam(name = "user_id")int userId){
+        List<Task> tasks = taskService.getIncomingTasks(userId);
+        if(tasks != null){
+            return gson.toJson(tasks);
+        }
+        return null;
     }
 }

@@ -71,26 +71,55 @@
 			<div class="col-xs-4">
 				<div class="widget">
 					<div class='widget-header'>
-						My incoming task&nbsp;<span class="badge">6</span>
+						My incoming task&nbsp;<span class="badge" th:text="${countTip}">6</span>
 					</div>
-					<div class="widget-content list-group">
-						<a href="item/1" class="list-group-item">Task name 1.</a> <a
-							href="item/2" class="list-group-item">Task name 2.</a>
+					<div class="list-group">
+						<a th:href="@{'item/'+${t.id}}" class="list-group-item" th:each="t : ${incomings}" th:text="${t.taskName}">Task name 1.</a>
+						<a th:if="${incomings.isEmpty()}" class="list-group-item">No incoming tasks.</a>
 					</div>
 				</div>
 
 				<div class="widget">
-					<div class="widget-header">Task status</div>
-					<div class="widget-content">Some content</div>
+					<div class="widget-header">Task statistics</div>
+					<div class="widget-content">
+                        <div id="main" style="height:240px;"></div>
+                    </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-<script src="https://use.fontawesome.com/b2bd19dab3.js"></script>
 <script th:src="@{~/js/jquery-2.1.1.js}"></script>
+<script th:src="@{~/js/echarts.common.min.js}"></script>
 <script th:src="@{~/js/bootstrap.min.js}"></script>
 <script th:src="@{~/js/bootstrap-select.min.js}"></script>
 <script th:src="@{~/js/bootstrap-datetimepicker.min.js}"></script>
 <script th:src="@{~/js/lib.js}"></script>
+<script>
+var myChart = echarts.init(document.getElementById('main'));
+
+var option = {
+	title: {
+		text: 'Statistics:Task priority'
+	},	
+    tooltip: {},
+    legend: {
+        data:['Priority']
+    },
+    xAxis: {
+    },
+    yAxis: {
+    	data: ["P1","P2","P3","P4"]
+    },
+    series: [{
+        name: '',
+        type: 'bar',
+        data: [1, 15, 6, 4]
+    }]
+};
+
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+</script>
+<script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>
