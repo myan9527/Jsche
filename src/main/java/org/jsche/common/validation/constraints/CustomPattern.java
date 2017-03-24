@@ -12,8 +12,7 @@ import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.validation.Payload;
-
+import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.JscheConstraint;
 import org.jsche.common.validation.validator.CustomPatternValidator;
 
@@ -23,10 +22,8 @@ import org.jsche.common.validation.validator.CustomPatternValidator;
 @JscheConstraint(validatedBy = CustomPatternValidator.class)
 @Repeatable(CustomPattern.List.class)
 public @interface CustomPattern {
-    String message() default "Data format is not correct.";
+    ErrorMessage message() default ErrorMessage.VALIDATION_ERROR;
     String regex() default "*";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default {};
     
     
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER })

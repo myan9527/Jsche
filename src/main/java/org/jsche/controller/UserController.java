@@ -22,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,12 +64,8 @@ public class UserController {
     public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
         ModelAndView mav = new ModelAndView("user/register");
         mav.addObject("user", user);
-        if (StringUtils.isEmpty(user.getPassword())) {
-            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.PASSWORD_REQUIRED);
-        } else if (!user.getPassword().equals(repassword)) {
+        if (!user.getPassword().equals(repassword)) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.UNMATCHED_PASSWORD);
-        } else if (StringUtils.isEmpty(user.getEmail())) {
-            mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REQUIRED);
         } else if (userService.getUserByEmail(user.getEmail()) != null) {
             mav.addObject(Constants.ERROR_ATTR_NAME, ErrorMessage.EMAIL_REGISTERED);
         }
