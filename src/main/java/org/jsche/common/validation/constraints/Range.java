@@ -12,11 +12,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.jsche.common.annotation.JscheConstraint;
+import org.jsche.common.validation.validator.RangeValidator;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER })
 @Retention(RUNTIME)
 @Documented
-@JscheConstraint
+@JscheConstraint(validatedBy = RangeValidator.class)
 @Repeatable(Range.List.class)
 public @interface Range {
     long min() default 0;

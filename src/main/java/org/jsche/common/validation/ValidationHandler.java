@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.jsche.common.annotation.BeanValidation;
+import org.jsche.common.annotation.JscheConstraint;
 import org.jsche.common.validation.validator.Validator;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -15,24 +16,30 @@ import org.springframework.stereotype.Component;
 @Component
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ValidationHandler implements ApplicationContextAware {
-    private Map<Annotation, Validator> rules = new ConcurrentHashMap();
-    Map<String, Object> validations = null;
+    private Map<Annotation, Validator> annotationRules = new ConcurrentHashMap();
+    Map<String, Object> validators = null;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        validations = applicationContext.getBeansWithAnnotation(BeanValidation.class);
+        //load all validators
+        validators = applicationContext.getBeansWithAnnotation(BeanValidation.class);
     }
 
     public Validator find(Annotation annotation) {
         Validator validator = null;
-        if (!rules.containsKey(annotation)) {
-            for (Entry<String, Object> entry : validations.entrySet()) {
+        if (!annotationRules.containsKey(annotation)) {
+            for (Entry<String, Object> entry : validators.entrySet()) {
                 if (entry != null) {
-                    rules.put(annotation, (Validator) entry.getValue());
+                    //match the validator
+                    if(annotation.annotationType().isAnnotationPresent(JscheConstraint.class)){
+                        Class constraint = annotation.annotationType().getAnnotationsByType(JscheConstraint.class)[0].validatedBy();
+                        if(constraint.isAssignableFrom((entry.getValue()).getClass()))
+                            annotationRules.put(annotation, (Validator) entry.getValue());
+                    }
                 }
             }
         }
-        validator = rules.get(annotation);
+        validator = annotationRules.get(annotation);
         return validator;
     }
 }

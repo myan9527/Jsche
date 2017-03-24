@@ -15,11 +15,12 @@ import java.lang.annotation.Target;
 import javax.validation.Payload;
 
 import org.jsche.common.annotation.JscheConstraint;
+import org.jsche.common.validation.validator.CustomPatternValidator;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Documented
-@JscheConstraint
+@JscheConstraint(validatedBy = CustomPatternValidator.class)
 @Repeatable(CustomPattern.List.class)
 public @interface CustomPattern {
     String message() default "Data format is not correct.";
