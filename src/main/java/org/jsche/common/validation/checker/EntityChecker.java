@@ -24,7 +24,7 @@ public class EntityChecker extends AbstractChecker {
         Object[] args = context.getArgValues();
         for (int i = 0;i < parameters.length; i++) {
             Class<?> type = parameters[i].getType();
-            if(type.getName().indexOf("org.jsche.entity") != -1 ||
+            if(type.getPackage().getName().equalsIgnoreCase("org.jsche.entity") ||
                     type.isInstance(String.class) ||
                     type.isInstance(int.class) ||
                     type.isArray()){
