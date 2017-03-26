@@ -20,4 +20,7 @@ public interface TaskService {
 	void save(Task task);
 	
 	Map<String, Object> analysis(List<Task> tasks);
+	
+	Task getItem(int id);
+	
 }

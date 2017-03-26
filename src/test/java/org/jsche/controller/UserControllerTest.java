@@ -72,22 +72,13 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
     public void testProcessRegister() {
         User user = mock(User.class);
         when(user.getPassword()).thenReturn(null);
-        ModelAndView mav = controller.processRegister(request, user, "1234");
-        Assert.assertEquals(mav.getViewName(), "user/register");
-        Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.PASSWORD_REQUIRED);
-
         when(user.getPassword()).thenReturn("123");
-        mav = controller.processRegister(request, user, "1234");
+        ModelAndView mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
         Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.UNMATCHED_PASSWORD);
 
-        when(user.getEmail()).thenReturn(null);
-        when(user.getPassword()).thenReturn("1234");
-        mav = controller.processRegister(request, user, "1234");
-        Assert.assertEquals(mav.getViewName(), "user/register");
-        Assert.assertEquals(mav.getModel().get(Constants.ERROR_ATTR_NAME), ErrorMessage.EMAIL_REQUIRED);
-
         when(user.getEmail()).thenReturn("email");
+        when(user.getPassword()).thenReturn("1234");
         when(userService.getUserByEmail("email")).thenReturn(user);
         mav = controller.processRegister(request, user, "1234");
         Assert.assertEquals(mav.getViewName(), "user/register");
