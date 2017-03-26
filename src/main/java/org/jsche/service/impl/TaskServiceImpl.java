@@ -101,4 +101,9 @@ public class TaskServiceImpl implements TaskService {
         return tp.getIncomingTasks(userId);
     }
 
+	@Override
+	public Task getItem(int id) {
+		return tp.findOne(id);
+	}
+
 }
