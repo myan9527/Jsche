@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository up;
 
     @Override
-    public void save(User user) throws ServiceException{
+    public void save(User user) throws ServiceException {
         if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         }
-        if(up.findOne(user.getId()) != null){
+        if (up.findOne(user.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
         up.save(user);
@@ -40,9 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateLastLogin(User user) throws ServiceException{
+    public void updateLastLogin(User user) throws ServiceException {
         user.setLastLogin(new Date(System.currentTimeMillis()));
-        if(up.findOne(user.getId()) == null){
+        if (up.findOne(user.getId()) == null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
         up.save(user);
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
             user.setAvatar(AppUtil.generateAvatar(user.getEmail()));
         } else {
             //get file path
-            if(user.isCustomizedAvatar()){
+            if (user.isCustomizedAvatar()) {
                 user.setAvatar(user.getAvatar());
             }
         }

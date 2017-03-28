@@ -96,8 +96,8 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
         Pageable pageable = mock(Pageable.class);
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
-        ModelAndView mav = controller.dashboard(session,pageable);
-        verify(taskService).getUserTasks(1,pageable);
+        ModelAndView mav = controller.dashboard(session, pageable);
+        verify(taskService).getUserTasks(1, pageable);
         Assert.assertEquals(mav.getViewName(), "user/dashboard");
     }
 

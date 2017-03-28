@@ -12,6 +12,6 @@ import org.jsche.common.validation.validator.Validator;
 @Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JscheConstraint {
-    
-    Class<? extends Validator<?,?>> validatedBy();
+
+    Class<? extends Validator<?, ?>> validatedBy();
 }

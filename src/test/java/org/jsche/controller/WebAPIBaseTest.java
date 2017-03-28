@@ -17,9 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
 
 /**
- *
- * @author myan
  * @param <T>
+ * @author myan
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = SpringConfiguration.class)

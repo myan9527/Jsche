@@ -18,7 +18,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right" th:if="${session.session_user}">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span th:text="${session.session_user.name}"></span><b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                            th:text="${session.session_user.name}"></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/user/dashboard"><span class="fa fa-dashboard"></span>&nbsp;My Dashboard</a></li>
                         <li><a href="/user/profile"><span class="fa fa-server"></span>&nbsp;View Profile</a></li>

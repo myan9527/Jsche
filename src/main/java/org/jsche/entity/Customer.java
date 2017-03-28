@@ -23,7 +23,7 @@ public class Customer implements Serializable {
     private Long id;
     @NotEmpty
     private String firstName;
-    @Range(min=2,max=10)
+    @Range(min = 2, max = 10)
     private String lastName;
 
     protected Customer() {

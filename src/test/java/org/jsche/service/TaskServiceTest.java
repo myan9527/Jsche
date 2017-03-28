@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.mockito.Mockito.*;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -24,40 +25,40 @@ public class TaskServiceTest {
     @Mock
     private TaskRepository tp;
     private TaskService service;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        
+
         service = new TaskServiceImpl();
         Whitebox.setInternalState(service, "tp", tp);
     }
-    
+
     @Test
-    public void testBuildTypeArray(){
+    public void testBuildTypeArray() {
         Assert.assertEquals(service.buildTypeArray().length, 5);
     }
-    
+
     @Test
-    public void testGetUserTasks(){
+    public void testGetUserTasks() {
         List<Task> tasks = new ArrayList<>();
         Pageable pageable = mock(Pageable.class);
-        when(tp.getTaskByUserId(anyInt(),anyObject())).thenReturn(tasks);
-        Assert.assertEquals(tasks, service.getUserTasks(1,pageable));
+        when(tp.getTaskByUserId(anyInt(), anyObject())).thenReturn(tasks);
+        Assert.assertEquals(tasks, service.getUserTasks(1, pageable));
     }
-    
+
     @Test
-    public void testSave(){
+    public void testSave() {
         Task task = mock(Task.class);
         service.save(task);
         verify(tp, times(1)).save(task);
     }
-    
+
     @Test(expected = ServiceException.class)
-    public void testSaveThrows(){
+    public void testSaveThrows() {
         Task task = mock(Task.class);
         when(tp.findOne(anyInt())).thenReturn(task);
         service.save(task);
     }
-    
+
 }

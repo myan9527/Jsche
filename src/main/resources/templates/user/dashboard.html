@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="shortcut icon" th:href="@{~/images/icon.ico}"
-    type="image/x-icon" />
-<link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon" />
-<link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{~/css/main.css}" />
-<title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" th:href="@{~/images/icon.ico}"
+          type="image/x-icon"/>
+    <link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{~/css/main.css}"/>
+    <title>Dashboard</title>
 </head>
 <body>
-    <div th:insert="nav :: navbar"></div>
-    <div class="container" style="margin-top: 10px;">
-        <!-- main content row -->
-        <div class="row">
-            <div class="col-xs-2">
-            </div>
-            
-            <div class="col-xs-7">
-            
-            </div>
+<div th:insert="nav :: navbar"></div>
+<div class="container" style="margin-top: 10px;">
+    <!-- main content row -->
+    <div class="row">
+        <div class="col-xs-2">
         </div>
-        <!-- end main content row -->
+
+        <div class="col-xs-7">
+
+        </div>
     </div>
+    <!-- end main content row -->
+</div>
 </body>
 <script th:src="@{~/js/jquery-2.1.1.js}"></script>
 <script th:src="@{~/js/bootstrap.min.js}"></script>

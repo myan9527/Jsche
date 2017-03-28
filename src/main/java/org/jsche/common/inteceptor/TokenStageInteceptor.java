@@ -11,7 +11,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * Set a token for each request.
  *
  * @author myan
- *
  */
 public class TokenStageInteceptor extends HandlerInterceptorAdapter {
 

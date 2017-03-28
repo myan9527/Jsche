@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface TaskRepository extends PagingAndSortingRepository<Task, Integer> {
 
     List<Task> getTaskByUserId(int userId, Pageable pageable);
-    
+
     @Query(value = "SELECT * FROM tasks t where t.user_id = :userId and t.start_date <= now() + 3", nativeQuery = true)
-    List<Task> getIncomingTasks(@Param("userId")int userId);
+    List<Task> getIncomingTasks(@Param("userId") int userId);
 }

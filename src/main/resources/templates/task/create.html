@@ -1,93 +1,95 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="shortcut icon" th:href="@{~/images/icon.ico}"
-	type="image/x-icon" />
-<link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon" />
-<link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{~/css/main.css}" />
-<link rel="stylesheet" th:href="@{~/css/bootstrap-select.min.css}" />
-<link rel="stylesheet" th:href="@{~/css/bootstrap-datetimepicker.min.css}" />
-<title>New task</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" th:href="@{~/images/icon.ico}"
+          type="image/x-icon"/>
+    <link rel="icon" th:href="@{~/images/icon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{~/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{~/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{~/css/bootstrap-select.min.css}"/>
+    <link rel="stylesheet" th:href="@{~/css/bootstrap-datetimepicker.min.css}"/>
+    <title>New task</title>
 </head>
 <body>
-	<div th:insert="nav :: navbar"></div>
-	<div class="container" style="margin-top: 10px;">
-		<div class="page-header">
-			<h1>New Task</h1>
-		</div>
-		<div class="row">
-			<!-- form content -->
-			<div class="col-xs-8">
-				<form action="/task/create" method="post" class="form" role="form">
-					<input name="csrf_token" type="hidden" th:value="${csrf_token}">
-					<div class="form-group  required">
-						<label class="control-label" for="task_name">Task name</label> <input
-							class="form-control" id="task_name" name="taskName" required
-							type="text">
-					</div>
-					<div class="form-group  required">
-						<label class="control-label" for="description">Description</label>
-						<textarea class="form-control" id="description" name="description">
+<div th:insert="nav :: navbar"></div>
+<div class="container" style="margin-top: 10px;">
+    <div class="page-header">
+        <h1>New Task</h1>
+    </div>
+    <div class="row">
+        <!-- form content -->
+        <div class="col-xs-8">
+            <form action="/task/create" method="post" class="form" role="form">
+                <input name="csrf_token" type="hidden" th:value="${csrf_token}">
+                <div class="form-group  required">
+                    <label class="control-label" for="task_name">Task name</label> <input
+                        class="form-control" id="task_name" name="taskName" required
+                        type="text">
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description">
                             </textarea>
-					</div>
-					<div class="form-group  required">
-						<label class="control-label" for="priority">Priority&nbsp;&nbsp;&nbsp;</label>
-						<select name="priority" id="priority" class="selectpicker">
-							<option value="-1" disabled selected>Please select one</option>
-							<option value="0">P1</option>
-							<option value="1">P2</option>
-							<option value="2">P3</option>
-							<option value="3">P4</option>
-						</select>
-					</div>
-					<div class="form-group  required">
-						<label class="control-label" for="task_type">Task type</label> <select
-							name="task_type" id="task_type" class="selectpicker">
-							<option value="-1" disabled selected>Please select one</option>
-							<option th:each="t,ts : ${types}" th:value="${ts.index}"
-								th:text="${t.typeName}"></option>
-						</select>
-					</div>
-					<div class="form-group">
-		                <label for="dtp_input" class="control-label">Schedule time</label>
-		                <div class="input-group date form_datetime" data-date-format="dd M yyyy hh:ii" data-link-field="dtp_input">
-		                    <input class="form-control" size="16" type="text" name="start_date" readonly>
-		                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-		                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-		                </div>
-		            </div>
-					<div class="form-group  required">
-						<label class="control-label" for="duration">Duration (eg. 3d 4h 20m)</label> <input
-							type="text" class="form-control" id="duration" name="duration" pattern="">
-					</div>
-					<input class="btn btn-info" id="submit" name="submit" type="submit"
-						value="Create" size="8">
-				</form>
-			</div>
-			<!-- widget content -->
-			<div class="col-xs-4">
-				<div class="widget">
-					<div class='widget-header'>
-						My incoming task&nbsp;<span class="badge" th:text="${countTip}">6</span>
-					</div>
-					<div class="list-group">
-						<a th:href="@{'item/'+${t.id}}" class="list-group-item" th:each="t : ${incomings}" th:text="${t.taskName}">Task name 1.</a>
-						<a th:if="${incomings.isEmpty()}" class="list-group-item">No incoming tasks.</a>
-					</div>
-				</div>
-
-				<div class="widget">
-					<div class="widget-header">Task statistics</div>
-					<div class="widget-content">
-                        <div id="main" style="height:240px;"></div>
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="priority">Priority&nbsp;&nbsp;&nbsp;</label>
+                    <select name="priority" id="priority" class="selectpicker">
+                        <option value="-1" disabled selected>Please select one</option>
+                        <option value="0">P1</option>
+                        <option value="1">P2</option>
+                        <option value="2">P3</option>
+                        <option value="3">P4</option>
+                    </select>
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="task_type">Task type</label> <select
+                        name="task_type" id="task_type" class="selectpicker">
+                    <option value="-1" disabled selected>Please select one</option>
+                    <option th:each="t,ts : ${types}" th:value="${ts.index}"
+                            th:text="${t.typeName}"></option>
+                </select>
+                </div>
+                <div class="form-group">
+                    <label for="dtp_input" class="control-label">Schedule time</label>
+                    <div class="input-group date form_datetime" data-date-format="dd M yyyy hh:ii"
+                         data-link-field="dtp_input">
+                        <input class="form-control" size="16" type="text" name="start_date" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                     </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="duration">Duration (eg. 3d 4h 20m)</label> <input
+                        type="text" class="form-control" id="duration" name="duration" pattern="">
+                </div>
+                <input class="btn btn-info" id="submit" name="submit" type="submit"
+                       value="Create" size="8">
+            </form>
+        </div>
+        <!-- widget content -->
+        <div class="col-xs-4">
+            <div class="widget">
+                <div class='widget-header'>
+                    My incoming task&nbsp;<span class="badge" th:text="${countTip}">6</span>
+                </div>
+                <div class="list-group">
+                    <a th:href="@{'item/'+${t.id}}" class="list-group-item" th:each="t : ${incomings}"
+                       th:text="${t.taskName}">Task name 1.</a>
+                    <a th:if="${incomings.isEmpty()}" class="list-group-item">No incoming tasks.</a>
+                </div>
+            </div>
+
+            <div class="widget">
+                <div class="widget-header">Task statistics</div>
+                <div class="widget-content">
+                    <div id="main" style="height:240px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script th:src="@{~/js/jquery-2.1.1.js}"></script>
 <script th:src="@{~/js/echarts.common.min.js}"></script>
@@ -120,6 +122,7 @@ var option = {
 
 // 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
+
 </script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>

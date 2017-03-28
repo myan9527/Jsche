@@ -1,15 +1,14 @@
 package org.jsche.common.util;
 
+import org.jsche.common.Constants;
+
+import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.jsche.common.Constants;
 
 public final class AppUtil {
 
@@ -29,8 +28,7 @@ public final class AppUtil {
             int j = md.length;
             char str[] = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];
+            for (byte byte0 : md) {
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];
             }
@@ -48,8 +46,8 @@ public final class AppUtil {
     public static String formatDate(Date dateStamp) {
         return sdf.format(dateStamp);
     }
-    
-    public static Date parseDate(String src){
+
+    public static Date parseDate(String src) {
         try {
             return sdf_us.parse(src);
         } catch (ParseException e) {
@@ -84,8 +82,8 @@ public final class AppUtil {
             md.update(src.getBytes());
             byte[] bytes = md.digest();
             StringBuilder buffer = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                buffer.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            for (byte aByte : bytes) {
+                buffer.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             return "URL: http://www.gravatar.com/avatar/" + buffer.toString() + "?size=" + Constants.AVATAR_SIZE;
         } catch (NoSuchAlgorithmException e) {
