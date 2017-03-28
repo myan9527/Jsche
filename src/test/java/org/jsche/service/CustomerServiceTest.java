@@ -22,29 +22,29 @@ public class CustomerServiceTest {
     private CustomerService customerService;
     @Mock
     private CustomerRepository cp;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        
+
         customerService = new CustomerServiceImpl();
         Whitebox.setInternalState(customerService, "cp", cp);
     }
-    
+
     @Test
-    public void testFindByFirstName(){
+    public void testFindByFirstName() {
         List<Customer> list = new ArrayList<>();
         Customer customer = mock(Customer.class);
         list.add(customer);
         when(cp.findByFirstName("michael")).thenReturn(list);
         Assert.assertTrue(customerService.findByFirstName("michael").size() == 1);
     }
-    
+
     @Test
-    public void testSaveCustomer(){
+    public void testSaveCustomer() {
         Customer customer = mock(Customer.class);
         customerService.save(customer);
         verify(cp).save(customer);
     }
-    
+
 }

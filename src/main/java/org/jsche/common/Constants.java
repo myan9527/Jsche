@@ -6,7 +6,6 @@
 package org.jsche.common;
 
 /**
- *
  * @author myan
  */
 public class Constants {
@@ -15,5 +14,5 @@ public class Constants {
     public static final String ERROR_ATTR_NAME = "error_message";
     public static final String LOGIN_USER = "session_user";
     public static final int AVATAR_SIZE = 180;
-    
+
 }

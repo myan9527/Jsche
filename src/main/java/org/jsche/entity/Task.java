@@ -5,20 +5,13 @@
  */
 package org.jsche.entity;
 
+import org.jsche.common.validation.constraints.NotEmpty;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.jsche.common.validation.constraints.NotEmpty;
-
 /**
- *
  * @author myan
  */
 @Entity
@@ -48,7 +41,7 @@ public class Task implements Serializable, Comparable<Task> {
     private int id;
     @NotEmpty
     private String taskName;
-    @Column(updatable = true, length = 1000)
+    @Column(length = 1000)
     private String description;
     private TaskType taskType;
     private int status;

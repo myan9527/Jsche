@@ -13,41 +13,41 @@ import org.jsche.common.validation.ValidationHandler;
 import org.jsche.common.validation.validator.Validator;
 
 public class EntityChecker extends AbstractChecker {
-    public EntityChecker(ValidationHandler handler){
+    public EntityChecker(ValidationHandler handler) {
         super(handler);
     }
-    
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void validate(ValidationContext context) throws ValidateException{
+    public void validate(ValidationContext context) throws ValidateException {
         Parameter[] parameters = context.getParameters();
         Object[] args = context.getArgValues();
-        for (int i = 0;i < parameters.length; i++) {
+        for (int i = 0; i < parameters.length; i++) {
             Class<?> type = parameters[i].getType();
-            if(type.getPackage().getName().equalsIgnoreCase("org.jsche.entity")) {
+            if (type.getPackage().getName().equalsIgnoreCase("org.jsche.entity")) {
                 //only validate entity class
                 Field[] fields = type.getDeclaredFields();
                 for (Field field : fields) {
                     List<Annotation> annotations = new LinkedList<>();
-                    
+
                     for (Annotation annotation : field.getAnnotations()) {
-                        if(annotation.annotationType().isAnnotationPresent(JscheConstraint.class)){
+                        if (annotation.annotationType().isAnnotationPresent(JscheConstraint.class)) {
                             annotations.add(annotation);
                         }
                     }
                     field.setAccessible(true);
                     Object value;
-                    
+
                     try {
                         value = field.get(args[i]);
                     } catch (IllegalArgumentException | IllegalAccessException e) {
                         throw new ValidateException(e.getMessage());
                     }
-                    
+
                     for (Annotation annotation : annotations) {
                         try {
                             Validator validator = handler.find(annotation);
-                            if(validator != null)
+                            if (validator != null)
                                 validator.isValid(annotation, value);
                         } catch (ValidateException e) {
                             throw e;

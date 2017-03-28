@@ -12,7 +12,7 @@ public class CustomPatternValidator extends AbstractValidator<CustomPattern, Str
     @Override
     public void validate(CustomPattern annotation, String value) throws ValidateException {
         String regex = annotation.regex();
-        if(value == null || !value.matches(regex))
+        if (value == null || !value.matches(regex))
             throw new ValidateException(annotation.message());
     }
 

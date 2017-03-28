@@ -5,11 +5,6 @@
  */
 package org.jsche.controller;
 
-import java.io.File;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
@@ -28,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+
 /**
- *
  * @author myan
  */
 @Controller
@@ -80,9 +78,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/dashboard")
-    @RequiredLogin(value = true)
+    @RequiredLogin
     public ModelAndView dashboard(HttpSession session,
-            @PageableDefault(value = 15, sort = { "startDate" }, direction =Sort.Direction.DESC) Pageable pageable) {
+                                  @PageableDefault(value = 15, sort = {"startDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ModelAndView mav = new ModelAndView("user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
         if (loginUser != null) {
@@ -122,7 +120,7 @@ public class UserController {
         User user = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
         if (user != null) {
             user.setCustomizedAvatar(true);
-            user.setAvatar(path+File.pathSeparator+fileName);
+            user.setAvatar(path + File.pathSeparator + fileName);
             userService.updateUserAvatar(user);
         }
         return null;

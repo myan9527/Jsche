@@ -9,7 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
+
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -59,9 +61,9 @@ public class UserServiceTest {
         User user = mock(User.class);
         service.updateLastLogin(user);
     }
-    
+
     @Test
-    public void testUpdateLastLogin(){
+    public void testUpdateLastLogin() {
         User user = mock(User.class);
         when(up.findOne(anyInt())).thenReturn(user);
         service.updateLastLogin(user);
@@ -80,6 +82,6 @@ public class UserServiceTest {
         when(user.isCustomizedAvatar()).thenReturn(true);
         service.updateUserAvatar(user);
         verify(user).setAvatar("avatar");
-        verify(up,times(2)).save(user);
+        verify(up, times(2)).save(user);
     }
 }

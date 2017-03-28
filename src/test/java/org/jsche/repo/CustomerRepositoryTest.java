@@ -20,22 +20,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CustomerRepositoryTest {
     @Mock
     private CustomerRepository cp;
-    
+
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
-    
+
     @Test
-    public void testFindByFirstName(){
+    public void testFindByFirstName() {
         Customer c = mock(Customer.class);
         List<Customer> list = new ArrayList<>();
         list.add(c);
-                
+
         when(cp.findByFirstName("Michael")).thenReturn(list);
         List<Customer> result = cp.findByFirstName("Michael");
         assertNotNull(result);
         assertTrue(result.contains(c));
     }
-    
+
 }

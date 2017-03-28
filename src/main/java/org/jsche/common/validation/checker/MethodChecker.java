@@ -1,14 +1,14 @@
 package org.jsche.common.validation.checker;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-
 import org.jsche.common.annotation.JscheConstraint;
 import org.jsche.common.exception.ValidateException;
 import org.jsche.common.validation.ValidationContext;
 import org.jsche.common.validation.ValidationHandler;
 import org.jsche.common.validation.validator.Validator;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 public class MethodChecker extends AbstractChecker {
 
@@ -16,7 +16,7 @@ public class MethodChecker extends AbstractChecker {
         super(handler);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void validate(ValidationContext context) throws ValidateException {
         Method method = context.getMethod();
@@ -30,7 +30,7 @@ public class MethodChecker extends AbstractChecker {
                 for (int i = 0; i < parameters.length; i++) {
                     try {
                         Validator validator = handler.find(annotation);
-                        if(validator != null)
+                        if (validator != null)
                             validator.isValid(annotation, args[i]);
                     } catch (ValidateException e) {
                         throw e;

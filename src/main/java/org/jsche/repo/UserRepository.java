@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Transactional
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer>{
+public interface UserRepository extends CrudRepository<User, Integer> {
     User getUserByEmail(String email);
 }
