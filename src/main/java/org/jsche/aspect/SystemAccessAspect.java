@@ -3,8 +3,8 @@ package org.jsche.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.jsche.common.util.AppUtil;
+import org.jsche.dao.SystemUsageDao;
 import org.jsche.entity.SystemUsage;
-import org.jsche.repo.SystemUsageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,8 @@ public class SystemAccessAspect {
     private SystemUsage usage;
 
     @Autowired
-    private SystemUsageRepository sup;
+//    private SystemUsageRepository sup;
+    private SystemUsageDao sud;
 
     @Pointcut("execution(public * org.jsche.controller..*.*(..))")
     public void logPoint() {
@@ -44,14 +45,14 @@ public class SystemAccessAspect {
     @AfterReturning(returning = "r", pointcut = "logPoint()")
     public void afterReturning(Object r) {
         usage.setStatus(200);
-        sup.save(usage);
+        sud.save(usage);
         logger.info(r.toString());
     }
 
     @AfterThrowing(throwing = "e", pointcut = "logPoint()")
     public void afterThrowing(Throwable e) {
         usage.setStatus(500);
-        sup.save(usage);
+        sud.save(usage);
         logger.error(e.getMessage());
     }
 

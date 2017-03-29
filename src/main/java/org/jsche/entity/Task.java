@@ -7,15 +7,12 @@ package org.jsche.entity;
 
 import org.jsche.common.validation.constraints.NotEmpty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author myan
  */
-@Entity
-@Table(name = "tasks")
 public class Task implements Serializable, Comparable<Task> {
 
     private static final long serialVersionUID = -6215223549526696658L;
@@ -36,12 +33,9 @@ public class Task implements Serializable, Comparable<Task> {
 
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotEmpty
     private String taskName;
-    @Column(length = 1000)
     private String description;
     private TaskType taskType;
     private int status;

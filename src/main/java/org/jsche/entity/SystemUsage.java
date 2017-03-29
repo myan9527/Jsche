@@ -1,30 +1,19 @@
 package org.jsche.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.jsche.common.util.AppUtil;
 
-@Entity
-@Table(name = "system_usages")
+import java.util.Date;
+
 /**
  * Log system usage every time
  *
  * @author Administrator
  *
  */
-public class SystemUsage implements Serializable {
+public class SystemUsage {
 
     private static final long serialVersionUID = 2992017243303594610L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String path;
     private String clientIp;

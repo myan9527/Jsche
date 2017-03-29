@@ -9,32 +9,24 @@ import org.jsche.common.ErrorMessage;
 import org.jsche.common.validation.constraints.CustomPattern;
 import org.jsche.common.validation.constraints.NotEmpty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author myan
  */
-@Entity
-@Table(name = "users")
 public class User implements Serializable {
     private static final long serialVersionUID = 2621563319327340685L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    @Column(unique = true, nullable = false, length = 100)
     @NotEmpty(message = ErrorMessage.PASSWORD_REQUIRED)
     private String password;
     private Date lastLogin;
 
-    @Column(unique = true, nullable = false, length = 100)
     @CustomPattern(regex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$",
             message = ErrorMessage.EMAIL_REQUIRED)
     private String email;
-    @Column(nullable = false, length = 200)
     private String avatar;
     private boolean customizedAvatar;
 

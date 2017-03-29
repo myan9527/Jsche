@@ -2,12 +2,11 @@ package org.jsche.service.impl;
 
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.exception.ServiceException;
+import org.jsche.dao.TaskDao;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
-import org.jsche.repo.TaskRepository;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,7 +15,7 @@ import java.util.*;
 public class TaskServiceImpl implements TaskService {
 
     @Autowired
-    private TaskRepository tp;
+    private TaskDao taskDao;
 
     @Override
     public TaskType[] buildTypeArray() {
@@ -24,8 +23,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getUserTasks(int userId, Pageable pageable) {
-        List<Task> tasks = tp.getTaskByUserId(userId, pageable);
+    public List<Task> getUserTasks(int userId) {
+        List<Task> tasks = taskDao.getTaskByUserId(userId);
         if (!tasks.isEmpty()) {
             Collections.sort(tasks);
         }
@@ -34,10 +33,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void save(Task task) throws ServiceException {
-        if (tp.findOne(task.getId()) != null) {
+        if (taskDao.getTaskById(task.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
         }
-        tp.save(task);
+        taskDao.save(task);
     }
 
     /**
@@ -48,6 +47,37 @@ public class TaskServiceImpl implements TaskService {
         Map<String, Object> result = new HashMap<>();
         Map<String, Integer> typesData = buildTypesData(tasks);
         result.put("type_data", typesData);
+        result.put("priority_data",buildPriotyData(tasks));
+        return result;
+    }
+
+    @Override
+    public int[] buildPriotyData(List<Task> tasks){
+        int[] result = new int[4];
+        int p1 = 0;
+        int p2 = 0;
+        int p3 = 0;
+        int p4 = 0;
+        for(Task task:tasks){
+            switch(task.getPriority()){
+                case 0:
+                    p1++;
+                    break;
+                case 1:
+                    p2++;
+                    break;
+                case 2:
+                    p3++;
+                    break;
+                default:
+                    p4++;
+                    break;
+            }
+        }
+        result[0] = p1;
+        result[1] = p2;
+        result[2] = p3;
+        result[3] = p4;
         return result;
     }
 
@@ -83,23 +113,14 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    /**
-     * Daily view for current user.
-     */
-    @Override
-    public List<Task> getDailyTasks(Date data) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     @Override
     public List<Task> getIncomingTasks(int userId) {
-        return tp.getIncomingTasks(userId);
+        return taskDao.getIncomingTasks(userId);
     }
 
     @Override
     public Task getItem(int id) {
-        return tp.findOne(id);
+        return taskDao.getTaskById(id);
     }
 
 }

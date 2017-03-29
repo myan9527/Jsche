@@ -13,9 +13,6 @@ import org.jsche.entity.User;
 import org.jsche.service.TaskService;
 import org.jsche.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -79,12 +76,14 @@ public class UserController {
 
     @RequestMapping(value = "/dashboard")
     @RequiredLogin
-    public ModelAndView dashboard(HttpSession session,
-                                  @PageableDefault(value = 15, sort = {"startDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public ModelAndView dashboard(HttpSession session) {
         ModelAndView mav = new ModelAndView("user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
         if (loginUser != null) {
-            mav.addObject("tasks", taskService.getUserTasks(loginUser.getId(), pageable));
+            mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+            //Fixme: should not query again
+            mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
+//            mav.addObject("data", taskService.analysis());
         }
         return mav;
     }
