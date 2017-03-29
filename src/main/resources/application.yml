@@ -1,26 +1,27 @@
 ####################only for product######################
 spring:
-  datasource:
-    name:dataSource
-    url:jdbc:mysql://localhost:3306/jsche
-    username:root
-    password:root
-    type:com.alibaba.druid.pool.DruidDataSource
-    driverClassName:com.mysql.jdbc.Driver
-    # Advanced configuration...
-    max-active:50
-    max-idle:6
-    min-idle:2
-    initial-size:6
-  themeleaf:
-    prefix:classpath:/templates/
-    suffix:.html
-    mode:HTML5
-    encoding:UTF-8
-    content-type:text/html
-    cache:false
-  mybatis:
-    type-aliases-package:org.jsche.entity
+#    profiles: development
+    datasource:
+        name: dataSource
+        url: jdbc:mysql://localhost:3306/jsche
+        username: root
+        password: root
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        # Advanced configuration...
+        max-active: 50
+        max-idle: 6
+        min-idle: 2
+        initial-size: 6
+    themeleaf:
+        prefix: classpath:/templates/
+        suffix: .html
+        mode: HTML5
+        encoding: UTF-8
+        content-type: text/html
+        cache: false
+    mybatis:
+        type-aliases-package: org.jsche.entity
 ########################h2 database#######################
 #spring.datasource.username=sa
 #spring.datasource.password=

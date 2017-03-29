@@ -25,9 +25,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getUserTasks(int userId) {
         List<Task> tasks = taskDao.getTaskByUserId(userId);
-        if (!tasks.isEmpty()) {
-            Collections.sort(tasks);
-        }
+//        if (!tasks.isEmpty()) {
+//            Collections.sort(tasks);
+//        }
         return tasks;
     }
 
