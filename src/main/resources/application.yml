@@ -1,28 +1,36 @@
 ####################only for product######################
 spring:
+    http:
+        encoding:
+          force: true
+          charset: UTF-8
+          enabled: true
 #    profiles: development
-    datasource:
+datasource:
+    druid:
         name: dataSource
-        url: jdbc:mysql://localhost:3306/jsche
+        url: jdbc:mysql://localhost:3306/jsche?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
         username: root
         password: root
-        type: com.alibaba.druid.pool.DruidDataSource
+        # type: com.alibaba.druid.pool.DruidDataSource
+        validationQuery: SELECT 'x'
         driverClassName: com.mysql.jdbc.Driver
         # Advanced configuration...
         max-active: 50
         max-idle: 6
         min-idle: 2
         initial-size: 6
-    themeleaf:
-        prefix: classpath:/templates/
-        suffix: .html
-        mode: HTML5
-        encoding: UTF-8
-        content-type: text/html
-        cache: false
-    mybatis:
-        type-aliases-package: org.jsche.entity
-        mapper-locations: classpath:mapper/*.xml
+themeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+mybatis:
+    type-aliases-package: org.jsche.entity
+    mapper-locations: classpath:mapper/*.xml
+     config-location: classpath:mybatis.xml
 ########################h2 database#######################
 #spring.datasource.username=sa
 #spring.datasource.password=

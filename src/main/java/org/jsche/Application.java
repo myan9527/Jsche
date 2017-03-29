@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @EnableCaching
-@MapperScan(basePackages = "org.jsche.dao")
+@MapperScan("org.jsche.dao")
 public class Application implements EmbeddedServletContainerCustomizer {
 
     public static void main(String[] args) throws Exception {
