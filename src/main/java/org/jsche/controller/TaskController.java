@@ -11,8 +11,6 @@ import org.jsche.entity.Task.TaskType;
 import org.jsche.entity.User;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +38,7 @@ public class TaskController {
             List<Task> tasks = taskService.getIncomingTasks(loginUser.getId());
             mav.addObject("incomings", tasks);
             mav.addObject("countTip", tasks.size());
+            mav.addObject("parray",taskService.buildPriotyData(tasks));
         }
         return mav;
     }
@@ -68,13 +67,12 @@ public class TaskController {
     @RequestMapping(value = "/statistics", method = RequestMethod.POST)
     @RequiredLogin
     @ResponseBody
-    public String getTaskStatistics(HttpServletRequest request,
-                                    @PageableDefault Pageable pageable) {
+    public String getTaskStatistics(HttpServletRequest request) {
         User loginUser = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
         List<Task> tasks;
         Map<String, Object> result = null;
         if (loginUser != null) {
-            tasks = taskService.getUserTasks(loginUser.getId(), pageable);
+            tasks = taskService.getUserTasks(loginUser.getId());
             if (!tasks.isEmpty()) {
                 result = taskService.analysis(tasks);
             }

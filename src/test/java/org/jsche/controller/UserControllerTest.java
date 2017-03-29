@@ -1,13 +1,5 @@
 package org.jsche.controller;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.entity.User;
@@ -19,9 +11,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class UserControllerTest extends WebAPIBaseTest<UserController> {
@@ -93,11 +90,11 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
     @Test
     public void testDashboard() {
         User user = mock(User.class);
-        Pageable pageable = mock(Pageable.class);
+//        Pageable pageable = mock(Pageable.class);
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
-        ModelAndView mav = controller.dashboard(session, pageable);
-        verify(taskService).getUserTasks(1, pageable);
+        ModelAndView mav = controller.dashboard(session);
+        verify(taskService).getUserTasks(1);
         Assert.assertEquals(mav.getViewName(), "user/dashboard");
     }
 

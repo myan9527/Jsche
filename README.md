@@ -5,7 +5,7 @@
 
 Build with:
 - Spring Boot
-- Spring Boot JPA
+- Mybatis
 - Maven 3.2 or above
 - Themeleaf
 - Mysql
