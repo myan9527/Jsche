@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/TobeDeveloper/Jsche/branch/develop/graphs/commits.svg)](https://codecov.io/gh/TobeDeveloper/Jsche)
 
 Build with:
+- JDK 1.8
 - Spring Boot
 - Mybatis
 - Maven 3.2 or above

@@ -10,7 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by myan on 2017/3/30.
+ * Author myan
+ * Date 2017/3/30.
  */
 public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
     private Class<Task.TaskType> type;
