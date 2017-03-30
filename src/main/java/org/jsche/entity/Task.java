@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * @author myan
  */
-public class Task implements Serializable, Comparable<Task> {
+public class Task implements Serializable {
 
     private static final long serialVersionUID = -6215223549526696658L;
 
@@ -99,11 +99,6 @@ public class Task implements Serializable, Comparable<Task> {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    @Override
-    public int compareTo(Task t) {
-        return this.startDate.before(t.getStartDate()) ? 0 : -1;
     }
 
     public int getDuration() {

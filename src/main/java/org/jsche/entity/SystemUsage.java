@@ -12,8 +12,6 @@ import java.util.Date;
  */
 public class SystemUsage {
 
-    private static final long serialVersionUID = 2992017243303594610L;
-
     private int id;
     private String path;
     private String clientIp;

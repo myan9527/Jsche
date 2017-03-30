@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jsche.dao.UserDao">
+    <resultMap id="UserResult" type="org.jsche.entity.User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="lastLogin" column="last_login"/>
+        <result property="password" column="password"/>
+        <result property="avatar" column="avatar"/>
+        <result property="customizedAvatar" column="customized_avatar"/>
+    </resultMap>
+
+    <select id="getUserByEmail" parameterType="java.lang.String" resultMap="UserResult">
+        <![CDATA[
+        SELECT id,name,email,last_login,password,avatar,customized_avatar
+        from users
+        where email = #{email}
+        ]]>
+    </select>
+
+    <select id="getUserById" parameterType="int" resultMap="UserResult">
+        <![CDATA[
+        SELECT id,name,email,last_login,password,avatar,customized_avatar
+        from users
+        where id = #{id}
+        ]]>
+    </select>
+
+    <insert id="save" parameterType="User">
+        <![CDATA[
+        insert into users(name,email,password,avatar)
+        values (#{name},#{email},#{password},#{avatar})
+        ]]>
+    </insert>
+
+    <update id="updateUserAvatar" parameterType="User">
+        <![CDATA[
+        Update users
+        set avatar = #{avatar}, customized_avatar = #{customizedAvatar}
+        where id = #{id}
+        ]]>
+    </update>
+
+    <update id="updateLastLogin" parameterType="User">
+        <![CDATA[
+        Update users
+        set last_login = #{lastLogin}
+        where id = #{id}
+        ]]>
+    </update>
+</mapper>
