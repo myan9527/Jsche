@@ -7,6 +7,7 @@ import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
 import org.jsche.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "taskCache", key = "'task_'+#userId")
     public List<Task> getUserTasks(int userId) {
         List<Task> tasks = taskDao.getTaskByUserId(userId);
 //        if (!tasks.isEmpty()) {
@@ -47,19 +49,19 @@ public class TaskServiceImpl implements TaskService {
         Map<String, Object> result = new HashMap<>();
         Map<String, Integer> typesData = buildTypesData(tasks);
         result.put("type_data", typesData);
-        result.put("priority_data",buildPriotyData(tasks));
+        result.put("priority_data", buildPriotyData(tasks));
         return result;
     }
 
     @Override
-    public int[] buildPriotyData(List<Task> tasks){
+    public int[] buildPriotyData(List<Task> tasks) {
         int[] result = new int[4];
         int p1 = 0;
         int p2 = 0;
         int p3 = 0;
         int p4 = 0;
-        for(Task task:tasks){
-            switch(task.getPriority()){
+        for (Task task : tasks) {
+            switch (task.getPriority()) {
                 case 0:
                     p1++;
                     break;
@@ -114,6 +116,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "incomingCache", key = "'task_'+#userId")
     public List<Task> getIncomingTasks(int userId) {
         return taskDao.getIncomingTasks(userId);
     }

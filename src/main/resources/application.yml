@@ -17,7 +17,7 @@ datasource:
         driverClassName: com.mysql.jdbc.Driver
         # Advanced configuration...
         max-active: 50
-        max-idle: 6
+#        max-idle: 6
         min-idle: 2
         initial-size: 6
 themeleaf:
