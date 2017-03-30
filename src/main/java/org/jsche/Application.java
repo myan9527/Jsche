@@ -18,11 +18,7 @@ public class Application implements EmbeddedServletContainerCustomizer {
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        ErrorPage error404 = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
-        ErrorPage error500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500.html");
-        container.setSessionTimeout(45, TimeUnit.MINUTES);
-        container.addErrorPages(error404, error500);
-        container.setPort(8000);
+
     }
 
 }
