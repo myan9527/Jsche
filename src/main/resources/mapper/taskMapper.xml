@@ -11,7 +11,7 @@
         <result property="startDate" column="start_date"/>
         <result property="status" column="status"/>
         <result property="taskName" column="task_name"/>
-        <result property="taskType" column="task_type"/>
+        <result property="taskType" column="task_type" typeHandler="org.jsche.config.TaskTypeEnumHandler"/>
         <result property="userid" column="user_id"/>
     </resultMap>
 
@@ -35,7 +35,8 @@
     <insert id="save" parameterType="Task">
         <![CDATA[
         insert into tasks(task_name,task_type,user_id,description,duration,priority,start_date)
-        values (#{taskName},#{taskType},#{userId},#{description},#{duration},#{priority},#{start_date})
+        values (#{taskName},#{taskType,typeHandler=org.jsche.config.TaskTypeEnumHandler},
+        #{userId},#{description},#{duration},#{priority},#{start_date})
         ]]>
     </insert>
 

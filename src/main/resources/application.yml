@@ -30,7 +30,8 @@ themeleaf:
 mybatis:
     type-aliases-package: org.jsche.entity
     mapper-locations: classpath:mapper/*.xml
-     config-location: classpath:mybatis.xml
+    config-location: classpath:mybatis.xml
+#    type-handlers-package: org.jsche.config
 ########################h2 database#######################
 #spring.datasource.username=sa
 #spring.datasource.password=
