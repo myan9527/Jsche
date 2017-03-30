@@ -12,7 +12,7 @@ datasource:
         url: jdbc:mysql://localhost:3306/jsche?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&createDatabaseIfNotExist=true
         username: root
         password: root
-        # type: com.alibaba.druid.pool.DruidDataSource
+        type: com.alibaba.druid.pool.DruidDataSource
         validationQuery: SELECT 'x'
         driverClassName: com.mysql.jdbc.Driver
         # Advanced configuration...
