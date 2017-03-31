@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@MapperScan("org.jsche.dao")
+@MapperScan("org.jsche.web.dao")
 public class DataSourceConfig {
 	
 	@ConfigurationProperties(prefix = "datasource.druid")
