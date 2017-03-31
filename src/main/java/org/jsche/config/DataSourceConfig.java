@@ -1,8 +1,10 @@
 package org.jsche.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.WebStatFilter;
+import com.google.common.collect.Lists;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -12,12 +14,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
-import com.google.common.collect.Lists;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
+@MapperScan("org.jsche.dao")
 public class DataSourceConfig {
 	
 	@ConfigurationProperties(prefix = "datasource.druid")
