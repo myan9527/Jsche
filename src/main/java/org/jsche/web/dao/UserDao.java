@@ -1,4 +1,4 @@
-package org.jsche.dao;
+package org.jsche.web.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.jsche.entity.User;

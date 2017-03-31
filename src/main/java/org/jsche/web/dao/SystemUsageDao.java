@@ -1,4 +1,4 @@
-package org.jsche.dao;
+package org.jsche.web.dao;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

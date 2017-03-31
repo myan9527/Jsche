@@ -1,7 +1,7 @@
-package org.jsche.service.impl;
+package org.jsche.web.service.impl;
 
 import org.jsche.entity.Customer;
-import org.jsche.service.CustomerService;
+import org.jsche.web.service.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
