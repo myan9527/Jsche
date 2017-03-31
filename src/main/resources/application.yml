@@ -5,6 +5,18 @@ spring:
           force: true
           charset: UTF-8
           enabled: true
+server:
+    port: 8433
+#    ssl:
+#      key-store: classpath:jsche.keystore
+#      key-store-password: michael
+#      key-password: yan
+    undertow:
+      io-threads: 4
+      worker-threads: 20
+      buffer-size: 1024
+      buffers-per-region: 1024
+      direct-buffers: true
 #    profiles: development
 datasource:
     druid:
@@ -17,7 +29,6 @@ datasource:
         driverClassName: com.mysql.jdbc.Driver
         # Advanced configuration...
         max-active: 50
-#        max-idle: 6
         min-idle: 2
         initial-size: 6
 themeleaf:
