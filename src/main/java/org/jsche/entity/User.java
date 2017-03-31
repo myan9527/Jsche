@@ -28,6 +28,16 @@ public class User implements Serializable {
             message = ErrorMessage.EMAIL_REQUIRED)
     private String email;
     private String avatar;
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     private boolean customizedAvatar;
 
     public String getAvatar() {

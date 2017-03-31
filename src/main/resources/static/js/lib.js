@@ -15,22 +15,3 @@ $('.form_datetime').datetimepicker({
 function checkTaskForm(e){
 	return false;
 }
-
-function drawCharts(){
-	var datas;
-	$.ajax({
-		cache:true,
-		data:{
-			"userId":2,
-			"date":"2017-3-10"
-		},
-		dataType:"json",
-		error:function(){
-			
-		},
-		url:"",
-		complete:function(xhr,data){
-			datas = data;
-		}
-	})
-}

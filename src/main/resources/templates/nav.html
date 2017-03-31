@@ -13,10 +13,8 @@
             </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav" th:if="${session.session_user}">
-                <li><a href="/task/new">Create New</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right" th:if="${session.session_user}">
+                <li><a href="/task/new"><i class="fa fa-pencil"></i> Create New</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
                             th:text="${session.session_user.name}"></span><b class="caret"></b></a>

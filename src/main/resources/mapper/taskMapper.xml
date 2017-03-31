@@ -15,21 +15,23 @@
         <result property="userId" column="user_id"/>
     </resultMap>
 
+    <sql id="baseColumn">
+        id,description,duration,priority,start_date,status,task_name,task_type,user_id
+    </sql>
+
     <select id="getTaskByUserId" parameterType="int" resultMap="TaskResult">
-        <![CDATA[
-        SELECT id,description,duration,priority,start_date,status,task_name,task_type,user_id
+        SELECT
+        <include refid="baseColumn"/>
         from tasks
         where user_id = #{userId}
         order by start_date desc
-        ]]>
     </select>
 
     <select id="getTaskById" parameterType="int" resultMap="TaskResult">
-        <![CDATA[
-        SELECT id,description,duration,priority,start_date,status,task_name,task_type,user_id
+        SELECT
+        <include refid="baseColumn"/>
         from tasks
         where id = #{id}
-        ]]>
     </select>
 
     <insert id="save" parameterType="Task">
@@ -44,8 +46,19 @@
         <![CDATA[
         SELECT id,description,duration,priority,start_date,status,task_name,task_type,user_id
         from tasks
-        where user_id = #{userId} and start_date <= now() + 3
+        where user_id = #{userId}
+        and start_date <= now() + 3 and start_date >= now()
         order by start_date desc
+        ]]>
+    </select>
+
+    <select id="getWeeklyTrendData" resultType="java.util.Map" parameterType="int">
+        <![CDATA[
+        select DATE_FORMAT(start_date,'%m-%e') as eachday,count(*) as cnt from tasks
+            where user_id = #{userId}
+            and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_date)
+            group by start_date
+            order by eachday asc
         ]]>
     </select>
 </mapper>
