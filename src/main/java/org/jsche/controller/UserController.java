@@ -81,9 +81,9 @@ public class UserController {
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
         if (loginUser != null) {
             mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
-            //Fixme: should not query again
+            //Fixed by ehcache
             mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
-//            mav.addObject("data", taskService.analysis());
+            mav.addObject("trends",taskService.getWeeklyTrendData(loginUser.getId()));
         }
         return mav;
     }

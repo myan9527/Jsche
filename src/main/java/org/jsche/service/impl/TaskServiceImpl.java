@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("taskService")
 public class TaskServiceImpl implements TaskService {
@@ -81,6 +83,11 @@ public class TaskServiceImpl implements TaskService {
         result[2] = p3;
         result[3] = p4;
         return result;
+    }
+
+    @Override
+    public Map<String, Integer> getWeeklyTrendData(int userId) {
+        return taskDao.getWeeklyTrendData(userId);
     }
 
     public Map<String, Integer> buildTypesData(List<Task> tasks) {

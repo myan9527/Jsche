@@ -48,4 +48,14 @@
         order by start_date desc
         ]]>
     </select>
+
+    <select id="getWeeklyTrendData" resultMap="java.util.Map" parameterType="int">
+        <![CDATA[
+        select DATE_FORMAT(start_date,'%m-%e') as eachday,count(*) as cnt from tasks
+            where user_id = #{userId}
+            and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_date)
+            group by start_date
+            order by eachday asc
+        ]]>
+    </select>
 </mapper>
