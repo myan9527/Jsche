@@ -131,3 +131,14 @@ select:invalid {
 	padding: 10px 15px;
 	border-radius: 4px;
 }
+.panel{
+    border: 0px;
+    box-shadow: 0 0px 1px rgba(0,0,0,0.09);
+    margin: 30px 5px 10px 5px;
+    width: 22%;
+    color: #5a5a5a;
+}
+.lead {
+    margin-bottom: 5px;
+    font-size: 2em;
+}
