@@ -50,8 +50,9 @@
                         profile picture</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="file" onchange="return file_selected(this)">
+                    <input type="file" onchange="file_selected(this)">
                     <!--dragable area-->
+                    <div id="dragable"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -67,5 +68,36 @@
 </body>
 <script th:src="@{~/js/jquery-2.1.1.js}"></script>
 <script th:src="@{~/js/bootstrap.min.js}"></script>
+<script>
+function file_selected(e){
+    if(e.files.length > 0){
+        var f = e.files[0];
+        $('#dragable').empty();
+        if(f instanceof File){
+            if(f.type == 'image/jpeg' ||
+                f.type == 'image/png' ||
+                f.type == 'image/gif'){
+                    var reader = new FileReader();
+                    reader.onload = function(evt){
+                        if(FileReader.DONE == reader.readyState) {
+                            var img = document.createElement('img');
+                            img.src = this.result;
+                            $('#dragable').append(img);
+                        }
+                    }
+                    reader.readAsDataURL(f);
+                    return true;
+                }else{
+                    var warning = `<div class="alert alert-warning" style="margin-top: 10px;">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <span>Only support gif/jpg/png at present.</span>
+                        </div>`;
+                    $('#dragable').append(warning);
+                }
+        }
+    }
+}
+
+</script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>
