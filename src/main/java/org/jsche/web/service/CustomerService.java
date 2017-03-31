@@ -1,4 +1,4 @@
-package org.jsche.service;
+package org.jsche.web.service;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package org.jsche.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.jsche.common.util.AppUtil;
-import org.jsche.dao.SystemUsageDao;
+import org.jsche.web.dao.SystemUsageDao;
 import org.jsche.entity.SystemUsage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
