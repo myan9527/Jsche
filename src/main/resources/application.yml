@@ -27,6 +27,7 @@ datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         validationQuery: SELECT 'x'
         driverClassName: com.mysql.jdbc.Driver
+        sql-script-encoding: utf-8
         # Advanced configuration...
         max-active: 50
         min-idle: 2
@@ -41,7 +42,12 @@ themeleaf:
 mybatis:
     type-aliases-package: org.jsche.entity
     mapper-locations: classpath:mapper/*.xml
+    checkConfigLocation: true
     config-location: classpath:mybatis.xml
+    executorType: REUSE
+logging:
+    level:
+       com.ibatis: INFO
 #    type-handlers-package: org.jsche.config
 ########################h2 database#######################
 #spring.datasource.username=sa

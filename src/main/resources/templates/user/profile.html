@@ -21,7 +21,7 @@
                 </dt>
                 <dd>
                     <img class="img-rounded img-thumbnail"
-                         src="{{ user.gravatar(size=180) }}">
+                         th:src="${user.avatar}">
                     <div class="upload-btn">
                         <label data-toggle="modal" data-target="#myModal"> Update
                             picture </label>
@@ -33,7 +33,25 @@
             <div class="page-header">
                 <h1>Pulic Profile</h1>
             </div>
-            {{wtf.quick_form(form)}}
+            <form method="post">
+                <input name="csrf_token" type="hidden" th:value="${csrf_token}">
+                <div class="form-group  required">
+                    <label class="control-label" for="email">Email</label> <input
+                        class="form-control" id="email" name="email" required type="email"
+                        value="">
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="name">User Name</label> <input
+                        class="form-control" id="name" name="userName" required type="text"
+                        value="">
+                </div>
+                <div class="form-group  required">
+                    <label class="control-label" for="city">User Name</label> <input
+                        class="form-control" id="city" name="city" required type="text"
+                        value="">
+                </div>
+            </form>
+
         </div>
     </div>
     <!-- Modal -->
@@ -53,6 +71,7 @@
                     <input type="file" onchange="file_selected(this)">
                     <!--dragable area-->
                     <div id="dragable"></div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -98,6 +117,9 @@ function file_selected(e){
     }
 }
 
+function save_avatar(){
+    //async save
+}
 </script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>

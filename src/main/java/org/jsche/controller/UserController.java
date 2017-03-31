@@ -90,8 +90,13 @@ public class UserController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     @RequiredLogin
-    public String profile() {
-        return "user/profile";
+    public ModelAndView profile(HttpSession session) {
+        ModelAndView mav = new ModelAndView("user/profile");
+        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
+        if(loginUser != null){
+            mav.addObject("user", userService.getUserById(loginUser.getId()));
+        }
+        return mav;
     }
 
     @RequiredLogin

@@ -90,7 +90,6 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
     @Test
     public void testDashboard() {
         User user = mock(User.class);
-//        Pageable pageable = mock(Pageable.class);
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
         ModelAndView mav = controller.dashboard(session);
@@ -100,7 +99,11 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
 
     @Test
     public void testProfile() {
-        Assert.assertEquals(controller.profile(), "user/profile");
+        User user = mock(User.class);
+        when(session.getAttribute(anyString())).thenReturn(user);
+        when(userService.getUserById(anyInt())).thenReturn(user);
+        ModelAndView result = controller.profile(session);
+        Assert.assertEquals(user,result.getModel().get("user"));
     }
 
     @Test
