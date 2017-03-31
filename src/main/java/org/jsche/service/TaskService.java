@@ -21,5 +21,5 @@ public interface TaskService {
 
     int[] buildPriotyData(List<Task> tasks);
 
-    Map<String, Integer> getWeeklyTrendData(int userId);
+    List<Map<String, Integer>> getWeeklyTrendData(int userId);
 }

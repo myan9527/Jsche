@@ -39,7 +39,29 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-8">Task list</div>
+        <div class="col-xs-8">
+            <div class="tasklist">
+                <h3>Task List</h3>
+                <table class="table table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Priority</th>
+                        <th>Start date</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                    </tr>
+                    <tr th:each="t,ts : ${tasks}">
+                        <td th:text="${ts.index + 1}">1</td>
+                        <td th:text="${t.taskName}">Test name</td>
+                        <td th:text="${t.priority}">2</td>
+                        <td th:text="${t.startDate}"></td>
+                        <td th:text="${t.taskType.typeName}"></td>
+                        <td th:text="${t.duration}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <div class="col-xs-4">Calender widget</div>
     </div>
     <!-- end main content row -->

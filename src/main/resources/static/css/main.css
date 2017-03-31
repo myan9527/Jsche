@@ -126,12 +126,13 @@ select:invalid {
 	font-size:14px;
 	color:rgb(255,255,255);
 }
-.widget-content{
+.widget-content,.tasklist{
 	border: 0.8px solid rgb(213, 213, 213);
 	padding: 10px 15px;
 	border-radius: 4px;
+	margin-bottom: 5px;
 }
-.panel{
+.panel {
     border: 0px;
     box-shadow: 0 0px 1px rgba(0,0,0,0.09);
     margin: 30px 5px 10px 5px;

@@ -86,7 +86,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Map<String, Integer> getWeeklyTrendData(int userId) {
+    public List<Map<String, Integer>> getWeeklyTrendData(int userId) {
         return taskDao.getWeeklyTrendData(userId);
     }
 

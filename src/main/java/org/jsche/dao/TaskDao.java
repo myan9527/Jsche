@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by myan on 2017/3/29.
+ * Created by Intellij IDEA. Author myan
+ * Date 2017/3/29.
  */
 public interface TaskDao {
 	
@@ -19,5 +20,5 @@ public interface TaskDao {
 
     List<Task> getIncomingTasks(@Param("userId") int userId);
 
-    Map<String,Integer> getWeeklyTrendData(@Param("userid") int userId);
+    List<Map<String,Integer>> getWeeklyTrendData(@Param("userId") int userId);
 }
