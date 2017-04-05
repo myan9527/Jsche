@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/task")
-public class TaskController {
+public class TaskController extends BasicController {
     private final Gson gson = new Gson();
 
     @Autowired

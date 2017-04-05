@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class BaseController {
+public class SimpleController extends BasicController {
 
     @RequestMapping("/")
     public String index(HttpSession session) {

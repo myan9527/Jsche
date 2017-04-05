@@ -29,7 +29,7 @@ import java.io.File;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BasicController {
 
     @Autowired
     private UserService userService;
