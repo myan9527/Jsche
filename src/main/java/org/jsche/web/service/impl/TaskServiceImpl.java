@@ -58,6 +58,7 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
+    //Fixme should be replaced with List<KV>
     @Override
     public int[] buildPriotyData(List<Task> tasks) {
         int[] result = new int[4];
@@ -104,7 +105,7 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    @Cacheable("weekSerial")
+    @Cacheable("weekSerialCache")
     private List<KeyValuePair> getWeekSerial() {
         return taskDao.getWeekSerial();
     }

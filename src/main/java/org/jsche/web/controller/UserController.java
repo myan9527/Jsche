@@ -9,6 +9,7 @@ import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.util.AppUtil;
+import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.User;
 import org.jsche.web.service.TaskService;
 import org.jsche.web.service.UserService;
@@ -24,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author myan
@@ -88,7 +88,17 @@ public class UserController extends BasicController {
             mav.addObject("todayCounts",taskService.getTodayTaskCount(loginUser.getId()));
             mav.addObject("extraData",taskService.getExtraData(loginUser.getId()));
             //always return 7 elements {Apr 5:1,Apr 6:2 ...}
-            mav.addObject("trends",taskService.getWeeklyTrendData(loginUser.getId()));
+            List<KeyValuePair> trends = taskService.getWeeklyTrendData(loginUser.getId());
+            String[] xaxis = new String[trends.size()];
+            int[] yaxis = new int[trends.size()];
+            for (int i = 0; i < trends.size(); i++) {
+                KeyValuePair kv = trends.get(i);
+                xaxis[i] = kv.getKey();
+                yaxis[i] = Integer.valueOf(String.valueOf(kv.getValue()));
+            }
+
+            mav.addObject("xaxis",xaxis);
+            mav.addObject("yaxis",yaxis);
         }
         return mav;
     }

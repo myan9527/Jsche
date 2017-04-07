@@ -67,8 +67,7 @@ BEGIN
 	end while;
 END//
 DELIMITER ;
---执行过程
-CALL `temp_week`();
+
 
 -- 导出  表 jsche.temp_week_serial 结构
 CREATE TABLE IF NOT EXISTS `temp_week_serial` (
@@ -93,6 +92,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
+
+
+-- 导出  事件 jsche.weekly_serial 结构
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` EVENT `weekly_serial` ON SCHEDULE EVERY 7 DAY STARTS '2017-04-07 15:41:15' ON COMPLETION NOT PRESERVE ENABLE DO CALL `temp_week`()//
+DELIMITER ;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
