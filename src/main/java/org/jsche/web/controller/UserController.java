@@ -83,6 +83,8 @@ public class UserController extends BasicController {
             mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
             //Fixed by ehcache
             mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
+            mav.addObject("todayCounts",taskService.getTodayTaskCount(loginUser.getId()));
+            mav.addObject("extraData",taskService.getExtraData(loginUser.getId()));
             mav.addObject("trends",taskService.getWeeklyTrendData(loginUser.getId()));
         }
         return mav;

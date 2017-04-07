@@ -17,20 +17,20 @@
     <div class="row">
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Tasks of today:</h5></div>
-            <div class="panel-body"><p class="lead">3</p></div>
+            <div class="panel-body"><p class="lead" th:text="${todayCounts}">3</p></div>
         </div>
 
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Average duration:</h5></div>
-            <div class="panel-body"><p class="lead">30min</p></div>
+            <div class="panel-body"><p class="lead" th:text="${extraData.avg_cost}">30min</p></div>
         </div>
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Time cost:</h5></div>
-            <div class="panel-body"><p class="lead">5h 20min</p></div>
+            <div class="panel-body"><p class="lead" th:text="${extraData.total}">5h 20min</p></div>
         </div>
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Recent tasks(in 3 days):</h5></div>
-            <div class="panel-body"><p class="lead">5</p></div>
+            <div class="panel-body"><p class="lead" th:text="${incomings}">5</p></div>
         </div>
     </div>
 

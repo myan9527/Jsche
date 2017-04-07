@@ -7,6 +7,7 @@ import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
 import org.jsche.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @CachePut(value = "taskCache", key = "'task_'+#userId")
     public void save(Task task) throws ServiceException {
         if (taskDao.getTaskById(task.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
@@ -88,6 +90,18 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Map<String, Integer>> getWeeklyTrendData(int userId) {
         return taskDao.getWeeklyTrendData(userId);
+    }
+
+    @Override
+    @Cacheable(value = "todayCountCache",key = "'today_'+#userId")
+    public int getTodayTaskCount(int userId) {
+        return userId > 0 ? taskDao.getTodayTaskCount(userId) : 0;
+    }
+
+    @Override
+    @Cacheable(value = "extraDataCache", key = "'extra_'+#userId")
+    public Map<String, Integer> getExtraData(int userId) {
+        return userId > 0 ? taskDao.getExtraData(userId): null;
     }
 
     public Map<String, Integer> buildTypesData(List<Task> tasks) {
