@@ -14,7 +14,7 @@
     <cache
             name="taskCache"
             eternal="false"
-            maxElementsInMemory="100"
+            maxElementsInMemory="600"
             overflowToDisk="false"
             diskPersistent="false"
             timeToIdleSeconds="0"
@@ -23,10 +23,28 @@
     <cache
             name="incomingCache"
             eternal="false"
+            maxElementsInMemory="600"
+            overflowToDisk="true"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU" />
+    <cache
+            name="todayCountCache"
+            eternal="false"
             maxElementsInMemory="100"
             overflowToDisk="false"
             diskPersistent="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="1200"
+            memoryStoreEvictionPolicy="LRU" />
+    <cache
+            name="extraDataCache"
+            eternal="false"
+            maxElementsInMemory="100"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="1200"
             memoryStoreEvictionPolicy="LRU" />
 </ehcache>

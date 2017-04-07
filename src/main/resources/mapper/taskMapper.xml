@@ -61,4 +61,20 @@
             order by eachday asc
         ]]>
     </select>
+
+    <select id="getTodayTaskCount" resultType="int" parameterType="int">
+        <![CDATA[
+        select count(*) cnt from tasks
+        where user_id = #{userId}
+        and date_format(now(),'%m-%d')=FROM_UNIXTIME(start_date,'%m-%d')
+        ]]>
+    </select>
+
+    <select id="getExtraData" resultType="java.util.Map" parameterType="int">
+        <![CDATA[
+        select avg(duration) avg_cost,count(*) cnt,sum(duration) total
+        from tasks
+        where user_id=#{userId}
+        ]]>
+    </select>
 </mapper>
