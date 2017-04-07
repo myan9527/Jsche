@@ -19,7 +19,7 @@ public class Task implements Serializable {
 
     public enum TaskType {
         FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
-                "Social Activity"), WORK_TASK("Work Task"), OTHER_ISSUE("Other Issue");
+                "Social Activity"), WORK_TASK("Work Staff"), OTHER_ISSUE("Other Issue");
 
         private final String typeName;
 

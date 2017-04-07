@@ -35,35 +35,40 @@
     </div>
 
     <div class="row chart-view">
-        <div id="my_chart" style="height:320px;"></div>
+        <div id="line_chart" style="height:320px;"></div>
     </div>
 
     <div class="row">
-        <div class="col-xs-8">
-            <div class="tasklist">
-                <h3>Task List</h3>
-                <table class="table table-hover">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Priority</th>
-                        <th>Start date</th>
-                        <th>Type</th>
-                        <th>Duration</th>
-                    </tr>
-                    <tr th:each="t,ts : ${tasks}">
-                        <td th:text="${ts.index + 1}">1</td>
-                        <td th:text="${t.taskName}">Test name</td>
-                        <td th:text="${t.priority}">2</td>
-                        <td th:text="${t.startDate}"></td>
-                        <td th:text="${t.taskType.typeName}"></td>
-                        <td th:text="${t.duration}"></td>
-                    </tr>
-                </table>
-            </div>
+        <div class="col-xs-8 widget-content">
+            <h3>Task List</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th>Start date</th>
+                    <th>Type</th>
+                    <th>Duration</th>
+                </tr>
+                <tr th:each="t,ts : ${tasks}">
+                    <td th:text="${ts.index + 1}">1</td>
+                    <td th:text="${t.taskName}">Test name</td>
+                    <td th:text="${t.priority}">2</td>
+                    <td th:text="${t.startDate}"></td>
+                    <td th:text="${t.taskType.typeName}"></td>
+                    <td th:text="${t.duration}"></td>
+                </tr>
+            </table>
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li><span>1</span>/<span>3</span></li>
+                    <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="col-xs-4 widget-content">
-
+        <div class="col-xs-4 widget-content" style="width:33%;float:right;">
+            <div id="pie_chart" style="height:350px;"></div>
         </div>
     </div>
     <!-- end main content row -->
@@ -73,7 +78,7 @@
 <script th:src="@{~/js/bootstrap.min.js}"></script>
 <script th:src="@{~/js/echarts.common.min.js}"></script>
 <script th:inline="javascript">
-var myChart = echarts.init(document.getElementById("my_chart"));
+var myChart = echarts.init(document.getElementById("line_chart"));
 var colors = ['#5793f3', '#d14a61', '#675bba'];
 var option = {
     title: {
@@ -126,6 +131,47 @@ var option = {
     }]
 }
 myChart.setOption(option);
+
+//Now draw the pie chart
+var pie_chart = echarts.init(document.getElementById("pie_chart"));
+var opt = {
+    title : {
+        text: 'Task Distribution',
+        x:'right'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['Family Issue','Self Improvement','Social Activity','Work Staff','Other Issue']
+    },
+    series : [
+        {
+            name: 'Task type',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'Family Issue'},
+                {value:310, name:'Self Improvement'},
+                {value:234, name:'Social Activity'},
+                {value:135, name:'Work Staff'},
+                {value:1548, name:'Other Issue'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+pie_chart.setOption(opt);
 </script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>

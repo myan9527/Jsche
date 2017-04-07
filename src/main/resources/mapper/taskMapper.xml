@@ -43,7 +43,7 @@
         <![CDATA[
         insert into tasks(task_name,task_type,user_id,description,duration,priority,start_date)
         values (#{taskName},#{taskType,typeHandler=org.jsche.config.TaskTypeEnumHandler},
-        #{userId},#{description},#{duration},#{priority},#{start_date})
+        #{userId},#{description},#{duration},#{priority},#{startDate})
         ]]>
     </insert>
 
@@ -52,7 +52,7 @@
         SELECT id,description,duration,priority,start_date,status,task_name,task_type,user_id
         from tasks
         where user_id = #{userId}
-        and start_date <= now() + 3 and start_date >= now()
+        and date(start_date) <= now() + 3 and date(start_date) >= now()
         order by start_date desc
         ]]>
     </select>
@@ -66,7 +66,7 @@
         select DATE_FORMAT(start_date,'%b %e') as eachday,count(*) as cnt from tasks
             where user_id = #{userId}
             and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_date)
-            group by start_date
+            group by eachday
             order by eachday asc
         ]]>
     </select>
