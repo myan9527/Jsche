@@ -47,7 +47,7 @@ mybatis:
     executorType: REUSE
 logging:
     level:
-       com.ibatis: INFO
+       org.apache.ibatis: INFO
 #    type-handlers-package: org.jsche.config
 ########################h2 database#######################
 #spring.datasource.username=sa

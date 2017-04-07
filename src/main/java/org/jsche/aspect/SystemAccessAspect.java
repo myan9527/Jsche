@@ -25,7 +25,7 @@ public class SystemAccessAspect {
 //    private SystemUsageRepository sup;
     private SystemUsageDao sud;
 
-    @Pointcut("execution(public * org.jsche.controller..*.*(..))")
+    @Pointcut("execution(public * org.jsche.web.controller..*.*(..))")
     public void logPoint() {
 
     }
