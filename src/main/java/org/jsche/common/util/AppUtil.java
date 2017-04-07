@@ -8,12 +8,14 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public final class AppUtil {
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
     private final static SimpleDateFormat sdf_us = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
+    private final static SimpleDateFormat sdf_temp = new SimpleDateFormat("MMM dd", Locale.US);
 
     public static String getHexPassword(String src) {
         if (src == null || src.trim().length() == 0) {
@@ -37,10 +39,6 @@ public final class AppUtil {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static boolean validHexPassword(String src) {
-        return false;
     }
 
     public static String formatDate(Date dateStamp) {
@@ -90,5 +88,11 @@ public final class AppUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static List<String> generateWeekDate() {
+        List<String> result = null;
+
+        return result;
     }
 }

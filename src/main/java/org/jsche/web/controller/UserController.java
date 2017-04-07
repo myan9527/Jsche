@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author myan
@@ -85,6 +87,7 @@ public class UserController extends BasicController {
             mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
             mav.addObject("todayCounts",taskService.getTodayTaskCount(loginUser.getId()));
             mav.addObject("extraData",taskService.getExtraData(loginUser.getId()));
+            //always return 7 elements {Apr 5:1,Apr 6:2 ...}
             mav.addObject("trends",taskService.getWeeklyTrendData(loginUser.getId()));
         }
         return mav;

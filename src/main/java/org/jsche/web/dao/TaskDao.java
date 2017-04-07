@@ -1,6 +1,7 @@
 package org.jsche.web.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.Task;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public interface TaskDao {
 
     List<Task> getIncomingTasks(@Param("userId") int userId);
 
-    List<Map<String,Integer>> getWeeklyTrendData(@Param("userId") int userId);
+    List<KeyValuePair> getWeekSerial();
+
+    List<KeyValuePair> getWeeklyTrendData(@Param("userId") int userId);
 
     int getTodayTaskCount(@Param("userId") int userId);
 

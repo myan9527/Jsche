@@ -46,6 +46,39 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- 数据导出被取消选择。
 
 
+-- 导出  过程 jsche.temp_week 结构
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `temp_week`()
+BEGIN
+	declare i int;
+	declare pos int;
+	declare date_string varchar(20);
+	set i=0;
+	set pos = 1;
+	
+	delete from temp_week_serial;
+	
+	while i < 7 do
+		select date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + pos DAY) from dual into date_string;
+		insert into temp_week_serial(start_date,count)
+		values (date_string,0) ;
+		set pos = pos - 1;
+		set i = i+1;	
+	end while;
+END//
+DELIMITER ;
+--执行过程
+CALL `temp_week`();
+
+-- 导出  表 jsche.temp_week_serial 结构
+CREATE TABLE IF NOT EXISTS `temp_week_serial` (
+  `start_date` datetime DEFAULT NULL,
+  `count` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
 -- 导出  表 jsche.users 结构
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

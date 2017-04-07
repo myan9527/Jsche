@@ -1,5 +1,6 @@
 package org.jsche.web.service;
 
+import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
 
@@ -21,7 +22,7 @@ public interface TaskService {
 
     int[] buildPriotyData(List<Task> tasks);
 
-    List<Map<String, Integer>> getWeeklyTrendData(int userId);
+    List<KeyValuePair> getWeeklyTrendData(int userId);
 
     int getTodayTaskCount(int userId);
 

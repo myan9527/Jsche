@@ -34,6 +34,7 @@ var option = {
                 }
             }
         },
+        //inject this data
         data: ["4.1","4.5","4.9","4.14"]
     },
     yAxis: [

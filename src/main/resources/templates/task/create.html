@@ -97,32 +97,6 @@
 <script th:src="@{~/js/bootstrap-select.min.js}"></script>
 <script th:src="@{~/js/bootstrap-datetimepicker.min.js}"></script>
 <script th:src="@{~/js/lib.js}"></script>
-<script>
-var myChart = echarts.init(document.getElementById('main'));
-
-var option = {
-	title: {
-		text: 'Statistics:Task priority'
-	},	
-    tooltip: {},
-    legend: {
-        data:['Priority']
-    },
-    xAxis: {
-    },
-    yAxis: {
-    	data: ["P1","P2","P3","P4"]
-    },
-    series: [{
-        name: '',
-        type: 'bar',
-        data: [1, 15, 6, 4]
-    }]
-};
-
-// 使用刚指定的配置项和数据显示图表。
-myChart.setOption(option);
-
-</script>
+<script th:src="@{~/js/crt2.js}"></script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>
