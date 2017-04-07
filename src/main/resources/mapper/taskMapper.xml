@@ -14,6 +14,11 @@
         <result property="taskType" column="task_type" typeHandler="org.jsche.config.TaskTypeEnumHandler"/>
         <result property="userId" column="user_id"/>
     </resultMap>
+    
+    <resultMap id="KeyValueResult" type="org.jsche.entity.KeyValuePair">
+        <result property="key" column="eachday"/>
+        <result property="value" column="cnt"/>
+    </resultMap>
 
     <sql id="baseColumn">
         id,description,duration,priority,start_date,status,task_name,task_type,user_id
@@ -52,9 +57,13 @@
         ]]>
     </select>
 
-    <select id="getWeeklyTrendData" resultType="java.util.Map" parameterType="int">
+    <select id="getWeekSerial" resultMap="KeyValueResult">
+        select DATE_FORMAT(start_date,'%b %e') as eachday,count as cnt from temp_week_serial
+    </select>
+
+    <select id="getWeeklyTrendData" resultMap="KeyValueResult" parameterType="int">
         <![CDATA[
-        select DATE_FORMAT(start_date,'%m-%e') as eachday,count(*) as cnt from tasks
+        select DATE_FORMAT(start_date,'%b %e') as eachday,count(*) as cnt from tasks
             where user_id = #{userId}
             and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_date)
             group by start_date

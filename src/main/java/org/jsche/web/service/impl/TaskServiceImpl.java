@@ -2,6 +2,7 @@ package org.jsche.web.service.impl;
 
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.exception.ServiceException;
+import org.jsche.entity.KeyValuePair;
 import org.jsche.web.dao.TaskDao;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
@@ -88,8 +89,24 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Map<String, Integer>> getWeeklyTrendData(int userId) {
-        return taskDao.getWeeklyTrendData(userId);
+    public List<KeyValuePair> getWeeklyTrendData(int userId) {
+        List<KeyValuePair> data = taskDao.getWeeklyTrendData(userId);
+        List<KeyValuePair> result = this.getWeekSerial();
+        for (int i = 0; i < result.size(); i++) {
+            KeyValuePair kv = result.get(i);
+            for (KeyValuePair datum : data) {
+                if(datum.getKey().equalsIgnoreCase(kv.getKey())){
+                    result.set(i,datum);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Cacheable("weekSerial")
+    private List<KeyValuePair> getWeekSerial() {
+        return taskDao.getWeekSerial();
     }
 
     @Override
