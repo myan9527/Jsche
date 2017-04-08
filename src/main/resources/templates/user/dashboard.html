@@ -22,11 +22,11 @@
 
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Average duration:</h5></div>
-            <div class="panel-body"><p class="lead" th:text="${extraData.avg_cost}">30min</p></div>
+            <div class="panel-body"><p class="lead" th:if="${extraData != null}" th:text="${extraData.avg_cost}">30min</p></div>
         </div>
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Time cost:</h5></div>
-            <div class="panel-body"><p class="lead" th:text="${extraData.total}">5h 20min</p></div>
+            <div class="panel-body"><p class="lead" th:if="${extraData != null}" th:text="${extraData.total}">5h 20min</p></div>
         </div>
         <div class="col-xs-3 panel">
             <div class="panel-heading"><h5>Recent tasks(in 3 days):</h5></div>

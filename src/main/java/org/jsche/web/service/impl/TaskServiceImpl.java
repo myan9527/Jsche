@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "taskCache", key = "'task_'+#userId")
+    @Cacheable(value = {"taskCache","extraDataCache"}, key = "'task_'+#userId")
     public List<Task> getUserTasks(int userId) {
         List<Task> tasks = taskDao.getTaskByUserId(userId);
 //        if (!tasks.isEmpty()) {
