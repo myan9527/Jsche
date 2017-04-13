@@ -47,4 +47,13 @@
             timeToIdleSeconds="0"
             timeToLiveSeconds="1200"
             memoryStoreEvictionPolicy="LRU" />
+    <cache
+            name="weekSerialCache"
+            eternal="false"
+            maxElementsInMemory="1"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="86400"
+            memoryStoreEvictionPolicy="LRU" />
 </ehcache>

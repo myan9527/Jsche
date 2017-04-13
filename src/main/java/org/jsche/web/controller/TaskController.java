@@ -48,7 +48,7 @@ public class TaskController extends BasicController {
     public ModelAndView createTask(Task task,
                                    @RequestParam(name = "start_date") String startDate,
                                    @RequestParam(name = "task_type") String type, HttpSession session) {
-        ModelAndView mav = new ModelAndView("user/dashboard");
+        ModelAndView mav = new ModelAndView("redirect:/user/dashboard");
         User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
         if (loginUser != null) {
             task.setUserId(loginUser.getId());

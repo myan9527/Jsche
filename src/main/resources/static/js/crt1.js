@@ -35,7 +35,7 @@ var option = {
             }
         },
         //inject this data
-        data: ["4.1","4.5","4.9","4.14"]
+        data: [[${trends.key}]]
     },
     yAxis: [
         {
@@ -46,8 +46,8 @@ var option = {
         name: '',
         type: 'line',
         smooth: true,
-        //load from map value
-        data: [1, 15, 6, 4]
+        //inject this data
+        data: [[${trends.data}]]
     }]
 }
 myChart.setOption(option);

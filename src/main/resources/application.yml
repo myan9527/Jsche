@@ -5,6 +5,9 @@ spring:
           force: true
           charset: UTF-8
           enabled: true
+    datasource:
+        schema: schema.sql
+        initialize: false
 server:
     port: 8433
 #    ssl:
@@ -27,7 +30,6 @@ datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         validationQuery: SELECT 'x'
         driverClassName: com.mysql.jdbc.Driver
-        sql-script-encoding: utf-8
         # Advanced configuration...
         max-active: 50
         min-idle: 2

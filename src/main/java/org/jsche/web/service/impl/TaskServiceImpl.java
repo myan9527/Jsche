@@ -28,13 +28,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "taskCache", key = "'task_'+#userId")
+    @Cacheable(value = {"taskCache","extraDataCache"}, key = "'task_'+#userId")
     public List<Task> getUserTasks(int userId) {
-        List<Task> tasks = taskDao.getTaskByUserId(userId);
-//        if (!tasks.isEmpty()) {
+        //        if (!tasks.isEmpty()) {
 //            Collections.sort(tasks);
 //        }
-        return tasks;
+        return taskDao.getTaskByUserId(userId);
     }
 
     @Override
@@ -58,6 +57,7 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
+    //Fixme should be replaced with List<KV>
     @Override
     public int[] buildPriotyData(List<Task> tasks) {
         int[] result = new int[4];
@@ -104,7 +104,7 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    @Cacheable("weekSerial")
+    @Cacheable("weekSerialCache")
     private List<KeyValuePair> getWeekSerial() {
         return taskDao.getWeekSerial();
     }
@@ -121,8 +121,9 @@ public class TaskServiceImpl implements TaskService {
         return userId > 0 ? taskDao.getExtraData(userId): null;
     }
 
-    public Map<String, Integer> buildTypesData(List<Task> tasks) {
+    private Map<String, Integer> buildTypesData(List<Task> tasks) {
         Map<String, Integer> result = new HashMap<>();
+
         int f = 0;
         int w = 0;
         int sa = 0;

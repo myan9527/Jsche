@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group  required">
                     <label class="control-label" for="duration">Duration (eg. 3d 4h 20m)</label> <input
-                        type="text" class="form-control" id="duration" name="duration" pattern="">
+                        type="text" class="form-control" id="duration" name="duration">
                 </div>
                 <input class="btn btn-info" id="submit" name="submit" type="submit"
                        value="Create" size="8">
@@ -82,7 +82,7 @@
             </div>
 
             <div class="widget">
-                <div class="widget-header">Task statistics</div>
+                <div class="widget-header">Incoming task statistics</div>
                 <div class="widget-content">
                     <div id="main" style="height:240px;"></div>
                 </div>
@@ -97,6 +97,33 @@
 <script th:src="@{~/js/bootstrap-select.min.js}"></script>
 <script th:src="@{~/js/bootstrap-datetimepicker.min.js}"></script>
 <script th:src="@{~/js/lib.js}"></script>
-<script th:src="@{~/js/crt2.js}"></script>
+<script th:inline="javascript">
+var myChart = echarts.init(document.getElementById('main'));
+var colors = ['#5793f3', '#d14a61', '#675bba'];
+
+var option = {
+	title: {
+		text: 'Statistics:Task priority'
+	},
+	color: colors,
+    tooltip: {},
+    legend: {
+        data:['Priority']
+    },
+    xAxis: {
+    },
+    yAxis: {
+    	data: ["P1","P2","P3","P4"]
+    },
+    series: [{
+        name: '',
+        type: 'bar',
+        smooth: true,
+        data: [[${parray}]]
+    }]
+};
+
+myChart.setOption(option);
+</script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>
