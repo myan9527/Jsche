@@ -54,7 +54,7 @@
                     <td th:text="${ts.index + 1}">1</td>
                     <td th:text="${t.taskName}">Test name</td>
                     <td th:text="${t.priority}">2</td>
-                    <td th:text="${{#dates.format(t.startDate,'yyyy-MMM-dd')}"></td>
+                    <td th:text="${#dates.format(t.startDate,'yyyy-MMM-dd')}"></td>
                     <td th:text="${t.taskType.typeName}"></td>
                     <td th:text="${t.duration}"></td>
                 </tr>

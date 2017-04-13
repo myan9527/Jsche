@@ -81,7 +81,7 @@
 
     <select id="getExtraData" resultType="java.util.Map" parameterType="int">
         <![CDATA[
-        select avg(duration) avg_cost,count(*) cnt,sum(duration) total
+        select ifnull(avg(duration),0) avg_cost,count(*) cnt,ifnull(sum(duration),0) total
         from tasks
         where user_id=#{userId}
         ]]>
