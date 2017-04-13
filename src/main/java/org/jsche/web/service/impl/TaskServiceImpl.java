@@ -28,13 +28,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "taskCache", key = "'task_'+#userId")
+    @Cacheable(value = "taskCache", key = "'user_'+#userId")
     public List<Task> getUserTasks(int userId) {
         return taskDao.getTaskByUserId(userId);
     }
 
     @Override
-    @CacheEvict(value = {"taskCache","extraDataCache"}, allEntries = true)
+    @CacheEvict(value = {"taskCache","extraDataCache", "incomingCache", "todayCountCache"},
+            key = "'user_'+#task.getUserId()", allEntries = true)
     public void save(Task task) throws ServiceException {
         if (taskDao.getTaskById(task.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
@@ -107,13 +108,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "todayCountCache",key = "'today_'+#userId")
+    @Cacheable(value = "todayCountCache",key = "'user_'+#userId")
     public int getTodayTaskCount(int userId) {
         return userId > 0 ? taskDao.getTodayTaskCount(userId) : 0;
     }
 
     @Override
-    @Cacheable(value = "extraDataCache", key = "'extra_'+#userId")
+    @Cacheable(value = "extraDataCache", key = "'user_'+#userId")
     public Map<String, Integer> getExtraData(int userId) {
         return userId > 0 ? taskDao.getExtraData(userId): null;
     }
@@ -152,7 +153,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "incomingCache", key = "'task_'+#userId")
+    @Cacheable(value = "incomingCache", key = "'user_'+#userId")
     public List<Task> getIncomingTasks(int userId) {
         return taskDao.getIncomingTasks(userId);
     }
