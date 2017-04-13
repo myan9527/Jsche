@@ -35,11 +35,6 @@ public class LoginInteceptor extends HandlerInterceptorAdapter {
                     response.setDateHeader("expries", -1);
                     response.setHeader("Cache-Control", "no-cache");
                     response.setHeader("Pragma", "no-cache");
-                    if(request.getScheme().equalsIgnoreCase("https")){
-
-                    } else {
-
-                    }
                     response.sendRedirect("/login");
                     return false;
                 }

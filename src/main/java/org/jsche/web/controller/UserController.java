@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author myan
@@ -80,8 +81,9 @@ public class UserController extends BasicController {
     @RequiredLogin
     public ModelAndView dashboard(HttpSession session) {
         ModelAndView mav = new ModelAndView("user/dashboard");
-        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
-        if (loginUser != null) {
+        Optional<User> userOptional = Optional.ofNullable((User)(session.getAttribute(Constants.LOGIN_USER)));
+        if (userOptional.isPresent()) {
+            User loginUser = userOptional.get();
             mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
             //Fixed by ehcache
             mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
@@ -107,8 +109,9 @@ public class UserController extends BasicController {
     @RequiredLogin
     public ModelAndView profile(HttpSession session) {
         ModelAndView mav = new ModelAndView("user/profile");
-        User loginUser = (User) session.getAttribute(Constants.LOGIN_USER);
-        if(loginUser != null){
+        Optional<User> userOptional = Optional.ofNullable((User)(session.getAttribute(Constants.LOGIN_USER)));
+        if (userOptional.isPresent()) {
+            User loginUser = userOptional.get();
             mav.addObject("user", userService.getUserById(loginUser.getId()));
         }
         return mav;

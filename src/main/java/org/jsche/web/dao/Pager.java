@@ -1,7 +1,8 @@
 package org.jsche.web.dao;
 
 /**
- * Created by myan on 2017/3/29.
+ * Created by Intellij IDEA. Author myan
+ * Date 2017/3/29.
  */
 public class Pager {
     private int currentPage = 1;

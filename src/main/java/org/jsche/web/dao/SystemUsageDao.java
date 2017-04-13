@@ -5,7 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.jsche.entity.SystemUsage;
 
 /**
- * Created by myan on 2017/3/29.
+ * Created by Intellij IDEA. Author myan
+ * Date 2017/3/29.
  */
 @Mapper
 public interface SystemUsageDao {

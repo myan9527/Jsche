@@ -4,7 +4,8 @@ import org.apache.ibatis.annotations.Param;
 import org.jsche.entity.User;
 
 /**
- * Created by myan on 2017/3/29.
+ * Created by Intellij IDEA. Author myan
+ * Date 2017/3/29.
  */
 
 public interface UserDao {

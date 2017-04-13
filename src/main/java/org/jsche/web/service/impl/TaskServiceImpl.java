@@ -30,11 +30,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Cacheable(value = {"taskCache","extraDataCache"}, key = "'task_'+#userId")
     public List<Task> getUserTasks(int userId) {
-        List<Task> tasks = taskDao.getTaskByUserId(userId);
-//        if (!tasks.isEmpty()) {
+        //        if (!tasks.isEmpty()) {
 //            Collections.sort(tasks);
 //        }
-        return tasks;
+        return taskDao.getTaskByUserId(userId);
     }
 
     @Override
@@ -122,8 +121,9 @@ public class TaskServiceImpl implements TaskService {
         return userId > 0 ? taskDao.getExtraData(userId): null;
     }
 
-    public Map<String, Integer> buildTypesData(List<Task> tasks) {
+    private Map<String, Integer> buildTypesData(List<Task> tasks) {
         Map<String, Integer> result = new HashMap<>();
+
         int f = 0;
         int w = 0;
         int sa = 0;
