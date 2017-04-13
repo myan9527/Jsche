@@ -3,12 +3,12 @@ package org.jsche.web.service.impl;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.KeyValuePair;
-import org.jsche.web.dao.TaskDao;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
+import org.jsche.web.dao.TaskDao;
 import org.jsche.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +28,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = {"taskCache","extraDataCache"}, key = "'task_'+#userId")
+    @Cacheable(value = "taskCache", key = "'task_'+#userId")
     public List<Task> getUserTasks(int userId) {
-        //        if (!tasks.isEmpty()) {
-//            Collections.sort(tasks);
-//        }
         return taskDao.getTaskByUserId(userId);
     }
 
     @Override
-    @CachePut(value = "taskCache", key = "'task_'+#userId")
+    @CacheEvict(value = {"taskCache","extraDataCache"}, allEntries = true)
     public void save(Task task) throws ServiceException {
         if (taskDao.getTaskById(task.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);

@@ -75,7 +75,7 @@
         <![CDATA[
         select count(*) cnt from tasks
         where user_id = #{userId}
-        and date_format(now(),'%m-%d')=FROM_UNIXTIME(start_date,'%m-%d')
+        and date_format(now(),'%m-%d')=date_format(start_date,'%m-%d')
         ]]>
     </select>
 
