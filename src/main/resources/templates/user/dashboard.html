@@ -50,6 +50,9 @@
                     <th>Type</th>
                     <th>Duration</th>
                 </tr>
+                <tr th:if="${tasks.size() == 0}">
+                    <td colspan="6">Your task list is empty.</td>
+                </tr>
                 <tr th:each="t,ts : ${tasks}">
                     <td th:text="${ts.index + 1}">1</td>
                     <td th:text="${t.taskName}">Test name</td>
