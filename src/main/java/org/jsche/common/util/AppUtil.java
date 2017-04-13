@@ -1,8 +1,16 @@
 package org.jsche.common.util;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hasher;
+import com.google.common.hash.Hashing;
 import org.jsche.common.Constants;
+import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -72,20 +80,31 @@ public final class AppUtil {
         return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
     }
 
-    public static String generateAvatar(String src) {
+    public static String generateAvatar(String email) {
+        Hasher hasher = Hashing.md5().newHasher();
+        hasher.putString(email, Charsets.UTF_8);
+        //use base64 instead
+        AvatarGenerator generator = new AvatarGenerator();
+        BufferedImage image = generator.create(hasher.hash().toString(), Constants.AVATAR_SIZE);
+        return encodeImage2String(image);
+    }
+
+    private static String encodeImage2String(BufferedImage image){
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(src.getBytes());
-            byte[] bytes = md.digest();
-            StringBuilder buffer = new StringBuilder();
-            for (byte aByte : bytes) {
-                buffer.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-            return "URL: http://www.gravatar.com/avatar/" + buffer.toString() + "?size=" + Constants.AVATAR_SIZE;
-        } catch (NoSuchAlgorithmException e) {
+            ImageIO.write(image, "png", bos);
+            byte[] imageBytes = bos.toByteArray();
+
+            BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        return imageString;
     }
 
 }

@@ -21,7 +21,7 @@
                 </dt>
                 <dd>
                     <img class="img-rounded img-thumbnail"
-                         th:src="${user.avatar}">
+                         th:src="${'data:image/png;base64,'+user.avatar}">
                     <div class="upload-btn">
                         <label data-toggle="modal" data-target="#myModal"> Update
                             picture </label>
