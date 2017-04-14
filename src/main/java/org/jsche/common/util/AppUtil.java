@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+@SuppressWarnings("restriction")
 public final class AppUtil {
 
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
@@ -97,7 +98,7 @@ public final class AppUtil {
             ImageIO.write(image, "png", bos);
             byte[] imageBytes = bos.toByteArray();
 
-            BASE64Encoder encoder = new BASE64Encoder();
+			BASE64Encoder encoder = new BASE64Encoder();
             imageString = encoder.encode(imageBytes);
 
             bos.close();

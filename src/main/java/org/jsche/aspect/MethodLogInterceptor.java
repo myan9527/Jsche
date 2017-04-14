@@ -33,10 +33,11 @@ public class MethodLogInterceptor implements MethodInterceptor {
 
 @Configuration
 class MethodLogConfiguration extends AbstractPointcutAdvisor {
-    private Pointcut pointcut;
+	private static final long serialVersionUID = -6119898122633638603L;
+	
+	private Pointcut pointcut;
     private Advice advice;
 
-    @SuppressWarnings("unused")
     @PostConstruct
     public void init(){
         this.pointcut = new AnnotationMatchingPointcut(null, MethodLog.class);
