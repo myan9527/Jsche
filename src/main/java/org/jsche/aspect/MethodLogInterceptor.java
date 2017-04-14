@@ -17,8 +17,8 @@ import javax.annotation.PostConstruct;
  * Created by Intellij IDEA. Author myan
  * Date 2017/4/14.
  */
-public class MethodLogInteceptor implements MethodInterceptor {
-    private Logger logger = LoggerFactory.getLogger(MethodLogInteceptor.class);
+public class MethodLogInterceptor implements MethodInterceptor {
+    private Logger logger = LoggerFactory.getLogger(MethodLogInterceptor.class);
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -33,13 +33,15 @@ public class MethodLogInteceptor implements MethodInterceptor {
 
 @Configuration
 class MethodLogConfiguration extends AbstractPointcutAdvisor {
-    private Pointcut pointcut;
+	private static final long serialVersionUID = -6119898122633638603L;
+	
+	private Pointcut pointcut;
     private Advice advice;
 
     @PostConstruct
     public void init(){
         this.pointcut = new AnnotationMatchingPointcut(null, MethodLog.class);
-        this.advice = new MethodLogInteceptor();
+        this.advice = new MethodLogInterceptor();
     }
 
     @Override

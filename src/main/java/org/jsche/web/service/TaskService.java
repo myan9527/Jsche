@@ -27,4 +27,8 @@ public interface TaskService {
     int getTodayTaskCount(int userId);
 
     Map<String, Integer> getExtraData(int userId);
+
+    int getUserTaskCount(int userId);
+
+    List<Task> getUserTasksPages(Map<String, Object> params);
 }

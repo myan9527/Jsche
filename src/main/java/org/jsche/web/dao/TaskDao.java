@@ -28,4 +28,6 @@ public interface TaskDao {
     int getTodayTaskCount(@Param("userId") int userId);
 
     Map<String,Integer> getExtraData(@Param("userId") int userId);
+
+    List<Task> getUserTaskPages(Map<String, Object> params);
 }

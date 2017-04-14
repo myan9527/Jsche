@@ -93,7 +93,7 @@ public class UserControllerTest extends WebAPIBaseTest<UserController> {
         when(session.getAttribute(Constants.LOGIN_USER)).thenReturn(user);
         when(user.getId()).thenReturn(1);
         ModelAndView mav = controller.dashboard(session);
-        verify(taskService).getUserTasks(1);
+        verify(taskService).getUserTaskCount(1);
         Assert.assertEquals(mav.getViewName(), "user/dashboard");
     }
 

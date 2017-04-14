@@ -6,15 +6,49 @@ package org.jsche.web.dao;
  */
 public class Pager {
     private int currentPage = 1;
-    private int pageCount = 10;
+    private int pageSize;
     private int totalRecords;
     private int totalPages;
+    private boolean isFirst;
+    private boolean hasNext;
+    private boolean hasPrevious;
+    private boolean isLast;
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public boolean hasNext() {
+        return hasNext;
+    }
+
+    public boolean hasPrevious() {
+        return hasPrevious;
+    }
+
+    public boolean isLast() {
+        return isLast;
+    }
 
     private int startPosition;
 
-    public Pager(int currentPage, int totalRecords) {
+    public Pager(int currentPage, int totalRecords, int pageSize) {
         this.currentPage = currentPage;
         this.totalRecords = totalRecords;
+        this.pageSize = pageSize;
+        //total pages
+        int totalPage = (totalRecords / pageSize);
+        this.totalPages = totalRecords % pageSize == 0 ? totalPage :
+                totalPage + 1;
+        //basic analysis
+        this.isFirst = currentPage == 1;
+        this.isLast = currentPage == getTotalPages();
+        this.hasNext = !isLast;
+        this.hasPrevious = !isFirst;
     }
 
     public int getCurrentpage() {
@@ -25,12 +59,12 @@ public class Pager {
         this.currentPage = currentpage;
     }
 
-    public int getPageCount() {
-        return pageCount;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getTotalRecords() {
@@ -42,29 +76,12 @@ public class Pager {
     }
 
     public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    /**
-     * total pages
-     */
-    public int totalPage() {
-        if (0 == totalRecords) {
-            return 0;
-        }
-        int totalPage = (totalRecords / pageCount);
-        return totalRecords % pageCount == 0 ? totalPage :
-                totalPage + 1;
+        return this.totalPages;
     }
 
     public int getStartPosition(){
-        startPosition = (currentPage - 1)*pageCount;
+        startPosition = (currentPage - 1)* pageSize;
         return startPosition;
     }
-
 
 }

@@ -15,7 +15,9 @@ import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -58,6 +60,42 @@ public class TaskServiceTest {
         Task task = mock(Task.class);
         when(taskDao.getTaskById(anyInt())).thenReturn(task);
         service.save(task);
+    }
+    
+    @Test
+    public void testGetExtraData() {
+    	Assert.assertNull(service.getExtraData(-1));
+    	
+    	Map<String, Integer> map = new HashMap<>();
+    	when(taskDao.getExtraData(anyInt())).thenReturn(map);
+    	Assert.assertEquals(map, service.getExtraData(1));
+    }
+    
+    @Test
+    public void testGetUserTasksPages() {
+    	List<Task> list = new ArrayList<>();
+    	when(taskDao.getUserTaskPages(anyObject())).thenReturn(list);
+    	Map<String, Object> map = new HashMap<>();
+    	Assert.assertEquals(list, service.getUserTasksPages(map));
+    }
+    
+    @Test
+    public void testGetUserTaskCount() {
+    	List<Task> list = new ArrayList<>();
+    	Task task = mock(Task.class);
+    	list.add(task);
+    	when(taskDao.getTaskByUserId(anyInt())).thenReturn(list);
+    	Assert.assertEquals(1, service.getUserTaskCount(1));
+    }
+    
+    @Test
+    public void testGetIncomingTasks() {
+    	List<Task> list = new ArrayList<>();
+    	Task task = mock(Task.class);
+    	list.add(task);
+    	when(taskDao.getIncomingTasks(anyInt())).thenReturn(list);
+    	Assert.assertEquals(list, service.getIncomingTasks(1));
+    	
     }
 
 }

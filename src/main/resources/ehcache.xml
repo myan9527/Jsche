@@ -21,6 +21,15 @@
             timeToLiveSeconds="300"
             memoryStoreEvictionPolicy="LRU" />
     <cache
+        name="taskCount"
+        eternal="false"
+        maxElementsInMemory="50"
+        overflowToDisk="false"
+        diskPersistent="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="300"
+        memoryStoreEvictionPolicy="LRU" />
+    <cache
             name="incomingCache"
             eternal="false"
             maxElementsInMemory="600"
