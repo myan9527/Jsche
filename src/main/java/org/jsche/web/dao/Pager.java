@@ -6,7 +6,7 @@ package org.jsche.web.dao;
  */
 public class Pager {
     private int currentPage = 1;
-    private int pageCount = 10;
+    private int pageSize = 10;
     private int totalRecords;
     private int totalPages;
 
@@ -25,12 +25,12 @@ public class Pager {
         this.currentPage = currentpage;
     }
 
-    public int getPageCount() {
-        return pageCount;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getTotalRecords() {
@@ -56,13 +56,13 @@ public class Pager {
         if (0 == totalRecords) {
             return 0;
         }
-        int totalPage = (totalRecords / pageCount);
-        return totalRecords % pageCount == 0 ? totalPage :
+        int totalPage = (totalRecords / pageSize);
+        return totalRecords % pageSize == 0 ? totalPage :
                 totalPage + 1;
     }
 
     public int getStartPosition(){
-        startPosition = (currentPage - 1)*pageCount;
+        startPosition = (currentPage - 1)* pageSize;
         return startPosition;
     }
 

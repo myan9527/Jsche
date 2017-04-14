@@ -10,7 +10,9 @@ import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.KeyValuePair;
+import org.jsche.entity.Task;
 import org.jsche.entity.User;
+import org.jsche.web.dao.Pager;
 import org.jsche.web.service.TaskService;
 import org.jsche.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -84,13 +88,21 @@ public class UserController extends BasicController {
         Optional<User> userOptional = Optional.ofNullable((User)(session.getAttribute(Constants.LOGIN_USER)));
         if (userOptional.isPresent()) {
             User loginUser = userOptional.get();
-            mav.addObject("tasks", taskService.getUserTasks(loginUser.getId()));
+            int userId = loginUser.getId();
+            Map<String, Object> params = new HashMap<>();
+            params.put("userId", userId);
+            Pager pager = new Pager(1, taskService.getUserTaskCount(userId));
+            pager.setPageSize(5);
+            params.put("pager",pager);
+            List<Task> tasks = taskService.getUserTasksPages(params);
+            mav.addObject("tasks", tasks);
+            mav.addObject("pager", pager);
             //Fixed by ehcache
-            mav.addObject("incomings", taskService.getIncomingTasks(loginUser.getId()).size());
-            mav.addObject("todayCounts",taskService.getTodayTaskCount(loginUser.getId()));
-            mav.addObject("extraData",taskService.getExtraData(loginUser.getId()));
+            mav.addObject("incomings", taskService.getIncomingTasks(userId).size());
+            mav.addObject("todayCounts",taskService.getTodayTaskCount(userId));
+            mav.addObject("extraData",taskService.getExtraData(userId));
             //always return 7 elements {Apr 5:1,Apr 6:2 ...}
-            List<KeyValuePair> trends = taskService.getWeeklyTrendData(loginUser.getId());
+            List<KeyValuePair> trends = taskService.getWeeklyTrendData(userId);
             String[] xaxis = new String[trends.size()];
             int[] yaxis = new int[trends.size()];
             for (int i = 0; i < trends.size(); i++) {

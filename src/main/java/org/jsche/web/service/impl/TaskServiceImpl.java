@@ -120,6 +120,17 @@ public class TaskServiceImpl implements TaskService {
         return userId > 0 ? taskDao.getExtraData(userId): null;
     }
 
+    @Override
+    public List<Task> getUserTasksPages(Map<String, Object> params) {
+        return taskDao.getUserTaskPages(params);
+    }
+
+    @Override
+    @Cacheable("taskCount")
+    public int getUserTaskCount(int userId){
+        return this.getUserTasks(userId).size();
+    }
+
     private Map<String, Integer> buildTypesData(List<Task> tasks) {
         Map<String, Integer> result = new HashMap<>();
 

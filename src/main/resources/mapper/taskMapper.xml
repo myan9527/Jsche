@@ -86,4 +86,13 @@
         where user_id=#{userId}
         ]]>
     </select>
+
+    <select id="getUserTaskPages" resultMap="TaskResult" parameterType="map">
+        SELECT
+        <include refid="baseColumn"/>
+        from tasks
+        where user_id = #{userId}
+        order by start_date desc
+        limit #{pager.startPosition,jdbcType=INTEGER},#{pager.pageSize,jdbcType=INTEGER}
+    </select>
 </mapper>
