@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(255) NOT NULL,
   `last_login` datetime DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `avatar` varchar(200) NOT NULL,
+  `avatar` varchar(1000) NOT NULL,
   `customized_avatar` bit(1) DEFAULT b'0',
   `city` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)

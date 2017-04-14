@@ -1,14 +1,15 @@
 package org.jsche.web.service.impl;
 
 import org.jsche.common.ErrorMessage;
+import org.jsche.common.annotation.MethodLog;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.KeyValuePair;
-import org.jsche.web.dao.TaskDao;
 import org.jsche.entity.Task;
 import org.jsche.entity.Task.TaskType;
+import org.jsche.web.dao.TaskDao;
 import org.jsche.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +29,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = {"taskCache","extraDataCache"}, key = "'task_'+#userId")
+    @Cacheable(value = "taskCache", key = "'user_'+#userId")
+    @MethodLog
     public List<Task> getUserTasks(int userId) {
-        //        if (!tasks.isEmpty()) {
-//            Collections.sort(tasks);
-//        }
         return taskDao.getTaskByUserId(userId);
     }
 
     @Override
-    @CachePut(value = "taskCache", key = "'task_'+#userId")
+    @CacheEvict(value = {"taskCache","extraDataCache", "incomingCache", "todayCountCache"},
+            key = "'user_'+#task.getUserId()", allEntries = true)
     public void save(Task task) throws ServiceException {
         if (taskDao.getTaskById(task.getId()) != null) {
             throw new ServiceException(ErrorMessage.INVALID_OPERATION);
@@ -57,7 +57,6 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    //Fixme should be replaced with List<KV>
     @Override
     public int[] buildPriotyData(List<Task> tasks) {
         int[] result = new int[4];
@@ -110,13 +109,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "todayCountCache",key = "'today_'+#userId")
+    @Cacheable(value = "todayCountCache",key = "'user_'+#userId")
     public int getTodayTaskCount(int userId) {
         return userId > 0 ? taskDao.getTodayTaskCount(userId) : 0;
     }
 
     @Override
-    @Cacheable(value = "extraDataCache", key = "'extra_'+#userId")
+    @Cacheable(value = "extraDataCache", key = "'user_'+#userId")
     public Map<String, Integer> getExtraData(int userId) {
         return userId > 0 ? taskDao.getExtraData(userId): null;
     }
@@ -155,7 +154,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "incomingCache", key = "'task_'+#userId")
+    @Cacheable(value = "incomingCache", key = "'user_'+#userId")
     public List<Task> getIncomingTasks(int userId) {
         return taskDao.getIncomingTasks(userId);
     }
