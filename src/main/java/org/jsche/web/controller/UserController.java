@@ -91,8 +91,7 @@ public class UserController extends BasicController {
             int userId = loginUser.getId();
             Map<String, Object> params = new HashMap<>();
             params.put("userId", userId);
-            Pager pager = new Pager(1, taskService.getUserTaskCount(userId));
-            pager.setPageSize(5);
+            Pager pager = new Pager(1, taskService.getUserTaskCount(userId), 3);
             params.put("pager",pager);
             List<Task> tasks = taskService.getUserTasksPages(params);
             mav.addObject("tasks", tasks);
