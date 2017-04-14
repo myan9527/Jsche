@@ -1,6 +1,7 @@
 package org.jsche.web.service.impl;
 
 import org.jsche.common.ErrorMessage;
+import org.jsche.common.annotation.MethodLog;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.Task;
@@ -29,6 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Cacheable(value = "taskCache", key = "'user_'+#userId")
+    @MethodLog
     public List<Task> getUserTasks(int userId) {
         return taskDao.getTaskByUserId(userId);
     }
@@ -55,7 +57,6 @@ public class TaskServiceImpl implements TaskService {
         return result;
     }
 
-    //Fixme should be replaced with List<KV>
     @Override
     public int[] buildPriotyData(List<Task> tasks) {
         int[] result = new int[4];

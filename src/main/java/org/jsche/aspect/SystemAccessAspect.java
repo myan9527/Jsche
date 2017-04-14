@@ -22,7 +22,6 @@ public class SystemAccessAspect {
     private SystemUsage usage;
 
     @Autowired
-//    private SystemUsageRepository sup;
     private SystemUsageDao sud;
 
     @Pointcut("execution(public * org.jsche.web.controller..*.*(..))")
