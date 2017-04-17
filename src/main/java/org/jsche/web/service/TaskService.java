@@ -2,7 +2,7 @@ package org.jsche.web.service;
 
 import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.Task;
-import org.jsche.entity.Task.TaskType;
+import org.jsche.entity.TaskType;
 
 import java.util.List;
 import java.util.Map;

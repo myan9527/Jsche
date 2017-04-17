@@ -1,7 +1,7 @@
 package org.jsche.config;
 
 import org.apache.ibatis.type.JdbcType;
-import org.jsche.entity.Task;
+import org.jsche.entity.TaskType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,12 +39,12 @@ public class TaskTypeEnumHandlerTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        handler = new TaskTypeEnumHandler(Task.TaskType.class);
+        handler = new TaskTypeEnumHandler(TaskType.class);
     }
 
     @Test
     public void testSetNonNullParameter() throws SQLException {
-        Task.TaskType typo = Task.TaskType.FAMILY_ISSUE;
+        TaskType typo = TaskType.FAMILY_ISSUE;
         handler.setNonNullParameter(statement,1, typo,JdbcType.INTEGER);
         verify(statement).setInt(1,typo.ordinal());
     }
@@ -52,8 +52,8 @@ public class TaskTypeEnumHandlerTest {
     @Test
     public void testGetNullableResult1() throws SQLException {
         when(resultSet.getInt(anyString())).thenReturn(1);
-        Task.TaskType typo = handler.getNullableResult(resultSet, "task_type");
-        assertEquals(Task.TaskType.SELF_IMPROVEMENT, typo);
+        TaskType typo = handler.getNullableResult(resultSet, "task_type");
+        assertEquals(TaskType.SELF_IMPROVEMENT, typo);
 
         when(resultSet.wasNull()).thenReturn(true);
         typo = handler.getNullableResult(resultSet,"task_type");
@@ -63,8 +63,8 @@ public class TaskTypeEnumHandlerTest {
     @Test
     public void testGetNullableResult2() throws SQLException {
         when(resultSet.getInt(anyInt())).thenReturn(1);
-        Task.TaskType typo = handler.getNullableResult(resultSet, 1);
-        assertEquals(Task.TaskType.SELF_IMPROVEMENT, typo);
+        TaskType typo = handler.getNullableResult(resultSet, 1);
+        assertEquals(TaskType.SELF_IMPROVEMENT, typo);
 
         when(resultSet.wasNull()).thenReturn(true);
         typo = handler.getNullableResult(resultSet, 1);
@@ -74,8 +74,8 @@ public class TaskTypeEnumHandlerTest {
     @Test
     public void testGetNullableResult3() throws SQLException {
         when(callableStatement.getInt(anyInt())).thenReturn(1);
-        Task.TaskType typo = handler.getNullableResult(callableStatement,1);
-        assertEquals(Task.TaskType.SELF_IMPROVEMENT, typo);
+        TaskType typo = handler.getNullableResult(callableStatement,1);
+        assertEquals(TaskType.SELF_IMPROVEMENT, typo);
 
         when(callableStatement.wasNull()).thenReturn(true);
         typo = handler.getNullableResult(callableStatement,1);
