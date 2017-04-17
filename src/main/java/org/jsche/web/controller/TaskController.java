@@ -7,7 +7,7 @@ import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.common.util.AppUtil;
 import org.jsche.entity.Task;
-import org.jsche.entity.Task.TaskType;
+import org.jsche.entity.TaskType;
 import org.jsche.entity.User;
 import org.jsche.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;

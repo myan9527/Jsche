@@ -2,7 +2,7 @@ package org.jsche.config;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.jsche.entity.Task;
+import org.jsche.entity.TaskType;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -13,12 +13,12 @@ import java.sql.SQLException;
  * Author myan
  * Date 2017/3/30.
  */
-public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
-    private Class<Task.TaskType> type;
+public class TaskTypeEnumHandler extends BaseTypeHandler<TaskType> {
+    private Class<TaskType> type;
 
-    private final Task.TaskType[] enums;
+    private final TaskType[] enums;
 
-    public TaskTypeEnumHandler(Class<Task.TaskType> type) {
+    public TaskTypeEnumHandler(Class<TaskType> type) {
         if (type == null)
             throw new IllegalArgumentException("Type argument cannot be null");
         this.type = type;
@@ -29,12 +29,12 @@ public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement preparedStatement, int i, Task.TaskType taskType, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement preparedStatement, int i, TaskType taskType, JdbcType jdbcType) throws SQLException {
         preparedStatement.setInt(i,taskType.ordinal());
     }
 
     @Override
-    public Task.TaskType getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
+    public TaskType getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
         int i = resultSet.getInt(columnName);
 
         if (resultSet.wasNull()) {
@@ -44,8 +44,8 @@ public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
         }
     }
 
-    private Task.TaskType locateTaskType(int i) {
-        for (Task.TaskType taskType : enums) {
+    private TaskType locateTaskType(int i) {
+        for (TaskType taskType : enums) {
             if(taskType.ordinal() == i){
                 return taskType;
             }
@@ -54,7 +54,7 @@ public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
     }
 
     @Override
-    public Task.TaskType getNullableResult(ResultSet resultSet, int columnIndex) throws SQLException {
+    public TaskType getNullableResult(ResultSet resultSet, int columnIndex) throws SQLException {
         int i = resultSet.getInt(columnIndex);
 
         if (resultSet.wasNull()) {
@@ -65,7 +65,7 @@ public class TaskTypeEnumHandler extends BaseTypeHandler<Task.TaskType> {
     }
 
     @Override
-    public Task.TaskType getNullableResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
+    public TaskType getNullableResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
         int i = callableStatement.getInt(columnIndex);
 
         if (callableStatement.wasNull()) {

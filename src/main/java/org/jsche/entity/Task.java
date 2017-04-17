@@ -17,22 +17,6 @@ public class Task implements Serializable {
 
     private static final long serialVersionUID = -6215223549526696658L;
 
-    public enum TaskType {
-        FAMILY_ISSUE("Family Issue"), SELF_IMPROVEMENT("Self Improvement"), SOCIAL_ACTIVITY(
-                "Social Activity"), WORK_TASK("Work Staff"), OTHER_ISSUE("Other Issue");
-
-        private final String typeName;
-
-        TaskType(String name) {
-            this.typeName = name;
-        }
-
-        public String getTypeName() {
-            return typeName;
-        }
-
-    }
-
     private int id;
     @NotEmpty
     private String taskName;
