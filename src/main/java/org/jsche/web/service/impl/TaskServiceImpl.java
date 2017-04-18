@@ -37,7 +37,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @CacheEvict(value = {"taskCache","extraDataCache", "incomingCache", "todayCountCache"},
+    @CacheEvict(value = {"taskCache", "extraDataCache", "incomingCache", "todayCountCache"},
             key = "'user_'+#task.getUserId()", allEntries = true)
     public void save(Task task) throws ServiceException {
         if (taskDao.getTaskById(task.getId()) != null) {
@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
         int[] result = new int[4];
         Map<Integer, Long> res = tasks.stream().
                 collect(Collectors.groupingBy(Task::getPriority, Collectors.counting()));
-        for (int i=0;i<res.size();i++){
+        for (int i = 0; i < res.size(); i++) {
             result[i] = Math.toIntExact(res.get(i));
         }
 
@@ -77,8 +77,8 @@ public class TaskServiceImpl implements TaskService {
         for (int i = 0; i < result.size(); i++) {
             KeyValuePair kv = result.get(i);
             for (KeyValuePair datum : data) {
-                if(datum.getKey().equalsIgnoreCase(kv.getKey())){
-                    result.set(i,datum);
+                if (datum.getKey().equalsIgnoreCase(kv.getKey())) {
+                    result.set(i, datum);
                 }
             }
         }
@@ -92,7 +92,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Cacheable(value = "todayCountCache",key = "'user_'+#userId")
+    @Cacheable(value = "todayCountCache", key = "'user_'+#userId")
     public int getTodayTaskCount(int userId) {
         return userId > 0 ? taskDao.getTodayTaskCount(userId) : 0;
     }
@@ -100,7 +100,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Cacheable(value = "extraDataCache", key = "'user_'+#userId")
     public Map<String, Integer> getExtraData(int userId) {
-        return userId > 0 ? taskDao.getExtraData(userId): null;
+        return userId > 0 ? taskDao.getExtraData(userId) : null;
     }
 
     @Override
@@ -110,14 +110,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Cacheable("taskCount")
-    public int getUserTaskCount(int userId){
+    public int getUserTaskCount(int userId) {
         return this.getUserTasks(userId).size();
     }
 
     private Map<TaskType, Long> buildTypesData(List<Task> tasks) {
-        Map<TaskType, Long> result = tasks.stream()
+        return tasks.stream()
                 .collect(Collectors.groupingBy(Task::getTaskType, Collectors.counting()));
-        return result;
     }
 
     @Override
