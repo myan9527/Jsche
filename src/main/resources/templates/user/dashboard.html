@@ -65,14 +65,14 @@
             <nav aria-label="...">
                 <ul class="pager">
                     <li class="previous" th:class="${pager.hasPrevious()} ? '' : 'disabled'">
-                        <a href="#"><span aria-hidden="true">&larr;</span> Previous</a>
+                        <a href="javascript:void(0)" onclick="loadPageData(this)"><span aria-hidden="true">&larr;</span> Previous</a>
                     </li>
                     <li>
                         <span th:text="${pager.currentPage}">1</span>/
                         <span th:text="${pager.totalPages}">3</span>
                     </li>
                     <li class="next" th:class="${pager.hasNext()} ? '' : 'disabled'">
-                        <a href="#">Next <span aria-hidden="true">&rarr;</span></a>
+                        <a href="javascript:void(0)" onclick="loadPageData(this)">Next <span aria-hidden="true">&rarr;</span></a>
                     </li>
                 </ul>
             </nav>
@@ -88,6 +88,7 @@
 <script th:src="@{~/js/bootstrap.min.js}"></script>
 <script th:src="@{~/js/echarts.common.min.js}"></script>
 <script th:inline="javascript">
+
 var myChart = echarts.init(document.getElementById("line_chart"));
 var colors = ['#5793f3', '#d14a61', '#675bba'];
 var option = {
@@ -182,6 +183,10 @@ var opt = {
     ]
 };
 pie_chart.setOption(opt);
+
+function loadPageData(e){
+    //console.log($[[pager.currentPage]])
+}
 </script>
 <script src="https://use.fontawesome.com/b2bd19dab3.js" async="async"></script>
 </html>
