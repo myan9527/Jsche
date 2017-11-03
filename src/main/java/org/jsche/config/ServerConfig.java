@@ -33,7 +33,6 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
         UndertowEmbeddedServletContainerFactory undertow = new UndertowEmbeddedServletContainerFactory();
         undertow.addBuilderCustomizers(builder -> {
             builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true);
-//            builder.addHttpsListener(8443,"local")
         });
 
         return undertow;

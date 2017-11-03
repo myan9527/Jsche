@@ -9,16 +9,23 @@ import org.jsche.common.util.AppUtil;
 import org.jsche.entity.Task;
 import org.jsche.entity.TaskType;
 import org.jsche.entity.User;
+import org.jsche.web.dao.Pager;
 import org.jsche.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/task")
@@ -64,32 +71,24 @@ public class TaskController extends BasicController {
         throw new ServiceException(ErrorMessage.INVALID_OPERATION);
     }
 
-    @RequestMapping(value = "/statistics", method = RequestMethod.POST)
+    @RequestMapping(value = "/tasks/{page}", method = RequestMethod.GET)
     @RequiredLogin
     @ResponseBody
-    public String getTaskStatistics(HttpServletRequest request) {
-        User loginUser = (User) request.getSession().getAttribute(Constants.LOGIN_USER);
-        List<Task> tasks;
-        Map<String, Object> result = null;
-        if (loginUser != null) {
-            tasks = taskService.getUserTasks(loginUser.getId());
-            if (!tasks.isEmpty()) {
-                result = taskService.analysis(tasks);
-            }
+    public ModelMap getUserTaskPageData(HttpSession session, @PathVariable("page") int pageNumber){
+        ModelMap result = new ModelMap();
+        Optional<User> userOptional = Optional.ofNullable((User)session.getAttribute(Constants.LOGIN_USER));
+        if(userOptional.isPresent()){
+            User loginUser = userOptional.get();
+            Map<String, Object> params = new HashMap<>();
+            params.put("userId", loginUser.getId());
+            Pager pager = new Pager(pageNumber, taskService.getUserTaskCount(loginUser.getId()), Constants.PAGE_SIZE);
+            List<Task> tasks = taskService.getUserTasksPages(params);
+            result.put("pager", pager);
+            result.put("tasks", tasks);
         }
-        return gson.toJson(result);
+        return result;
     }
 
-    @RequestMapping(value = "/incoming", method = RequestMethod.GET)
-    @RequiredLogin
-    @ResponseBody
-    public String getIncomingTasks(@RequestParam(name = "user_id") int userId) {
-        List<Task> tasks = taskService.getIncomingTasks(userId);
-        if (tasks != null) {
-            return gson.toJson(tasks);
-        }
-        return null;
-    }
 
     @RequestMapping(value = "/item/{id}", method = RequestMethod.GET)
     @RequiredLogin
