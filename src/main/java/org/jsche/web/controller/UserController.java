@@ -9,6 +9,7 @@ import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.util.AppUtil;
+import org.jsche.common.validation.constraints.CheckValid;
 import org.jsche.entity.KeyValuePair;
 import org.jsche.entity.Task;
 import org.jsche.entity.User;
@@ -63,7 +64,7 @@ public class UserController extends BasicController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView processRegister(HttpServletRequest request, User user, String repassword) {
+    public ModelAndView processRegister(HttpServletRequest request, @CheckValid User user, String repassword) {
         ModelAndView mav = new ModelAndView("user/register");
         mav.addObject("user", user);
         if (!user.getPassword().equals(repassword)) {

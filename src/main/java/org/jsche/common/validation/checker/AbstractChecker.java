@@ -20,7 +20,7 @@ public abstract class AbstractChecker {
     protected Annotation[] getValidationList(Annotation annotation) {
         Annotation[] annotations = null;
         if (annotation == null)
-            return annotations;
+            return null;
         Class<?> clazz = annotation.getClass();
         Method method;
         try {
