@@ -45,13 +45,9 @@ public class EntityChecker extends AbstractChecker {
                     }
 
                     for (Annotation annotation : annotations) {
-                        try {
-                            Validator validator = handler.find(annotation);
-                            if (validator != null)
-                                validator.isValid(annotation, value);
-                        } catch (ValidateException e) {
-                            throw e;
-                        }
+                        Validator validator = handler.find(annotation);
+                        if (validator != null)
+                            validator.isValid(annotation, value);
                     }
                 }
             }
