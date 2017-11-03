@@ -6,8 +6,9 @@
 Build with:
 - JDK 1.8
 - Spring Boot
+- Spring session support
 - Mybatis
-- Ehcache
+- Redis
 - Maven 3.2 or above
 - Themeleaf
 - Mysql
