@@ -30,14 +30,10 @@ public class ParameterChecker extends AbstractChecker {
                 Annotation[] annotations = parameters[i].getAnnotations();
                 for (Annotation annotation : annotations) {
                     if (annotation.annotationType().isAnnotationPresent(JscheConstraint.class)) {
-                        try {
-                            Validator validator = handler.find(annotation);
+                        Validator validator = handler.find(annotation);
 
-                            if (validator != null)
-                                validator.isValid(annotation, args[i]);
-                        } catch (ValidateException e) {
-                            throw e;
-                        }
+                        if (validator != null)
+                            validator.isValid(annotation, args[i]);
                     }
                 }
             }

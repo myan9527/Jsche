@@ -1,11 +1,11 @@
 package org.jsche.web.controller;
 
-import com.google.gson.Gson;
 import org.jsche.common.Constants;
 import org.jsche.common.ErrorMessage;
 import org.jsche.common.annotation.RequiredLogin;
 import org.jsche.common.exception.ServiceException;
 import org.jsche.common.util.AppUtil;
+import org.jsche.common.validation.constraints.CheckValid;
 import org.jsche.entity.Task;
 import org.jsche.entity.TaskType;
 import org.jsche.entity.User;
@@ -30,8 +30,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/task")
 public class TaskController extends BasicController {
-    private final Gson gson = new Gson();
-
     @Autowired
     private TaskService taskService;
 
@@ -52,7 +50,7 @@ public class TaskController extends BasicController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @RequiredLogin
-    public ModelAndView createTask(Task task,
+    public ModelAndView createTask(@CheckValid Task task,
                                    @RequestParam(name = "start_date") String startDate,
                                    @RequestParam(name = "task_type") String type, HttpSession session) {
         ModelAndView mav = new ModelAndView("redirect:/user/dashboard");

@@ -28,13 +28,9 @@ public class MethodChecker extends AbstractChecker {
         for (Annotation annotation : method.getAnnotations()) {
             if (annotation.annotationType().isAnnotationPresent(JscheConstraint.class)) {
                 for (int i = 0; i < parameters.length; i++) {
-                    try {
-                        Validator validator = handler.find(annotation);
-                        if (validator != null)
-                            validator.isValid(annotation, args[i]);
-                    } catch (ValidateException e) {
-                        throw e;
-                    }
+                    Validator validator = handler.find(annotation);
+                    if (validator != null)
+                        validator.isValid(annotation, args[i]);
                 }
             }
         }
